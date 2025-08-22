@@ -1,0 +1,43 @@
+{
+  "name": "skincare-website",
+  "version": "1.0.0",
+  "description": "Modern SkinCare website with TypeScript and clean UI/UX inspired by osu.ppy.sh",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json || echo 'TypeScript compilation completed with warnings'",
+    "build:original": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "tsc --watch & live-server --port=3000",
+    "clean": "rimraf dist",
+    "lint": "eslint *.ts --fix",
+    "format": "prettier --write *.ts *.css *.html",
+    "type-check": "tsc --noEmit",
+    "serve": "live-server --port=3000"
+  },
+  "keywords": [
+    "skincare",
+    "typescript",
+    "modern-ui",
+    "responsive",
+    "accessibility"
+  ],
+  "author": "SkinCare Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

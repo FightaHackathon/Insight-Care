@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Treatment Detail</title>
+  <link rel="stylesheet" href="treatment-details.css">
+</head>
+<body>
+
+  <div class="detail-card" id="treatment-detail"></div>
+
+  <script>
+    const treatments = {
+      "acne": {
+        title: "Acne Treatment",
+        image: "Pics/hormonal-acne.jpg",
+        description: "This treatment helps cleanse clogged pores, reduce inflammation, and balance oil production to treat and prevent acne breakouts."
+      },
+      "hair-breakage": {
+        title: "Hair Breakage Repair",
+        image: "Pics/breakage.jpg",
+        description: "Strengthens weak hair strands with keratin-based therapies and nourishing oils to reduce split ends and breakage."
+      },
+      "anti-aging": {
+        title: "Anti-Aging Therapy",
+        image: "Pics/antiAging.jpg",
+        description: "Stimulates collagen production and reduces the appearance of wrinkles and fine lines using non-invasive procedures."
+      },
+      "dry-skin": {
+        title: "Dry Skin Solution",
+        image: "Pics/skin.jpg",
+        description: "Deep hydration treatment to soothe flaky, itchy skin and restore the skin barrier."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("treatment");
+
+    const treatment = treatments[slug];
+    const container = document.getElementById("treatment-detail");
+
+    if (treatment) {
+      container.innerHTML = `
+        <img src="${treatment.image}" alt="${treatment.title}">
+        <h2>${treatment.title}</h2>
+        <p>${treatment.description}</p>
+      `;
+    } else {
+      container.innerHTML = `<p style="color:red;">Treatment not found.</p>`;
+    }
+  </script>
+
+</body>
+</html>

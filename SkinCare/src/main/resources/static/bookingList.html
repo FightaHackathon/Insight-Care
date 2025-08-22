@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Booking specific styles */
+        .booking-hero {
+            background: var(--gradient-background);
+            padding: var(--space-3xl) 0;
+            text-align: center;
+        }
+        
+        .booking-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .booking-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--space-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .booking-hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+        
+        .bookings-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .bookings-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .bookings-header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-hover);
+        }
+        
+        .bookings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .bookings-table thead {
+            background: var(--surface-hover);
+        }
+        
+        .bookings-table th {
+            padding: var(--space-lg);
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .bookings-table td {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+        
+        .bookings-table tbody tr {
+            transition: all var(--transition);
+        }
+        
+        .bookings-table tbody tr:hover {
+            background: var(--surface-hover);
+        }
+        
+        .booking-number {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .booking-date {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .booking-time {
+            background: rgba(255, 107, 157, 0.1);
+            color: var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .booking-clinic {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .booking-treatment {
+            background: var(--surface-hover);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            display: inline-block;
+        }
+        
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .delete-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: var(--space-3xl);
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-lg);
+            opacity: 0.5;
+        }
+        
+        .empty-state-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .empty-state-description {
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+        
+        .empty-state-cta {
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all var(--transition);
+        }
+        
+        .empty-state-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        @media (max-width: 768px) {
+            .booking-hero-title {
+                font-size: 2rem;
+            }
+            
+            .bookings-table {
+                font-size: 0.85rem;
+            }
+            
+            .bookings-table th,
+            .bookings-table td {
+                padding: var(--space-md);
+            }
+            
+            .bookings-table th {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .bookings-table thead {
+                display: none;
+            }
+            
+            .bookings-table,
+            .bookings-table tbody,
+            .bookings-table tr,
+            .bookings-table td {
+                display: block;
+            }
+            
+            .bookings-table tr {
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                margin-bottom: var(--space-md);
+                padding: var(--space-md);
+                background: var(--surface);
+            }
+            
+            .bookings-table td {
+                border: none;
+                padding: var(--space-sm) 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .bookings-table td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-primary);
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand" style="display: flex;">
+                <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+                <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        Services
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                        <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                        <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                        <a href="treatment.html" class="dropdown-item">Treatments</a>
+                    </div>
+                </div>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link active">Bookings</a>
+            </div>
+            
+            <!-- Mobile Navigation Toggle -->
+            <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <div class="notification-container">
+                    <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="notification-badge" id="notification-badge">0</span>
+                    </button>
+                    
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="nav-notification-list">
+                            <div class="empty-notifications" id="nav-empty-notifications">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <p>No notifications yet</p>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <button class="profile-btn" aria-label="User profile menu">
+                        <div class="profile-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                        </div>
+                        <span class="profile-name">Guest</span>
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown" role="menu">
+                        <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="bookingList.html" class="dropdown-item active" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Bookings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="Login.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Log In
+                        </a>
+                        <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link">Treatments</a>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link active">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="booking-hero">
+        <div class="booking-hero-content">
+            <h1 class="booking-hero-title">📅 Your Bookings</h1>
+            <p class="booking-hero-description">
+                Manage and track all your upcoming appointments and treatment bookings in one place.
+            </p>
+        </div>
+    </section>
+
+    <!-- Bookings Section -->
+    <section class="bookings-section">
+        <div class="bookings-card">
+            <div class="bookings-header">
+                <h2 class="bookings-title">My Appointments</h2>
+            </div>
+            
+            <div id="bookings-content">
+                <table class="bookings-table" id="booking-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Clinic</th>
+                            <th>Treatment Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Component -->
+    <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="chat-title">SkinCare Support</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="close-chat" class="chat-close" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                    <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-welcome">
+                <p>Hi! How can we help you with your bookings today?</p>
+            </div>
+            <div class="question-list">
+                <button class="question">What's the best skincare routine for oily skin?</button>
+                <button class="question">Do your products contain parabens?</button>
+                <button class="question">Are your products cruelty-free?</button>
+                <button class="question">How long does shipping take?</button>
+                <button class="question">Can I return a product?</button>
+            </div>
+            <div id="chat-response" class="chat-response"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Profile dropdown toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        profileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isOpen = profileDropdown.classList.contains('dropdown-open');
+            if (isOpen) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                profileDropdown.classList.add('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        window.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Chat functionality is now handled by chat.js
+        
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileNavToggle && mobileNavMenu) {
+            mobileNavToggle.addEventListener('click', function() {
+                mobileNavMenu.classList.toggle('show');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('show');
+                }
+            });
+        }
+        
+        // Notification Dropdown Toggle
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationDropdown = document.getElementById('notification-dropdown');
+        
+        if (notificationBtn && notificationDropdown) {
+            notificationBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('show');
+            });
+            
+            // Close notification dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                    notificationDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Booking Table Logic
+        const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+        const tbody = document.querySelector("#booking-table tbody");
+        const bookingsContent = document.getElementById("bookings-content");
+
+        if (bookings.length === 0) {
+            bookingsContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📅</div>
+                    <h3 class="empty-state-title">No bookings found</h3>
+                    <p class="empty-state-description">
+                        You haven't made any appointments yet. Book your first treatment to get started on your skincare journey.
+                    </p>
+                    <a href="clinic.html" class="empty-state-cta">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14" stroke="currentColor" stroke-width="2"/>
+                            <path d="M5 12h14" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Book Appointment
+                    </a>
+                </div>
+            `;
+        } else {
+            bookings.forEach((booking, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td data-label="No." class="booking-number">${index + 1}</td>
+                    <td data-label="Date" class="booking-date">${booking.date}</td>
+                    <td data-label="Time" class="booking-time">${booking.time}</td>
+                    <td data-label="Clinic" class="booking-clinic">${booking.clinic}</td>
+                    <td data-label="Treatment" class="booking-treatment">${booking.treatment}</td>
+                    <td data-label="Action">
+                        <button class="delete-btn" onclick="deleteBooking(${index})">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 6h18" stroke="currentColor" stroke-width="2"/>
+                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" stroke="currentColor" stroke-width="2"/>
+                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function deleteBooking(index) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                bookings.splice(index, 1);
+                localStorage.setItem("bookings", JSON.stringify(bookings));
+                location.reload();
+            }
+        }
+    </script>
+
+    <!-- TypeScript Modules -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script src="chat.js"></script>
+    <script src="auth-manager.js"></script>
+</body>
+</html>

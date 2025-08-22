@@ -1,0 +1,31 @@
+
+    body {
+      background-color: #f5e8d5;
+      font-family: sans-serif;
+      padding: 30px;
+    }
+
+    .detail-card {
+      background: white;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .detail-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .detail-card h2 {
+      margin-bottom: 10px;
+    }
+
+    .detail-card p {
+      line-height: 1.6;
+    }

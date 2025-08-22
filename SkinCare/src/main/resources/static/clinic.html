@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinics - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Clinic specific styles */
+        .clinic-hero {
+            background: var(--gradient-background);
+            padding: var(--space-3xl) 0;
+            text-align: center;
+        }
+        
+        .clinic-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .clinic-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--space-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .clinic-hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+        
+        .search-section {
+            max-width: 800px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .search-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 200px auto;
+            gap: var(--space-lg);
+            align-items: end;
+        }
+        
+        .search-input {
+            height: 56px;
+            padding: 0 var(--space-lg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all var(--transition);
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .search-select {
+            height: 56px;
+            padding: 0 var(--space-lg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            outline: none;
+        }
+        
+        .search-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+        
+        .search-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--space-lg) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: var(--shadow);
+            height: 56px;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .clinics-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .clinics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+        }
+        
+        .clinic-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .clinic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+        
+        .clinic-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+        
+        .clinic-card:hover .clinic-image {
+            transform: scale(1.05);
+        }
+        
+        .clinic-info {
+            padding: var(--space-xl);
+            flex: 1;
+        }
+        
+        .clinic-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+        
+        .clinic-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .clinic-detail strong {
+            color: var(--text-primary);
+            font-weight: 600;
+            min-width: 140px;
+        }
+        
+        .clinic-location {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: rgba(255, 107, 157, 0.1);
+            color: var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .clinic-price {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .clinic-stars {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            margin-top: var(--space-md);
+            font-size: 1.1rem;
+        }
+        
+        .star {
+            color: #fbbf24;
+        }
+        
+        .star.empty {
+            color: var(--border);
+        }
+        
+        @media (max-width: 768px) {
+            .clinic-hero-title {
+                font-size: 2rem;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            
+            .clinics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand" style="display: flex;">
+                <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+                <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        Services
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                        <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                        <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                        <a href="treatment.html" class="dropdown-item">Treatments</a>
+                    </div>
+                </div>
+                <a href="clinic.html" class="nav-link active">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+            
+            <!-- Mobile Navigation Toggle -->
+            <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <div class="notification-container">
+                    <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="notification-badge" id="notification-badge">0</span>
+                    </button>
+                    
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="nav-notification-list">
+                            <div class="empty-notifications" id="nav-empty-notifications">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <p>No notifications yet</p>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <button class="profile-btn" aria-label="User profile menu">
+                        <div class="profile-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                        </div>
+                        <span class="profile-name">Guest</span>
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown" role="menu">
+                        <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Bookings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="Login.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Log In
+                        </a>
+                        <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link">Treatments</a>
+                <a href="clinic.html" class="nav-link active">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="clinic-hero">
+        <div class="clinic-hero-content">
+            <h1 class="clinic-hero-title">🏥 Find Your Perfect Clinic</h1>
+            <p class="clinic-hero-description">
+                Discover top-rated skincare clinics near you with experienced professionals and proven treatments.
+            </p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-card">
+            <div class="search-form">
+                <input type="text" id="search-name" class="search-input" placeholder="Search by clinic name..." />
+                <select id="search-location" class="search-select">
+                    <option value="">All Locations</option>
+                    <option value="Yangon">Yangon</option>
+                    <option value="Mandalay">Mandalay</option>
+                    <option value="Tokyo">Tokyo</option>
+                </select>
+                <button id="search-btn" class="search-btn">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinics Section -->
+    <section class="clinics-section">
+        <div id="clinic-list" class="clinics-grid">
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-minkyi')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. MinKyi</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Yangon
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-shinbhone')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. ShinBhone</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Mandalay
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-syantk')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. S yan tk</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Yangon
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-yannku')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. Yann ku</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Mandalay
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-kutineshaw')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. Ku tine shaw</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Yangon
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinic-card animate-on-scroll" onclick="goToClinicDetails('dr-ec')">
+                <img src="Pics/photo_2025-07-02_23-55-49.jpg" alt="Clinic Image" class="clinic-image" />
+                <div class="clinic-info">
+                    <h2 class="clinic-name">Dr. EC</h2>
+                    <div class="clinic-detail">
+                        <strong>Location:</strong>
+                        <span class="clinic-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Tokyo
+                        </span>
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Popular Treatment:</strong> Acne Removal
+                    </div>
+                    <div class="clinic-detail">
+                        <strong>Price Range:</strong> <span class="clinic-price">$$</span>
+                    </div>
+                    <div class="clinic-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star empty">★</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Component -->
+    <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="chat-title">SkinCare Support</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="close-chat" class="chat-close" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                    <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-welcome">
+                <p>Hi! How can we help you find the perfect clinic today?</p>
+            </div>
+            <div class="question-list">
+                <button class="question">What's the best skincare routine for oily skin?</button>
+                <button class="question">Do your products contain parabens?</button>
+                <button class="question">Are your products cruelty-free?</button>
+                <button class="question">How long does shipping take?</button>
+                <button class="question">Can I return a product?</button>
+            </div>
+            <div id="chat-response" class="chat-response"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileNavToggle && mobileNavMenu) {
+            mobileNavToggle.addEventListener('click', function() {
+                mobileNavMenu.classList.toggle('show');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('show');
+                }
+            });
+        }
+        
+        // Notification Dropdown Toggle
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationDropdown = document.getElementById('notification-dropdown');
+        
+        if (notificationBtn && notificationDropdown) {
+            notificationBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('show');
+            });
+            
+            // Close notification dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                    notificationDropdown.classList.remove('show');
+                }
+            });
+        }
+        
+        // Profile dropdown toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        profileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isOpen = profileDropdown.classList.contains('dropdown-open');
+            if (isOpen) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                profileDropdown.classList.add('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        window.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Chat functionality is now handled by chat.js
+
+        // Search functionality
+        document.getElementById("search-btn").addEventListener("click", () => {
+            const nameInput = document.getElementById("search-name").value.toLowerCase();
+            const locationInput = document.getElementById("search-location").value.toLowerCase();
+
+            const cards = document.querySelectorAll(".clinic-card");
+
+            cards.forEach(card => {
+                const name = card.querySelector(".clinic-name").textContent.toLowerCase();
+
+                // Get the location text
+                let locationText = "";
+                const locationSpan = card.querySelector(".clinic-location");
+                if (locationSpan) {
+                    locationText = locationSpan.textContent.toLowerCase();
+                }
+
+                const matchName = name.includes(nameInput);
+                const matchLocation = locationInput === "" || locationText.includes(locationInput);
+
+                if (matchName && matchLocation) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+        // Clinic navigation function
+        function goToClinicDetails(slug) {
+            window.location.href = `clinic-details.html?clinic=${slug}`;
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Simulate clinic updates (for demonstration)
+        // In a real application, this would be triggered when clinic data is actually updated
+        function simulateClinicUpdate(clinicName, updateType) {
+            // Import the notification utility and trigger notification
+            import('./notifications.js').then(module => {
+                module.triggerClinicUpdateNotification({
+                    clinicName: clinicName,
+                    updateType: updateType,
+                    timestamp: new Date().toISOString()
+                });
+            }).catch(error => {
+                console.log('Notification system not available:', error);
+            });
+        }
+
+        // Example: Simulate clinic updates when clinic cards are clicked
+        // This demonstrates how you would trigger notifications in real scenarios
+        document.querySelectorAll('.clinic-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger notification if not navigating to details
+                if (!e.defaultPrevented) {
+                    const clinicName = this.querySelector('.clinic-name').textContent;
+                    
+                    // Simulate different types of updates randomly
+                    const updateTypes = [
+                        'New Services Available',
+                        'Schedule Updated', 
+                        'Special Promotion',
+                        'Staff Changes',
+                        'Facility Upgrade'
+                    ];
+                    
+                    const randomUpdate = updateTypes[Math.floor(Math.random() * updateTypes.length)];
+                    
+                    // Trigger notification after a short delay to simulate real update
+                    setTimeout(() => {
+                        simulateClinicUpdate(clinicName, randomUpdate);
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+
+    <!-- Chat Module -->
+    <script src="chat.js"></script>
+
+    <!-- TypeScript Modules -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script src="auth-manager.js"></script>
+</body>
+</html>

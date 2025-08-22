@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clinic Details - SkinCare</title>
+  <link rel="stylesheet" href="modern-styles.css">
+  <link rel="stylesheet" href="clinic-details.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Modern Navigation Bar -->
+  <nav class="modern-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="index.html" class="brand-logo">SkinCare</a>
+      </div>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link dropdown-trigger">
+            Services
+            <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+            <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+            <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+            <a href="treatment.html" class="dropdown-item">Treatments</a>
+          </div>
+        </div>
+        <a href="clinic.html" class="nav-link">Clinics</a>
+        <a href="bookingList.html" class="nav-link">Bookings</a>
+      </div>
+      
+      <div class="nav-actions">
+        <div class="profile-container">
+          <button class="profile-btn" aria-label="User profile menu">
+            <div class="profile-avatar">
+              <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+            </div>
+            <span class="profile-name">Guest</span>
+            <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+          <div class="profile-dropdown" role="menu">
+            <a href="myProfile.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              My Profile
+            </a>
+            <a href="bookingList.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              My Bookings
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="Login.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Log In
+            </a>
+            <a href="SignUp.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Back Button -->
+  <div class="back-navigation">
+    <div class="container">
+      <a href="clinic.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Back to Clinics
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="clinic-details-main">
+    <div class="container">
+      <div class="clinic-detail-container" id="clinic-detail-container">
+        <!-- dynamic content goes here -->
+      </div>
+
+      <div class="booking-section">
+        <button class="book-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Book Appointment
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const clinics = {
+      "dr-shinbhone": {
+        name: "Dr. Shin Bhone Wai",
+        location: "Yangon",
+        specialty: "Aesthetic Doctor / Anti-Aging Doctor in Yangon",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: true,
+        about: "An experienced doctor specializing in laser therapy, skin rejuvenation, and anti-aging treatments.",
+        credentials: [
+          "M.B., B.Sc (Ygn)",
+          "Diploma - Aesthetic Medicine (USA)",
+          "M.Sc - Anti-aging and Regenerative Medicine",
+          "International Certificates in Skin Science"
+        ]
+      },
+      "dr-minkyi": {
+        name: "Dr. Min Kyi Sin Thant",
+        location: "Mandalay",
+        specialty: "Skin Care and Acne Specialist",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: false,
+        about: "Focused on acne treatment, scar healing, and basic skin health procedures.",
+        credentials: [
+          "B.Med, Dermatology (Japan)",
+          "M.D. - General Practice",
+          "Certificate in Clinical Cosmetology"
+        ]
+      },
+      "dr-ec": {
+        name: "Dr. Min Thant Tun",
+        location: "Mandalay",
+        specialty: "Skin Care and Acne Specialist",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: false,
+        about: "Focused on acne treatment, scar healing, and basic skin health procedures.",
+        credentials: [
+          "B.Med, Dermatology (Japan)",
+          "M.D. - General Practice",
+          "Certificate in Clinical Cosmetology"
+        ]
+      },
+      "dr-kutineshaw": {
+        name: "Dr. Thet Htar San",
+        location: "Yangon",
+        specialty: "Aesthetic Doctor / Anti-Aging Doctor in Yangon",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: true,
+        about: "An experienced doctor specializing in laser therapy, skin rejuvenation, and anti-aging treatments.",
+        credentials: [
+          "M.B., B.Sc (Ygn)",
+          "Diploma - Aesthetic Medicine (USA)",
+          "M.Sc - Anti-aging and Regenerative Medicine",
+          "International Certificates in Skin Science"
+        ]
+      },
+      "dr-yannku": {
+        name: "Dr. Nway Yadanar Aung",
+        location: "Yangon",
+        specialty: "Aesthetic Doctor / Anti-Aging Doctor in Yangon",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: true,
+        about: "An experienced doctor specializing in laser therapy, skin rejuvenation, and anti-aging treatments.",
+        credentials: [
+          "M.B., B.Sc (Ygn)",
+          "Diploma - Aesthetic Medicine (USA)",
+          "M.Sc - Anti-aging and Regenerative Medicine",
+          "International Certificates in Skin Science"
+        ]
+      },
+      "dr-syantk": {
+        name: "Dr. Htet Eaindray",
+        location: "Yangon",
+        specialty: "Aesthetic Doctor / Anti-Aging Doctor in Yangon",
+        photo: "Pics/photo_2025-07-02_23-55-49.jpg",
+        founder: true,
+        about: "An experienced doctor specializing in laser therapy, skin rejuvenation, and anti-aging treatments.",
+        credentials: [
+          "M.B., B.Sc (Ygn)",
+          "Diploma - Aesthetic Medicine (USA)",
+          "M.Sc - Anti-aging and Regenerative Medicine",
+          "International Certificates in Skin Science"
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const clinicSlug = params.get("clinic");
+    const data = clinics[clinicSlug];
+    const container = document.getElementById("clinic-detail-container");
+
+    if (data) {
+      container.innerHTML = `
+        <div class="clinic-hero-section">
+          <div class="clinic-hero-content">
+            <div class="clinic-image-container">
+              <img src="${data.photo}" alt="${data.name}" class="clinic-hero-image">
+              <div class="clinic-badge ${data.founder ? 'founder-badge' : 'partner-badge'}">
+                ${data.founder ? '⭐ Founder' : '🤝 Partner'}
+              </div>
+            </div>
+            <div class="clinic-hero-info">
+              <h1 class="clinic-hero-title">${data.name}</h1>
+              <p class="clinic-hero-specialty">${data.specialty}</p>
+              <div class="clinic-location-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                ${data.location}
+              </div>
+              <div class="clinic-rating">
+                <div class="stars">
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                </div>
+                <span class="rating-text">5.0 (127 reviews)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clinic-details-grid">
+          <div class="clinic-about-card">
+            <h2 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              About Doctor
+            </h2>
+            <p class="about-text">${data.about}</p>
+          </div>
+
+          <div class="clinic-credentials-card">
+            <h2 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Professional Credentials
+            </h2>
+            <ul class="credentials-list">
+              ${data.credentials.map(item => `
+                <li class="credential-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  ${item}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="clinic-services-card">
+            <h2 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 11H5a2 2 0 0 0-2 2v3c0 1.1.9 2 2 2h4m-4-8V9a2 2 0 0 1 2-2h4m-4 8h10m0 0V9a2 2 0 0 0-2-2h-4m6 8v3c0 1.1-.9 2-2 2h-4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Available Services
+            </h2>
+            <div class="services-grid">
+              <div class="service-item">
+                <span class="service-icon">💉</span>
+                <span class="service-name">Botox Treatment</span>
+              </div>
+              <div class="service-item">
+                <span class="service-icon">✨</span>
+                <span class="service-name">Skin Rejuvenation</span>
+              </div>
+              <div class="service-item">
+                <span class="service-icon">🔬</span>
+                <span class="service-name">Laser Therapy</span>
+              </div>
+              <div class="service-item">
+                <span class="service-icon">🧴</span>
+                <span class="service-name">Chemical Peels</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="not-found-card">
+          <div class="not-found-icon">😔</div>
+          <h2>Clinic Not Found</h2>
+          <p>Sorry, we couldn't find the clinic you're looking for.</p>
+          <a href="clinic.html" class="back-to-clinics-btn">Back to Clinics</a>
+        </div>
+      `;
+    }
+
+    const bookBtn = document.querySelector(".book-btn");
+
+    if (bookBtn && data) {
+      bookBtn.addEventListener("click", () => {
+        const newBooking = {
+          clinic: data.name,
+          date: new Date().toISOString().split("T")[0],
+          time: "14:00",
+          treatment: data.specialty
+        };
+
+        const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+        bookings.push(newBooking);
+        localStorage.setItem("bookings", JSON.stringify(bookings));
+
+        window.location.href = "bookingList.html";
+      });
+    }
+
+    // Profile dropdown functionality
+    const profileBtn = document.querySelector('.profile-btn');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+
+    if (profileBtn && profileDropdown) {
+      profileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = profileDropdown.classList.contains('dropdown-open');
+        
+        if (isOpen) {
+          profileDropdown.classList.remove('dropdown-open');
+          profileBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          profileDropdown.classList.add('dropdown-open');
+          profileBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        profileDropdown.classList.remove('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      // Prevent dropdown from closing when clicking inside it
+      profileDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  </script>
+
+  <script src="auth-manager.js"></script>
+</body>
+</html>
+

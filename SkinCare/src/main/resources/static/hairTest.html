@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Test - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Hair Test specific styles */
+        .hair-hero {
+            background: var(--gradient-background);
+            padding: var(--space-3xl) 0;
+            text-align: center;
+        }
+        
+        .hair-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .hair-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--space-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hair-hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+        
+        .quiz-section {
+            max-width: 800px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .quiz-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+        
+        .quiz-start-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+        
+        .quiz-start-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--space-lg) var(--space-2xl);
+            border-radius: var(--radius-lg);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .quiz-start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .quiz-container {
+            display: none;
+        }
+        
+        .quiz-progress {
+            background: var(--surface-hover);
+            border-radius: var(--radius-full);
+            height: 8px;
+            margin-bottom: var(--space-xl);
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: var(--gradient-primary);
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width var(--transition);
+        }
+        
+        .quiz-question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .quiz-options {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .quiz-btn {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: var(--space-lg) var(--space-2xl);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            min-width: 120px;
+        }
+        
+        .quiz-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .quiz-footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .hair-guide-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .hair-guide-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--text-primary);
+        }
+        
+        .hair-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .hair-type-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        
+        .hair-type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hair-type-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            color: var(--primary);
+        }
+        
+        .hair-type-subtitle {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hair-type-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hair-type-list {
+            margin: var(--space-md) 0;
+            padding-left: var(--space-lg);
+        }
+        
+        .hair-type-list li {
+            margin-bottom: var(--space-sm);
+            color: var(--text-secondary);
+        }
+        
+        .hair-type-list strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .hair-care-tips {
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        
+        .hair-care-tips h4 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+        }
+        
+        .hair-info-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow);
+        }
+        
+        .hair-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+        }
+        
+        .hair-info-card {
+            background: var(--surface-hover);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid var(--border);
+        }
+        
+        .hair-info-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            color: var(--primary);
+        }
+        
+        .hair-info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .hair-info-card li {
+            padding: var(--space-sm) 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .hair-info-card li:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 768px) {
+            .hair-hero-title {
+                font-size: 2rem;
+            }
+            
+            .quiz-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .hair-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-logo">SkinCare</a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger active">
+                        Services
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                        <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                        <a href="hairTest.html" class="dropdown-item active">Hair Test</a>
+                        <a href="treatment.html" class="dropdown-item">Treatments</a>
+                    </div>
+                </div>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="profile-container">
+                    <button class="profile-btn" aria-label="User profile menu">
+                        <div class="profile-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                        </div>
+                        <span class="profile-name">IykNim</span>
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown" role="menu">
+                        <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Bookings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="Login.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Log In
+                        </a>
+                        <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hair-hero">
+        <div class="hair-hero-content">
+            <h1 class="hair-hero-title">💇‍♀️ Hair Type Analysis</h1>
+            <p class="hair-hero-description">
+                Discover your unique hair type and learn the best care routine for healthy, beautiful hair.
+            </p>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+        <div class="quiz-card">
+            <div id="start-screen">
+                <h2 class="quiz-start-title">Take this quiz and determine your hair type!</h2>
+                <button id="start-btn" class="quiz-start-btn">Start the Quiz</button>
+            </div>
+            
+            <div class="quiz-container" id="quiz-container">
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <div class="quiz-question" id="quiz-question">
+                    Your hair is straight at the roots and has very pronounced S-shaped waves further down.
+                </div>
+
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="submitAnswer(true)">Agree</button>
+                    <button class="quiz-btn" onclick="submitAnswer(false)">Disagree</button>
+                </div>
+
+                <div class="quiz-footer">
+                    <span id="question-count">1 of 5</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hair Guide Section -->
+    <section class="hair-guide-section">
+        <h2 class="hair-guide-title">An Overview of Hair Types</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-3xl); font-size: 1.125rem; line-height: 1.7;">
+            There are 4 general hair types: straight (type 1), wavy (type 2), curly (type 3), and coily (type 4). Each is then further divided into subtypes (1A, 1B, and so on) based on the hair's specific pattern, coarseness, and the tightness or looseness of any curls or coils.
+        </p>
+
+        <div class="hair-types-grid">
+            <!-- Type 1: Straight -->
+            <div class="hair-type-card animate-on-scroll">
+                <h3 class="hair-type-title">Type 1</h3>
+                <p class="hair-type-subtitle">Straight</p>
+                <p class="hair-type-description">
+                    Type 1 hair is predominantly straight (and tends to look very sleek and shiny as a result). Because type 1 hair lacks curls and waves, natural oils flow from the scalp to the ends—which ensures that each strand gets enough nutrients but may also cause the hair to get oily faster than other types.
+                </p>
+                <h4><strong>Type 1 hair consists of:</strong></h4>
+                <ul class="hair-type-list">
+                    <li><strong>1A:</strong> Fully straight hair that's fine, wispy, and very sleek.</li>
+                    <li><strong>1B:</strong> Fully straight hair with some volume and thickness.</li>
+                    <li><strong>1C:</strong> Mostly straight hair with occasional bends or waves.</li>
+                </ul>
+                <div class="hair-care-tips">
+                    <h4>To care for type 1 hair:</h4>
+                    <ul class="hair-type-list">
+                        <li>Use a hairbrush with natural bristles so you can carry your scalp's natural oils along each strand.</li>
+                        <li>Use shampoo and hair masks to keep your hair from getting too oily.</li>
+                        <li>Use texturizing spray or dry shampoo before styling your hair, and apply hairspray to lock in styles.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Type 2: Wavy -->
+            <div class="hair-type-card animate-on-scroll">
+                <h3 class="hair-type-title">Type 2</h3>
+                <p class="hair-type-subtitle">Wavy</p>
+                <p class="hair-type-description">
+                    Type 2 hair is wavy—with more waves and bends than type 1 hair but not as much curl as types 3 or 4 (which makes it fall somewhere between straight and curly). Most type 2 hair has S-shaped patterns, with each wave and curl getting more prominent the further it gets from the root.
+                </p>
+                <h4><strong>Type 2 hair consists of:</strong></h4>
+                <ul class="hair-type-list">
+                    <li><strong>2A:</strong> Tousled, loose waves that are less defined and easy to style.</li>
+                    <li><strong>2B:</strong> Pronounced S-shaped waves that curl more as they get further from the scalp.</li>
+                    <li><strong>2C:</strong> Voluminous, well-defined S-shaped waves that are especially prone to frizz.</li>
+                </ul>
+                <div class="hair-care-tips">
+                    <h4>To care for type 2 hair:</h4>
+                    <ul class="hair-type-list">
+                        <li>Squeeze-dry your hair with a soft t-shirt or hair towel (instead of rubbing it).</li>
+                        <li>Use a moisturizing, anti-frizz shampoo or leave-in treatment.</li>
+                        <li>Avoid touching your hair to prevent frizzing.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Type 3: Curly -->
+            <div class="hair-type-card animate-on-scroll">
+                <h3 class="hair-type-title">Type 3</h3>
+                <p class="hair-type-subtitle">Curly</p>
+                <p class="hair-type-description">
+                    Type 3 hair features curls with more volume and body than types 1 or 2. Strands are mostly curled, although some might be S-shaped. Type 3 hair has plenty of natural definition and some sheen; it usually lies flat when wet and curls up as it dries.
+                </p>
+                <h4><strong>Type 3 hair consists of:</strong></h4>
+                <ul class="hair-type-list">
+                    <li><strong>3A:</strong> Loose, bouncy curls roughly the size of sidewalk chalk.</li>
+                    <li><strong>3B:</strong> Tight, dense ringlets roughly as wide as a marker.</li>
+                    <li><strong>3C:</strong> Dense, voluminous corkscrew curls around the size of a pencil.</li>
+                </ul>
+                <div class="hair-care-tips">
+                    <h4>To care for type 3 hair:</h4>
+                    <ul class="hair-type-list">
+                        <li>Try not to heat-style your hair too often since it can damage your curls.</li>
+                        <li>Consider using heatless styles, or protective styles like buns and twist-outs to protect your hair.</li>
+                        <li>Use plenty of anti-frizz and moisturizing products in your daily haircare routine.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Type 4: Coily -->
+            <div class="hair-type-card animate-on-scroll">
+                <h3 class="hair-type-title">Type 4</h3>
+                <p class="hair-type-subtitle">Coily</p>
+                <p class="hair-type-description">
+                    Coily hair features the tightest curls of all hair types. It's heavily textured (e.g., tight coils, zig-zag patterns, etc.) and super dense, with lots of versatility in terms of styling! However, it needs lots of moisture to maintain, and it tangles easily because each strand of hair has so much texture.
+                </p>
+                <h4><strong>Type 4 hair consists of:</strong></h4>
+                <ul class="hair-type-list">
+                    <li><strong>4A:</strong> Defined S-shaped coils roughly the size of a chopstick.</li>
+                    <li><strong>4B:</strong> Tight, Z-shaped coils with less definition than 4A hair.</li>
+                    <li><strong>4C:</strong> Sharp, extremely small Z-shaped strands with the least definition.</li>
+                </ul>
+                <div class="hair-care-tips">
+                    <h4>To care for type 4 hair:</h4>
+                    <ul class="hair-type-list">
+                        <li>Moisturize your hair often to keep it from getting dry.</li>
+                        <li>Consider using twists or braids to keep your hair out of your face.</li>
+                        <li>Try a protective style like crochet braids or box braids, especially for 4B or 4C.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hair Info Section -->
+        <div class="hair-info-section">
+            <div class="hair-info-grid">
+                <div class="hair-info-card">
+                    <h3>Types</h3>
+                    <ul>
+                        <li>Straight</li>
+                        <li>Wavy</li>
+                        <li>Curly</li>
+                        <li>Coiled</li>
+                    </ul>
+                </div>
+
+                <div class="hair-info-card">
+                    <h3>Texture</h3>
+                    <ul>
+                        <li>Fine</li>
+                        <li>Medium</li>
+                        <li>Thick</li>
+                    </ul>
+                </div>
+
+                <div class="hair-info-card">
+                    <h3>Four Different Hair Types</h3>
+                    <p><strong>Type 1 (Straight):</strong></p>
+                    <ul>
+                        <li>1a – Very straight and fine</li>
+                        <li>1b – Straight with a little body</li>
+                        <li>1c – Straight but coarse and thick</li>
+                    </ul>
+                </div>
+
+                <div class="hair-info-card">
+                    <h3>Difference Between Textures</h3>
+                    <p>Fine hair is thinner in diameter, feels silky and can be fragile. Medium hair has more volume, while thick hair has a larger diameter and can be heavier or frizzier.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Component -->
+    <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="chat-title">SkinCare Support</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="close-chat" class="chat-close" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                    <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-welcome">
+                <p>Hi! How can we help you with hair care today?</p>
+            </div>
+            <div class="question-list">
+                <button class="question">What's the best skincare routine for oily skin?</button>
+                <button class="question">Do your products contain parabens?</button>
+                <button class="question">Are your products cruelty-free?</button>
+                <button class="question">How long does shipping take?</button>
+                <button class="question">Can I return a product?</button>
+            </div>
+            <div id="chat-response" class="chat-response"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Profile dropdown toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        profileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isOpen = profileDropdown.classList.contains('dropdown-open');
+            if (isOpen) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                profileDropdown.classList.add('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        window.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Chat functionality
+        const chatIconEl = document.querySelector('.chatbox-icon');
+        const chatBoxEl = document.getElementById('chatbox');
+        const closeChatEl = document.getElementById('close-chat');
+        const chatResponseEl = document.getElementById('chat-response');
+
+        chatIconEl.addEventListener('click', () => {
+            chatBoxEl.classList.remove('hidden');
+        });
+        
+        closeChatEl.addEventListener('click', () => {
+            chatBoxEl.classList.add('hidden');
+        });
+
+        const chatResponses = {
+            "What's the best skincare routine for oily skin?": "Cleanse twice daily, use an oil-free moisturizer, and don't skip sunscreen!",
+            "Do your products contain parabens?": 'Nope! All our products are 100% paraben-free.',
+            'Are your products cruelty-free?': 'Absolutely! We never test on animals.',
+            'How long does shipping take?': 'Shipping usually takes 3–5 business days within the country.',
+            'Can I return a product?': 'Yes! We have a 15-day return policy for unopened products.'
+        };
+
+        document.querySelectorAll('.question').forEach((qBtn) => {
+            qBtn.addEventListener('click', () => {
+                const userQuestion = qBtn.textContent.trim();
+                const answer = chatResponses[userQuestion] || 'Let me get back to you on that!';
+                chatResponseEl.innerHTML = `
+                    <div class="chat-message bot-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">${answer}</div>
+                    </div>
+                `;
+            });
+        });
+
+        // Hair Quiz Logic
+        const questions = [
+            "Your hair is thin, straight, wispy, and doesn't hold curls at all.",
+            "Your hair is straight but has volume, and you can sometimes curl it.",
+            "Your hair is mainly straight, with a few waves here and there.",
+            "Your hair is wavy and beachy with loose, S-shaped curls.",
+            "Your hair is straight at the roots and has very pronounced S-shaped waves further down.",
+            "Your hair is prone to frizz and extremely wavy—even a bit curly at times.",
+            "Your hair has big, bouncy curls roughly the size of sidewalk chalk.",
+            "Your hair has tight ringlets the size of a marker—and lots of volume.",
+            "Your hair has springy, corkscrew curls the size of a pencil.",
+            "Your hair has well-defined S-shaped coils the size of a chopstick.",
+            "Your hair has tight, Z-shaped strands and coils that form a zig-zag pattern.",
+            "Your hair has very sharp Z-shaped coils so tiny they don't look like curls from a distance.",
+            "You have fine, delicate hair (as opposed to medium or coarse hair).",
+            "You have medium hair that isn't super coarse or fine.",
+            "You have thick, coarse hair (as opposed to medium or fine)."
+        ];
+
+        let currentQuestion = 0;
+
+        function startQuiz() {
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+            updateQuiz();
+        }
+
+        function updateQuiz() {
+            document.getElementById("quiz-question").textContent = questions[currentQuestion];
+            document.getElementById("question-count").textContent = `${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById("progress-bar").style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+        }
+
+        function submitAnswer(agreed) {
+            console.log("Answer for question", currentQuestion + 1, ":", agreed ? "Agree" : "Disagree");
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                updateQuiz();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = `
+                    <div style="text-align: center; padding: var(--space-xl);">
+                        <h3 style="color: var(--primary); margin-bottom: var(--space-lg);">Thank you!</h3>
+                        <p style="color: var(--text-secondary);">Your answers have been recorded. We'll analyze your hair type and provide personalized recommendations.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Hook up the Start button
+        document.getElementById("start-btn").addEventListener("click", startQuiz);
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- TypeScript Modules -->
+    <script type="module" src="app.js"></script>
+    <script src="auth-manager.js"></script>
+</body>
+</html>

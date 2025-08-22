@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Analysis - SkinCare</title>
+  <link rel="stylesheet" href="modern-styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Color Analysis specific styles */
+    .color-hero {
+      background: var(--gradient-background);
+      padding: var(--space-3xl) 0;
+      transition: background-color 300ms ease-out;
+    }
+    
+    .color-hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+    
+    .color-hero-text {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-3xl);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .color-hero-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .color-hero-description {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .color-wheel-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-3xl);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .color-wheel-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+    }
+    
+    .color-picker-container {
+      margin-bottom: var(--space-xl);
+    }
+    
+    #colorPicker {
+      width: 80px;
+      height: 80px;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition);
+    }
+    
+    #colorPicker:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .color-picker-label {
+      display: block;
+      margin-top: var(--space-md);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .color-tools {
+      margin-top: var(--space-xl);
+    }
+    
+    .color-tools-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+    }
+    
+    .color-controls {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+    }
+    
+    .color-select {
+      padding: var(--space-md) var(--space-lg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      color: var(--text-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    
+    .color-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+      outline: none;
+    }
+    
+    .generate-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: var(--space-md) var(--space-xl);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--shadow);
+    }
+    
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .result-colors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    
+    .color-swatch {
+      height: 80px;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+    
+    .color-swatch:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .themes-section {
+      max-width: 1200px;
+      margin: var(--space-3xl) auto;
+      padding: 0 var(--space-lg);
+    }
+    
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-xl);
+    }
+    
+    .theme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    
+    .theme-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .theme-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      height: 200px;
+    }
+    
+    .theme-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .theme-content {
+      padding: var(--space-xl);
+    }
+    
+    .theme-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+    
+    .theme-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .color-theory-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      margin: var(--space-3xl) auto;
+      max-width: 1200px;
+      padding: var(--space-3xl);
+      box-shadow: var(--shadow);
+    }
+    
+    .color-theory-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: var(--space-xl);
+      color: var(--text-primary);
+      text-align: center;
+    }
+    
+    .color-theory-content {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    
+    .color-theory-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: var(--space-xl) 0 var(--space-md);
+      color: var(--text-primary);
+    }
+    
+    .color-theory-content ul {
+      margin: var(--space-md) 0;
+      padding-left: var(--space-xl);
+    }
+    
+    .color-theory-content li {
+      margin-bottom: var(--space-sm);
+    }
+    
+    .color-theory-content strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .callout {
+      background: rgba(255, 107, 157, 0.1);
+      border: 1px solid rgba(255, 107, 157, 0.2);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      color: var(--text-primary);
+    }
+    
+    @media (max-width: 768px) {
+      .color-hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+      
+      .color-hero-title {
+        font-size: 2rem;
+      }
+      
+      .color-controls {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+      
+      .result-colors {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      }
+      
+      .color-swatch {
+        height: 60px;
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Modern Navigation Bar -->
+  <nav class="modern-nav">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <a href="index.html" class="brand-logo">SkinCare</a>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger active">
+                    Services
+                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </a>
+                <div class="nav-dropdown-menu">
+                    <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                    <a href="colorAnalysis.html" class="dropdown-item active">Color Analysis</a>
+                    <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                    <a href="treatment.html" class="dropdown-item">Treatments</a>
+                </div>
+            </div>
+            <a href="clinic.html" class="nav-link">Clinics</a>
+            <a href="bookingList.html" class="nav-link">Bookings</a>
+        </div>
+        
+        <div class="nav-actions">
+            <div class="profile-container">
+                <button class="profile-btn" aria-label="User profile menu">
+                    <div class="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                    </div>
+                    <span class="profile-name">IykNim</span>
+                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <div class="profile-dropdown" role="menu">
+                    <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        My Profile
+                    </a>
+                    <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        My Bookings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="Login.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                            <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Log In
+                    </a>
+                    <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                            <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="colorHero" class="color-hero">
+    <div class="color-hero-content">
+      <div class="color-hero-text">
+        <h1 class="color-hero-title">🎨 Color Palette</h1>
+        <p class="color-hero-description">
+          Want to know what colors look good together?<br />
+          Try out our interactive color tool to personalize your palette!
+        </p>
+      </div>
+
+      <div class="color-wheel-section">
+        <h2 class="color-wheel-title">Try the Color Palette</h2>
+        <div class="color-picker-container">
+          <input type="color" id="colorPicker" value="#f4b26d" />
+          <span class="color-picker-label">Pick a color to change this section~</span>
+        </div>
+
+        <div class="color-tools">
+          <h3 class="color-tools-title">🎨 Generate Color Combinations</h3>
+          <div class="color-controls">
+            <select id="schemeType" class="color-select">
+              <option value="mono">Monochromatic</option>
+              <option value="comp">Complementary</option>
+              <option value="analog">Analogous</option>
+              <option value="triad">Triadic</option>
+            </select>
+            <button class="generate-btn" id="generate" type="button">Generate</button>
+          </div>
+          <div class="result-colors" id="resultColors"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Themes Section -->
+  <section class="themes-section">
+    <div class="themes-grid">
+      <div class="theme-card animate-on-scroll">
+        <div class="theme-images">
+          <img src="Pics/summer.jpg" alt="Soft Summer Cool" />
+          <img src="Pics/summer.jpg" alt="Soft Summer Light" />
+        </div>
+        <div class="theme-content">
+          <h2 class="theme-title">Soft Summer</h2>
+          <p class="theme-description">Soft Summers have cool undertones and suit muted, pastel, or smoky colors.</p>
+        </div>
+      </div>
+
+      <div class="theme-card animate-on-scroll">
+        <div class="theme-images">
+          <img src="Pics/winterjpg.jpg" alt="Cool Winter 1" />
+          <img src="Pics/winterjpg.jpg" alt="Cool Winter 2" />
+        </div>
+        <div class="theme-content">
+          <h2 class="theme-title">Cool Winter</h2>
+          <p class="theme-description">Cool Winters shine in icy, deep, and jewel tones like sapphire, black, and fuchsia.</p>
+        </div>
+      </div>
+
+      <div class="theme-card animate-on-scroll">
+        <div class="theme-images">
+          <img src="Pics/autumn.jpg" alt="Warm Autumn 1" />
+          <img src="Pics/autumn.jpg" alt="Warm Autumn 2" />
+        </div>
+        <div class="theme-content">
+          <h2 class="theme-title">Warm Autumn</h2>
+          <p class="theme-description">Warm Autumns glow in earthy, golden tones like olive, rust, and camel.</p>
+        </div>
+      </div>
+
+      <div class="theme-card animate-on-scroll">
+        <div class="theme-images">
+          <img src="Pics/spring.jpg" alt="Light Spring 1" />
+          <img src="Pics/spring.jpg" alt="Light Spring 2" />
+        </div>
+        <div class="theme-content">
+          <h2 class="theme-title">Light Spring</h2>
+          <p class="theme-description">Light Springs shine in bright, light colors such as peach, coral, and mint.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Theory Section -->
+  <section class="color-theory-section">
+    <h2 class="color-theory-title">Color Theory 101: Picking Palettes That Love Your Skin</h2>
+    <div class="color-theory-content">
+      <p>Use the generator above to explore harmonies, then apply these guidelines to build palettes that look cohesive in UI and flattering in photos or outfits.</p>
+
+      <h3>1) Harmony types at a glance</h3>
+      <ul>
+        <li><strong>Monochromatic:</strong> Same hue, different lightness/saturation. Clean and minimal; great for backgrounds, buttons, and shadows.</li>
+        <li><strong>Complementary:</strong> Opposites on the wheel. High contrast; use one as the hero and the other as an accent to avoid visual noise.</li>
+        <li><strong>Analogous:</strong> Neighbors on the wheel. Soft and blended; perfect for gradients and section backgrounds.</li>
+        <li><strong>Triadic:</strong> Three evenly spaced hues. Balanced but lively; keep two muted and one vivid for focus.</li>
+      </ul>
+
+      <h3>2) Contrast & accessibility</h3>
+      <p>For text on colored backgrounds, aim for sufficient contrast. A practical rule: if you lighten a color for a background, darken the text (or use near-black); if you darken the background, use near-white text.</p>
+      <div class="callout"><strong>Tip:</strong> Keep semantic roles clear—one brand color for actions, a calmer neutral for surfaces, and a vivid accent sparingly.</div>
+
+      <h3>3) Undertone & temperature</h3>
+      <p>Colors lean <em>warm</em> (reds/oranges/yellows) or <em>cool</em> (blues/greens/violets). When in doubt, keep temperatures consistent and let contrast come from light vs. dark rather than warm vs. cool.</p>
+
+      <h3>4) Building a small, versatile system</h3>
+      <ul>
+        <li><strong>Primary:</strong> The main brand or highlight color.</li>
+        <li><strong>Neutral scale:</strong> 4–6 steps from background to text.</li>
+        <li><strong>Accent:</strong> One pop color for emphasis (alerts, badges).</li>
+        <li><strong>State tints:</strong> Success, warning, danger—muted so they don't overpower content.</li>
+      </ul>
+
+      <h3>5) Real-world workflow</h3>
+      <ul>
+        <li>Pick a base color (your picker).</li>
+        <li>Generate a scheme (analogous/triadic for breadth, mono for depth).</li>
+        <li>Nudge saturation/lightness to get accessible pairs for text and UI states.</li>
+        <li>Test on both light and dark surfaces; export tokens as HEX/HSL.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Chat Component -->
+  <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+    <div class="chat-header" id="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="chat-title">SkinCare Support</span>
+          <span class="chat-status">Online</span>
+        </div>
+      </div>
+      <button id="close-chat" class="chat-close" aria-label="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+          <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-welcome">
+        <p>Hi! How can we help you with color analysis today?</p>
+      </div>
+      <div class="question-list">
+        <button class="question">What's the best skincare routine for oily skin?</button>
+        <button class="question">Do your products contain parabens?</button>
+        <button class="question">Are your products cruelty-free?</button>
+        <button class="question">How long does shipping take?</button>
+        <button class="question">Can I return a product?</button>
+      </div>
+      <div id="chat-response" class="chat-response"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Profile dropdown toggle
+    const profileBtn = document.querySelector('.profile-btn');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    
+    profileBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const isOpen = profileDropdown.classList.contains('dropdown-open');
+      if (isOpen) {
+        profileDropdown.classList.remove('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        profileDropdown.classList.add('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    
+    window.addEventListener('click', function (e) {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Chat module logic
+    const chatIconEl = document.querySelector('.chatbox-icon');
+    const chatBoxEl = document.getElementById('chatbox');
+    const closeChatEl = document.getElementById('close-chat');
+    const chatResponseEl = document.getElementById('chat-response');
+
+    chatIconEl.addEventListener('click', () => {
+      chatBoxEl.classList.remove('hidden');
+    });
+    
+    closeChatEl.addEventListener('click', () => {
+      chatBoxEl.classList.add('hidden');
+    });
+
+    const chatResponses = {
+      "What's the best skincare routine for oily skin?": "Cleanse twice daily, use an oil-free moisturizer, and don't skip sunscreen!",
+      "Do your products contain parabens?": 'Nope! All our products are 100% paraben-free.',
+      'Are your products cruelty-free?': 'Absolutely! We never test on animals.',
+      'How long does shipping take?': 'Shipping usually takes 3–5 business days within the country.',
+      'Can I return a product?': 'Yes! We have a 15-day return policy for unopened products.'
+    };
+
+    document.querySelectorAll('.question').forEach((qBtn) => {
+      qBtn.addEventListener('click', () => {
+        const userQuestion = qBtn.textContent.trim();
+        const answer = chatResponses[userQuestion] || 'Let me get back to you on that!';
+        chatResponseEl.innerHTML = `
+          <div class="chat-message bot-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">${answer}</div>
+          </div>
+        `;
+      });
+    });
+
+    // Hero color change functionality
+    window.addEventListener('load', () => {
+      const colorPicker = document.getElementById('colorPicker');
+      const hero = document.getElementById('colorHero');
+      
+      colorPicker.addEventListener('input', (e) => {
+        const pickedColor = e.target.value;
+        hero.style.backgroundColor = pickedColor + '33'; // Add transparency
+      });
+    });
+
+    // Color scheme generator
+    function hexToHSL(H) {
+      let r = 0, g = 0, b = 0;
+      if (H.length === 4) {
+        r = parseInt(H[1] + H[1], 16);
+        g = parseInt(H[2] + H[2], 16);
+        b = parseInt(H[3] + H[3], 16);
+      } else {
+        r = parseInt(H[1] + H[2], 16);
+        g = parseInt(H[3] + H[4], 16);
+        b = parseInt(H[5] + H[6], 16);
+      }
+      r /= 255; g /= 255; b /= 255;
+      
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return [h * 360, s * 100, l * 100];
+    }
+
+    function HSLToHex(h, s, l) {
+      l /= 100;
+      const a = s * Math.min(l, 1 - l) / 100;
+      const f = n => {
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0');
+      };
+      return `#${f(0)}${f(8)}${f(4)}`;
+    }
+
+    function generateColorScheme(baseColor, type) {
+      const [h, s, l] = hexToHSL(baseColor);
+      const colors = [];
+
+      switch (type) {
+        case 'mono':
+          for (let i = 0; i < 5; i++) {
+            const newL = Math.max(10, Math.min(90, l + (i - 2) * 15));
+            colors.push(HSLToHex(h, s, newL));
+          }
+          break;
+        case 'comp':
+          colors.push(baseColor);
+          colors.push(HSLToHex((h + 180) % 360, s, l));
+          colors.push(HSLToHex(h, s * 0.7, l * 1.2));
+          colors.push(HSLToHex((h + 180) % 360, s * 0.7, l * 1.2));
+          break;
+        case 'analog':
+          for (let i = -2; i <= 2; i++) {
+            colors.push(HSLToHex((h + i * 30) % 360, s, l));
+          }
+          break;
+        case 'triad':
+          colors.push(baseColor);
+          colors.push(HSLToHex((h + 120) % 360, s, l));
+          colors.push(HSLToHex((h + 240) % 360, s, l));
+          break;
+      }
+      return colors;
+    }
+
+    document.getElementById('generate').addEventListener('click', () => {
+      const baseColor = document.getElementById('colorPicker').value;
+      const schemeType = document.getElementById('schemeType').value;
+      const colors = generateColorScheme(baseColor, schemeType);
+      
+      const resultContainer = document.getElementById('resultColors');
+      resultContainer.innerHTML = '';
+      
+      colors.forEach(color => {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+        swatch.style.backgroundColor = color;
+        swatch.textContent = color.toUpperCase();
+        swatch.addEventListener('click', () => {
+          navigator.clipboard.writeText(color);
+          swatch.textContent = 'Copied!';
+          setTimeout(() => {
+            swatch.textContent = color.toUpperCase();
+          }, 1000);
+        });
+        resultContainer.appendChild(swatch);
+      });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+  <!-- TypeScript Modules -->
+  <script type="module" src="app.js"></script>
+  <script src="auth-manager.js"></script>
+</body>
+</html>

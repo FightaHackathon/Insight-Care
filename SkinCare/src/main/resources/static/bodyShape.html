@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Shape Analysis - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Body Shape specific styles */
+        .body-hero {
+            background: var(--gradient-background);
+            padding: var(--space-3xl) 0;
+            text-align: center;
+        }
+        
+        .body-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .body-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--space-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .body-hero-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+        
+        .calculator-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: start;
+        }
+        
+        .calculator-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .calculator-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        
+        .form-input {
+            height: 56px;
+            padding: 0 var(--space-lg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all var(--transition);
+            outline: none;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .calculate-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--space-lg) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .result-message {
+            margin-top: var(--space-lg);
+            padding: var(--space-lg);
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            display: none;
+        }
+        
+        .result-message.show {
+            display: block;
+            animation: slideInUp 0.3s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .instructions-card {
+            background: var(--surface-hover);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        
+        .instructions-title {
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .instructions-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        .body-shapes-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .body-shapes-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+        
+        .body-shapes-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3xl);
+            font-size: 1.125rem;
+        }
+        
+        .body-shapes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .shape-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        
+        .shape-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .shape-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--surface-hover);
+        }
+        
+        .shape-content {
+            padding: var(--space-xl);
+        }
+        
+        .shape-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            color: var(--primary);
+        }
+        
+        .shape-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .info-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow);
+        }
+        
+        .info-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+        
+        .info-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .shape-formulas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .formula-item {
+            background: var(--surface-hover);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid var(--border);
+        }
+        
+        .formula-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .formula-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+        }
+        
+        @media (max-width: 768px) {
+            .body-hero-title {
+                font-size: 2rem;
+            }
+            
+            .calculator-section {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+            
+            .body-shapes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .shape-formulas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand" style="display: flex;">
+                <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+                <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger active">
+                        Services
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="bodyShape.html" class="dropdown-item active">Body Shape Analysis</a>
+                        <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                        <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                        <a href="treatment.html" class="dropdown-item">Treatments</a>
+                    </div>
+                </div>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+            
+            <!-- Mobile Navigation Toggle -->
+            <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <div class="notification-container">
+                    <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="notification-badge" id="notification-badge">0</span>
+                    </button>
+                    
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="nav-notification-list">
+                            <div class="empty-notifications" id="nav-empty-notifications">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <p>No notifications yet</p>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <button class="profile-btn" aria-label="User profile menu">
+                        <div class="profile-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                        </div>
+                        <span class="profile-name">Guest</span>
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown" role="menu">
+                        <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Bookings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="Login.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Log In
+                        </a>
+                        <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bodyShape.html" class="nav-link active">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link">Treatments</a>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="body-hero">
+        <div class="body-hero-content">
+            <h1 class="body-hero-title">📏 Body Shape Calculator</h1>
+            <p class="body-hero-description">
+                The Body Type Calculator is designed for females to find their "body shape," which can be used for getting targeted outfit ideas. Even though there is some research linking certain body shapes with some health risks, the body shape result of this calculator is not intended to be a serious indication of health or an ideal that must be met.
+            </p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="calculator-card">
+            <h2 class="calculator-title">Calculate Your Body Shape</h2>
+            <form class="calculator-form" id="body-calculator">
+                <input type="number" class="form-input" placeholder="Bust Size (cm)" required />
+                <input type="number" class="form-input" placeholder="Waist Size (cm)" required />
+                <input type="number" class="form-input" placeholder="High Hip Size (cm)" required />
+                <input type="number" class="form-input" placeholder="Hip Size (cm)" required />
+                <button type="submit" class="calculate-btn">Calculate Body Shape</button>
+                <div id="result-message" class="result-message"></div>
+            </form>
+        </div>
+
+        <div class="calculator-card">
+            <div class="instructions-card">
+                <h3 class="instructions-title">Measurement Instructions</h3>
+                <p class="instructions-text">
+                    <strong>When measuring, be sure to stand straight with arms to the side. Make sure the tape is snug against the body, but not too tight such that it compresses the body.</strong><br><br>
+                    <strong>Bust Size</strong> - the circumference measured around the chest over the fullest part of the breasts, while wearing a properly fitted bra.<br><br>
+                    <strong>Waist Size</strong> - the smallest circumference measured around the natural waist, just above the belly button.<br><br>
+                    <strong>High Hip Size</strong> - the circumference of the upper swell of the hip over the pelvic region. It is around 7 inches (18 cm) below the natural waist.<br><br>
+                    <strong>Hip Size</strong> - the largest circumference measured around the hips over the largest part of the buttocks.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Body Shapes Section -->
+    <section class="body-shapes-section">
+        <h2 class="body-shapes-title">Determine Your Body Shape</h2>
+        <p class="body-shapes-subtitle">In the fashion industry, body shapes are often categorized into four classes.</p>
+        
+        <div class="body-shapes-grid">
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/hourglass.jpg" alt="Hourglass">
+                <div class="shape-content">
+                    <h3 class="shape-title">Hourglass</h3>
+                    <p class="shape-description">This body shape describes a person with hip and bust measurements nearly equal in size, with a narrower waist measurement.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/rectangle.jpg" alt="Rectangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Rectangle</h3>
+                    <p class="shape-description">This body shape describes a person who typically has waist measurements that are less than 9 inches smaller than the hip or bust measurements.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/invertedTri.jpg" alt="Inverted Triangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Inverted Triangle</h3>
+                    <p class="shape-description">This body shape describes a person who has broader shoulders and bust than they do hips.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/pear.jpg" alt="Pear">
+                <div class="shape-content">
+                    <h3 class="shape-title">Pear</h3>
+                    <p class="shape-description">This body shape describes a person who has hip measurements greater than their bust measurements.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <h2 class="info-title">What is my body shape?</h2>
+            <p class="info-description">
+                The female body shapes are based on societal standards that are subjective and are different in different cultures. The algorithm used in this calculator is based on a study published in the International Journal of Clothing Science and Technology, which breaks down the body shapes of women into 7 categories. There are very wide ranges of actual sizes within each shape. Also, some body shapes may not fit into any of the shapes listed below.
+            </p>
+            
+            <div class="shape-formulas">
+                <div class="formula-item">
+                    <h4 class="formula-title">Hourglass</h4>
+                    <p class="formula-text">If (bust - hips) ≤ 1" AND (hips - bust) < 3.6" AND (bust - waist) ≥ 9" OR (hips - waist) ≥ 10"</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Bottom hourglass</h4>
+                    <p class="formula-text">If (hips - bust) ≥ 3.6" AND (hips - bust) < 10" AND (hips - waist) ≥ 9" AND (high hip/waist) < 1.193</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Top hourglass</h4>
+                    <p class="formula-text">If (bust - hips) > 1" AND (bust - hips) < 10" AND (bust - waist) ≥ 9"</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Spoon</h4>
+                    <p class="formula-text">If (hips - bust) > 2" AND (hips - waist) ≥ 7" AND (high hip/waist) ≥ 1.193</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Triangle</h4>
+                    <p class="formula-text">If (hips - bust) ≥ 3.6" AND (hips - waist) < 9"</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Inverted triangle</h4>
+                    <p class="formula-text">If (bust - hips) ≥ 3.6" AND (bust - waist) < 9"</p>
+                </div>
+                
+                <div class="formula-item">
+                    <h4 class="formula-title">Rectangle</h4>
+                    <p class="formula-text">If (hips - bust) < 3.6" AND (bust - hips) < 3.6" AND (bust - waist) < 9" AND (hips - waist) < 10"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Component -->
+    <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="chat-title">SkinCare Support</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="close-chat" class="chat-close" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                    <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-welcome">
+                <p>Hi! How can we help you with body shape analysis today?</p>
+            </div>
+            <div class="question-list">
+                <button class="question">What's the best skincare routine for oily skin?</button>
+                <button class="question">Do your products contain parabens?</button>
+                <button class="question">Are your products cruelty-free?</button>
+                <button class="question">How long does shipping take?</button>
+                <button class="question">Can I return a product?</button>
+            </div>
+            <div id="chat-response" class="chat-response"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Profile dropdown toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        profileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isOpen = profileDropdown.classList.contains('dropdown-open');
+            if (isOpen) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                profileDropdown.classList.add('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        window.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Chat functionality is now handled by chat.js
+
+        // Body shape calculator
+        document.getElementById('body-calculator').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const inputs = document.querySelectorAll('.form-input');
+            const bust = parseFloat(inputs[0].value);
+            const waist = parseFloat(inputs[1].value);
+            const highHip = parseFloat(inputs[2].value); 
+            const hip = parseFloat(inputs[3].value);
+
+            let result = "";
+
+            // Body shape logic
+            if (Math.abs(bust - hip) <= 5 && waist < bust && waist < hip) {
+                result = "Hourglass";
+            } else if (bust > hip + 5) {
+                result = "Inverted Triangle";
+            } else if (hip > bust + 5) {
+                result = "Pear";
+            } else if (waist >= bust * 0.75) {
+                result = "Apple";
+            } else {
+                result = "Rectangle";
+            }
+
+            const resultElement = document.getElementById("result-message");
+            resultElement.textContent = "Your body shape is: " + result + "!";
+            resultElement.classList.add('show');
+        });
+
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileNavToggle && mobileNavMenu) {
+            mobileNavToggle.addEventListener('click', function() {
+                mobileNavMenu.classList.toggle('show');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('show');
+                }
+            });
+        }
+        
+        // Notification Dropdown Toggle
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationDropdown = document.getElementById('notification-dropdown');
+        
+        if (notificationBtn && notificationDropdown) {
+            notificationBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('show');
+            });
+            
+            // Close notification dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                    notificationDropdown.classList.remove('show');
+                }
+            });
+        }
+        
+        // Profile Dropdown Toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isOpen = profileDropdown.classList.contains('dropdown-open');
+                if (isOpen) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    profileDropdown.classList.add('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+            
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Chat Module -->
+    <script src="chat.js"></script>
+
+    <!-- TypeScript Modules -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script src="auth-manager.js"></script>
+</body>
+</html>
