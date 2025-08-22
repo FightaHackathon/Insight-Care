@@ -31,6 +31,8 @@
                     <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
                     <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
                     <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                    <a href="skin.html" class="dropdown-item">Skin Test</a>
+                    <a href="skinTone.html" class="dropdown-item">Skin Tone Test</a>
                     <a href="treatment.html" class="dropdown-item">Treatments</a>
                 </div>
             </div>
@@ -81,8 +83,8 @@
             
             <div class="profile-container">
                 <button class="profile-btn active" aria-label="User profile menu">
-                    <div class="profile-avatar default-avatar">
-                        <img alt="Profile" style="display: none;" />
+                    <div class="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
                     </div>
                     <span class="profile-name">Guest</span>
                 </button>
@@ -120,11 +122,11 @@
       </div>
       
       <div class="profile-info">
-        <div class="profile-avatar-large default-avatar">
-          <img alt="Profile Picture" id="profile-avatar-img" style="display: none;" />
+        <div class="profile-avatar-large">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=120&h=120&fit=crop&crop=face" alt="Sarah Johnson" id="profile-avatar-img" />
           <div class="avatar-status online"></div>
           <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
-          <button class="avatar-change-btn" id="avatar-change-btn" title="Change profile picture">
+          <button class="avatar-change-btn" id="avatar-change-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
               <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
@@ -133,14 +135,14 @@
         </div>
         
         <div class="profile-details">
-          <h1 class="profile-name" id="profile-display-name">Guest</h1>
-          <p class="profile-title" id="profile-email"></p>
+          <h1 class="profile-name">Guest</h1>
+          <p class="profile-title"></p>
           <div class="profile-stats">
             <div class="stat-item">
               <span class="stat-number">127</span>
               <span class="stat-label">Clinic Expats</span>
             </div>
-            <div class="stat-item">
+              <div class="stat-item">
               <span class="stat-number">67</span>
               <span class="stat-label">Past relationships</span>
             </div>
@@ -893,141 +895,11 @@
         });
       }
 
-      // Default profile picture system
+      // Avatar photo change functionality
       const avatarChangeBtn = document.getElementById('avatar-change-btn');
       const avatarUpload = document.getElementById('avatar-upload');
       const profileAvatarImg = document.getElementById('profile-avatar-img');
-      const profileAvatarContainer = document.querySelector('.profile-avatar-large');
       const navProfileImg = document.querySelector('.nav-actions .profile-avatar img');
-      const navProfileContainer = document.querySelector('.nav-actions .profile-avatar');
-
-      // Set default profile picture using CSS classes
-      function setDefaultProfilePicture() {
-        // Set main profile avatar to default
-        if (profileAvatarContainer) {
-          profileAvatarContainer.classList.add('default-avatar');
-        }
-        if (profileAvatarImg) {
-          profileAvatarImg.style.display = 'none';
-        }
-
-        // Set navigation avatar to default
-        if (navProfileContainer) {
-          navProfileContainer.classList.add('default-avatar');
-        }
-        if (navProfileImg) {
-          navProfileImg.style.display = 'none';
-        }
-      }
-
-      // Remove default profile picture and show custom image
-      function removeDefaultProfilePicture() {
-        // Remove default from main profile avatar
-        if (profileAvatarContainer) {
-          profileAvatarContainer.classList.remove('default-avatar');
-        }
-        if (profileAvatarImg) {
-          profileAvatarImg.style.display = 'block';
-        }
-
-        // Remove default from navigation avatar
-        if (navProfileContainer) {
-          navProfileContainer.classList.remove('default-avatar');
-        }
-        if (navProfileImg) {
-          navProfileImg.style.display = 'block';
-        }
-      }
-
-      // Handle profile picture upload
-      function handleProfilePictureUpload(file) {
-        if (!file || !file.type.startsWith('image/')) {
-          alert('Please select a valid image file.');
-          return;
-        }
-
-        // Check file size (max 5MB)
-        if (file.size > 5 * 1024 * 1024) {
-          alert('File size must be less than 5MB.');
-          return;
-        }
-
-        // Show loading state
-        if (avatarChangeBtn) {
-          avatarChangeBtn.innerHTML = '<div style="width: 16px; height: 16px; border: 2px solid white; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>';
-          avatarChangeBtn.disabled = true;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const imageData = e.target.result;
-
-          // Remove default avatar styling and show custom image
-          removeDefaultProfilePicture();
-
-          // Update the profile avatar
-          if (profileAvatarImg) {
-            profileAvatarImg.src = imageData;
-          }
-
-          // Update navigation avatar
-          if (navProfileImg) {
-            navProfileImg.src = imageData;
-          }
-
-          // Store in localStorage for persistence
-          localStorage.setItem('userProfilePicture', imageData);
-
-          // Restore button state
-          if (avatarChangeBtn) {
-            avatarChangeBtn.innerHTML = `
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
-                <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            `;
-            avatarChangeBtn.disabled = false;
-          }
-
-          // Show success message
-          showImageUploadSuccess('Profile photo updated successfully!');
-        };
-
-        reader.onerror = function() {
-          // Restore button state
-          if (avatarChangeBtn) {
-            avatarChangeBtn.innerHTML = `
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
-                <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            `;
-            avatarChangeBtn.disabled = false;
-          }
-          alert('Error reading the image file. Please try again.');
-        };
-
-        reader.readAsDataURL(file);
-      }
-
-      // Load saved profile picture from localStorage
-      function loadSavedProfilePicture() {
-        const savedPicture = localStorage.getItem('userProfilePicture');
-        if (savedPicture) {
-          // Remove default styling and show custom image
-          removeDefaultProfilePicture();
-
-          if (profileAvatarImg) {
-            profileAvatarImg.src = savedPicture;
-          }
-          if (navProfileImg) {
-            navProfileImg.src = savedPicture;
-          }
-        } else {
-          // Show default avatar
-          setDefaultProfilePicture();
-        }
-      }
 
       if (avatarChangeBtn && avatarUpload) {
         avatarChangeBtn.addEventListener('click', function(e) {
@@ -1038,48 +910,26 @@
 
         avatarUpload.addEventListener('change', function(e) {
           const file = e.target.files[0];
-          if (file) {
-            handleProfilePictureUpload(file);
+          if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              // Update the profile avatar
+              if (profileAvatarImg) {
+                profileAvatarImg.src = e.target.result;
+              }
+              
+              // Update navigation avatar
+              if (navProfileImg) {
+                navProfileImg.src = e.target.result;
+              }
+              
+              // Show success message
+              showImageUploadSuccess('Profile photo updated successfully!');
+            };
+            reader.readAsDataURL(file);
           }
         });
       }
-
-      // Reset profile picture to default
-      function resetProfilePictureToDefault() {
-        // Remove saved picture from localStorage
-        localStorage.removeItem('userProfilePicture');
-
-        // Set back to default avatar
-        setDefaultProfilePicture();
-
-        showImageUploadSuccess('Profile picture reset to default!');
-      }
-
-      // Add right-click context menu for resetting profile picture
-      if (profileAvatarImg) {
-        profileAvatarImg.addEventListener('contextmenu', function(e) {
-          e.preventDefault();
-          if (confirm('Reset profile picture to default?')) {
-            resetProfilePictureToDefault();
-          }
-        });
-      }
-
-      // Handle image loading errors - fallback to default avatar
-      if (profileAvatarImg) {
-        profileAvatarImg.addEventListener('error', function() {
-          setDefaultProfilePicture();
-        });
-      }
-
-      if (navProfileImg) {
-        navProfileImg.addEventListener('error', function() {
-          setDefaultProfilePicture();
-        });
-      }
-
-      // Initialize profile picture on page load
-      loadSavedProfilePicture();
     });
 
     // Function to show image upload success message
@@ -1395,6 +1245,5 @@
   <script type="module" src="app.js"></script>
   <script type="module" src="notifications.js"></script>
   <script src="chat.js"></script>
-  <script src="auth-manager.js"></script>
 </body>
 </html>

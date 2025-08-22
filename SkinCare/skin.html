@@ -60,8 +60,24 @@
       flex-direction: column;
       background: var(--background);
       box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
     }
-    .upload-box:hover {
+
+    .upload-box.has-image {
+      padding: 0;
+      min-height: 300px;
+    }
+
+    .uploaded-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+
+    .upload-box:not(.has-image):hover {
       border-color: var(--primary);
       background: rgba(255,107,157,0.05);
     }
@@ -98,6 +114,11 @@
       cursor: not-allowed;
       opacity: 0.6;
       transform: none;
+    }
+
+    /* Add gradient secondary for new analysis button */
+    :root {
+      --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .upload-box.dragover {
@@ -251,7 +272,7 @@
   <section class="skin-hero">
     <h1 class="skin-hero-title">🌸 Skin Analysis</h1>
     <p class="skin-hero-description">
-      Upload your photo and scan using ai-powered...
+      Upload your photo and get AI-powered skin analysis with personalized recommendations
     </p>
   </section>
 
@@ -271,14 +292,17 @@
         </div>
         <input type="file" id="photo-upload" accept="image/*">
       </label>
-      <button class="analyze-btn" id="analyze-btn">Analyze Skin</button>
+      <div style="margin-top: var(--space-lg); text-align: center;">
+        <button class="analyze-btn" id="analyze-btn">Analyze Image</button>
+        <button class="analyze-btn" id="new-analysis-btn" style="margin-left: var(--space-md); background: var(--gradient-secondary); opacity: 0.6;" disabled>Select New Image</button>
+      </div>
     </section>
 
     <!-- Results Section -->
     <section class="results-section">
       <h2 class="results-title">Skin Analysis Results</h2>
       <p id="results-text" class="results-description">
-        min s yan chaw dl
+        Upload a clear photo of your face to get started with AI-powered skin analysis. Our advanced system will detect skin conditions, assess your skin type, and provide personalized skincare recommendations.
       </p>
     </section>
   </div>
@@ -331,26 +355,85 @@
     const fileInput = document.getElementById("photo-upload");
     const uploadBox = document.querySelector(".upload-box");
     const analyzeBtn = document.getElementById("analyze-btn");
+    const newAnalysisBtn = document.getElementById("new-analysis-btn");
     const resultsText = document.getElementById("results-text");
 
     // Handle file selection
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (file) {
-        uploadBox.innerHTML = `
-          <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: var(--space-md);">✅</div>
-            <p style="font-size: 1.1rem; margin-bottom: var(--space-sm); color: var(--success);">Photo uploaded successfully!</p>
-            <p style="font-size: 0.9rem; color: var(--text-secondary);">${file.name}</p>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
-              Click "Analyze Skin" to start the analysis
-            </p>
-          </div>
-        `;
+        displayUploadedImage(file);
         analyzeBtn.style.opacity = "1";
         analyzeBtn.disabled = false;
       }
     });
+
+    // Function to display uploaded image
+    function displayUploadedImage(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Clear any existing content and classes
+        uploadBox.classList.remove('has-image');
+        uploadBox.innerHTML = '';
+
+        // Force a reflow
+        uploadBox.offsetHeight;
+
+        // Add the image content without overlay
+        uploadBox.classList.add('has-image');
+        uploadBox.innerHTML = `
+          <img src="${e.target.result}" alt="Uploaded image" class="uploaded-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">
+          <input type="file" id="photo-upload-hidden" accept="image/*" style="display: none;">
+        `;
+
+        // Re-attach event listener to the new hidden input
+        const hiddenInput = uploadBox.querySelector('#photo-upload-hidden');
+        hiddenInput.addEventListener('change', (e) => {
+          const newFile = e.target.files[0];
+          if (newFile) {
+            // Update the main file input
+            const dt = new DataTransfer();
+            dt.items.add(newFile);
+            fileInput.files = dt.files;
+
+            displayUploadedImage(newFile);
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Function to reset upload box
+    function resetUploadBox() {
+      uploadBox.classList.remove('has-image');
+      uploadBox.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: var(--space-md);">📷</div>
+          <p style="font-size: 1.1rem; margin-bottom: var(--space-sm);">Drag & drop your photo here</p>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">or click to browse files</p>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
+            Supported formats: JPG, PNG, GIF, WebP
+          </p>
+        </div>
+        <input type="file" id="photo-upload" accept="image/*">
+      `;
+
+      // Update fileInput reference to the new input element
+      fileInput = uploadBox.querySelector('#photo-upload');
+
+      // Re-attach the change event listener
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          displayUploadedImage(file);
+          analyzeBtn.style.opacity = "1";
+          analyzeBtn.disabled = false;
+        }
+      });
+
+      analyzeBtn.style.opacity = "0.6";
+      analyzeBtn.disabled = true;
+    }
 
     // Handle drag and drop
     uploadBox.addEventListener("dragover", (e) => {
@@ -369,25 +452,21 @@
       e.preventDefault();
       uploadBox.style.borderColor = "var(--border)";
       uploadBox.style.background = "transparent";
-      
+
       const files = e.dataTransfer.files;
       if (files.length > 0) {
         const file = files[0];
         if (file.type.startsWith("image/")) {
-          fileInput.files = files;
-          uploadBox.innerHTML = `
-            <div style="text-align: center;">
-              <div style="font-size: 3rem; margin-bottom: var(--space-md);">✅</div>
-              <p style="font-size: 1.1rem; margin-bottom: var(--space-sm); color: var(--success);">Photo uploaded successfully!</p>
-              <p style="font-size: 0.9rem; color: var(--text-secondary);">${file.name}</p>
-              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
-                Click "Analyze Skin" to start the analysis
-              </p>
-            </div>
-          `;
+          // Create a new FileList-like object
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          fileInput.files = dt.files;
+
+          displayUploadedImage(file);
           analyzeBtn.style.opacity = "1";
           analyzeBtn.disabled = false;
         } else {
+          uploadBox.classList.remove('has-image');
           uploadBox.innerHTML = `
             <div style="text-align: center;">
               <div style="font-size: 3rem; margin-bottom: var(--space-md);">❌</div>
@@ -402,44 +481,69 @@
       }
     });
 
-    // Analyze button functionality
-    analyzeBtn.addEventListener("click", () => {
+    // Analyze button functionality with real Roboflow integration
+    analyzeBtn.addEventListener("click", async () => {
       if (!fileInput.files[0]) {
         resultsText.textContent = "Please upload a photo first to analyze your skin.";
         resultsText.style.color = "var(--error)";
         return;
       }
 
-      resultsText.style.color = "var(--text-secondary)";
-      resultsText.textContent = "🔍 Analyzing your skin... This may take a few moments.";
-      
-      // Simulate analysis process
-      setTimeout(() => {
-        resultsText.innerHTML = `
-          <div style="color: var(--text-primary);">
-            <h3 style="margin-bottom: 16px; color: var(--primary);">📊 Analysis Complete!</h3>
-            <p><strong>Skin Type:</strong> Combination (T-zone oily, cheeks normal)</p>
-            <p><strong>Acne-Prone Areas:</strong> Forehead and chin area</p>
-            <p><strong>Smoothness Score:</strong> 7.5/10</p>
-            <p><strong>Recommendations:</strong></p>
-            <ul style="margin-left: 20px; margin-top: 8px;">
-              <li>Use a gentle cleanser twice daily</li>
-              <li>Apply oil-free moisturizer to T-zone</li>
-              <li>Consider salicylic acid treatment for acne-prone areas</li>
-              <li>Don't forget daily SPF protection</li>
-            </ul>
-            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-secondary);">
-              <em>Note: This is a simulated result. Real AI analysis will be implemented soon!</em>
-            </p>
-          </div>
-        `;
-      }, 2000);
+      const file = fileInput.files[0];
+      const resultsSection = document.querySelector('.results-section');
+
+      // Disable button during analysis
+      analyzeBtn.disabled = true;
+      analyzeBtn.textContent = "Analyzing...";
+
+      // Show loading state
+      window.skinAnalysisIntegration.showLoadingState(resultsSection.querySelector('#results-text'));
+
+      try {
+        // Check if service is available
+        const isHealthy = await window.skinAnalysisIntegration.checkServiceHealth();
+        if (!isHealthy) {
+          throw new Error("Analysis service is currently unavailable. Please try again later.");
+        }
+
+        // Perform analysis
+        const analysisResult = await window.skinAnalysisIntegration.analyzeSkin(file);
+
+        // Display results
+        const formattedResult = window.skinAnalysisIntegration.formatAnalysisForDisplay(analysisResult);
+        resultsText.innerHTML = formattedResult;
+
+        // Enable "Select New Image" button and keep "Analyze Image" button visible
+        newAnalysisBtn.style.display = "inline-block";
+        newAnalysisBtn.disabled = false;
+        newAnalysisBtn.style.opacity = "1";
+
+        // Scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      } catch (error) {
+        console.error('Analysis failed:', error);
+        window.skinAnalysisIntegration.showErrorState(resultsText, error.message);
+      } finally {
+        // Re-enable button
+        analyzeBtn.disabled = false;
+        analyzeBtn.textContent = "Analyze Image";
+      }
+    });
+
+    // Select New Image button functionality
+    newAnalysisBtn.addEventListener("click", () => {
+      // Trigger file input dialog
+      fileInput.click();
     });
 
     // Initialize button state
     analyzeBtn.style.opacity = "0.6";
     analyzeBtn.disabled = true;
   </script>
+
+  <!-- Skin Analysis Integration -->
+  <script src="skinAnalysisIntegration.js"></script>
 
   <!-- TypeScript Modules -->
   <script type="module" src="index-app.js"></script>
