@@ -333,7 +333,63 @@
         // Validate password confirmation
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+<<<<<<< HEAD
         
+=======
+        const termsAccepted = form.querySelector('input[name="terms"]').checked;
+
+        // Comprehensive validation
+
+        // Validate name
+        if (!name) {
+          showMessage('Name cannot be blank', 'error');
+          return;
+        }
+        if (name.length > 50) {
+          showMessage('Name cannot be more than 50 characters', 'error');
+          return;
+        }
+
+        // Validate email
+        if (!email) {
+          showMessage('Email cannot be blank', 'error');
+          return;
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+        if (!emailRegex.test(email)) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        if (!gmailRegex.test(email) && !emailRegex.test(email)) {
+          showMessage('Email must be a valid email address (preferably @gmail.com)', 'error');
+          return;
+        }
+
+        // Validate password
+        if (!password) {
+          showMessage('Password cannot be blank', 'error');
+          return;
+        }
+        if (password.length > 16) {
+          showMessage('Password cannot be more than 16 characters', 'error');
+          return;
+        }
+        if (password.length < 6) {
+          showMessage('Password must be at least 6 characters long', 'error');
+          return;
+        }
+        if (!/[A-Z]/.test(password)) {
+          showMessage('Password must contain at least 1 uppercase letter', 'error');
+          return;
+        }
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+          showMessage('Password must contain at least 1 special character (!@#$%^&*()_+-=[]{}|;\':"\\,.<>?/)', 'error');
+          return;
+        }
+
+        // Validate password confirmation
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
         if (password !== confirmPassword) {
           showMessage('Passwords do not match', 'error');
           return;
@@ -359,11 +415,25 @@
             throw new Error(data.error || 'Registration failed');
           }
           
-          // Success
-          showMessage('Account created successfully! Redirecting...', 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
+          // Success - Check if user was automatically logged in
+          if (data.autoLogin && data.name) {
+            // Store user session data for automatic login
+            sessionStorage.setItem('userLoggedIn', 'true');
+            sessionStorage.setItem('userName', data.name);
+            sessionStorage.setItem('userEmail', data.email);
+
+            showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } else {
+            // Fallback if auto-login failed
+            showMessage('Account created successfully! Please log in to continue.', 'success');
+            setTimeout(() => {
+              // Switch to login form
+              document.querySelector('.auth-toggle a[href="#login"]').click();
+            }, 1500);
+          }
           
         } catch (err) {
           console.error('Signup error:', err);

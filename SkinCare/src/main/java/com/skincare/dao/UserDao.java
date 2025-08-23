@@ -10,7 +10,11 @@ public class UserDao {
         // Check if the table exists and matches your existing structure
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
+<<<<<<< HEAD
                 "name VARCHAR(255) NOT NULL, " +
+=======
+                "name VARCHAR(50) NOT NULL, " +
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
                 "email VARCHAR(255) NOT NULL UNIQUE, " +
                 "password VARCHAR(255) NOT NULL, " +
                 "role ENUM('user', 'admin') DEFAULT 'user', " +
