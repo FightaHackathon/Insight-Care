@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -100,7 +101,13 @@ public class RegisterServlet extends HttpServlet {
             boolean ok = userDao.insert(user);
             if (ok) {
                 System.out.println("✅ User registered successfully: " + user.getEmail());
-                resp.getWriter().write("{\"status\":\"ok\",\"message\":\"User registered successfully\"}");
+
+                // Automatically log in the newly registered user
+                HttpSession session = req.getSession(true);
+                session.setAttribute("user", user);
+                System.out.println("✅ User automatically logged in after registration: " + user.getName());
+
+                resp.getWriter().write("{\"status\":\"ok\",\"message\":\"User registered successfully\",\"autoLogin\":true,\"name\":\"" + user.getName().replace("\"","'") + "\",\"email\":\"" + user.getEmail() + "\"}");
             } else {
                 System.err.println("❌ Insert operation failed");
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

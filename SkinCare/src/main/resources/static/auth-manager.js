@@ -5,36 +5,38 @@ class AuthManager {
         this.init();
     }
 
-    async init() {
+    init() {
         // Check if user is logged in on page load
-        await this.checkAuthStatus();
+        this.checkAuthStatus();
         this.updateNavigation();
     }
 
     async checkAuthStatus() {
-        try {
-            console.log('Checking authentication status...');
-            const response = await fetch('/api/auth/status');
-            console.log('Auth status response:', response.status, response.ok);
+        // First check session storage for auto-login after registration
+        const userLoggedIn = sessionStorage.getItem('userLoggedIn');
+        const userName = sessionStorage.getItem('userName');
+        const userEmail = sessionStorage.getItem('userEmail');
 
+        if (userLoggedIn === 'true' && userName && userEmail) {
+            this.currentUser = {
+                name: userName,
+                email: userEmail
+            };
+            console.log('✅ User auto-logged in from session storage:', userName);
+            return;
+        }
+
+        // Fallback: Check server session
+        try {
+            const response = await fetch('/api/auth/status');
             if (response.ok) {
                 const data = await response.json();
-                console.log('Auth status data:', data);
-
                 if (data.authenticated) {
                     this.currentUser = data.user;
-                    console.log('User authenticated:', this.currentUser);
-                } else {
-                    console.log('User not authenticated');
-                    this.currentUser = null;
                 }
-            } else {
-                console.log('Auth status request failed:', response.status);
-                this.currentUser = null;
             }
         } catch (error) {
-            console.log('Error checking auth status:', error);
-            this.currentUser = null;
+            console.log('Not authenticated or error checking auth status');
         }
     }
 
@@ -46,20 +48,15 @@ class AuthManager {
 
         if (this.currentUser) {
             // User is logged in
-            // Update all elements with class 'profile-name' (both navigation and profile page)
-            const profileNameElements = document.querySelectorAll('.profile-name');
-            profileNameElements.forEach(element => {
-                element.textContent = this.currentUser.name;
-            });
-
-            // Update profile page specific elements
-            this.updateProfilePage();
-
+            if (profileName) {
+                profileName.textContent = this.currentUser.name;
+            }
+            
             // Update dropdown to show logout option
             if (profileDropdown) {
                 const loginItem = profileDropdown.querySelector('a[href*="Login"]');
                 const signupItem = profileDropdown.querySelector('a[href*="SignUp"]');
-
+                
                 if (loginItem) {
                     loginItem.innerHTML = `
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -75,111 +72,16 @@ class AuthManager {
                         this.logout();
                     };
                 }
-
+                
                 if (signupItem) {
                     signupItem.style.display = 'none';
                 }
             }
         } else {
             // User is not logged in
-            const profileNameElements = document.querySelectorAll('.profile-name');
-            profileNameElements.forEach(element => {
-                element.textContent = 'Guest';
-            });
-
-            // Reset profile page
-            this.resetProfilePage();
-        }
-    }
-
-    updateProfilePage() {
-        if (!this.currentUser) return;
-
-        // Update profile page title if it exists
-        const profileTitle = document.querySelector('.profile-title');
-        if (profileTitle) {
-            profileTitle.textContent = this.currentUser.email;
-        }
-
-        // Update any other profile-specific elements here
-        // For example, if there are input fields for editing profile
-        const nameInput = document.querySelector('input[name="name"]');
-        if (nameInput) {
-            nameInput.value = this.currentUser.name;
-        }
-
-        const emailInput = document.querySelector('input[name="email"]');
-        if (emailInput) {
-            emailInput.value = this.currentUser.email;
-        }
-    }
-
-    resetProfilePage() {
-        // Reset profile page elements when user is not logged in
-        const profileTitle = document.querySelector('.profile-title');
-        if (profileTitle) {
-            profileTitle.textContent = '';
-        }
-
-        const nameInput = document.querySelector('input[name="name"]');
-        if (nameInput) {
-            nameInput.value = '';
-        }
-
-        const emailInput = document.querySelector('input[name="email"]');
-        if (emailInput) {
-            emailInput.value = '';
-        }
-    }
-
-    async login(email, password) {
-        try {
-            console.log('Attempting login for:', email);
-
-            // Use the existing LoginServlet endpoint with form data
-            const formData = new URLSearchParams();
-            formData.append('email', email);
-            formData.append('password', password);
-
-            const response = await fetch('/LoginServlet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData
-            });
-
-            console.log('Login response:', response.status, response.ok);
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Login response data:', data);
-
-                if (data.status === 'ok') {
-                    // Set user data from the response
-                    this.currentUser = {
-                        name: data.name,
-                        email: data.email
-                    };
-                    console.log('Login successful, user set:', this.currentUser);
-
-                    // Update navigation immediately
-                    this.updateNavigation();
-
-                    // Check auth status to ensure session is properly set
-                    await this.checkAuthStatus();
-
-                    return { success: true, user: this.currentUser };
-                } else {
-                    return { success: false, message: data.error || 'Login failed' };
-                }
-            } else {
-                const data = await response.json();
-                return { success: false, message: data.error || 'Login failed' };
+            if (profileName) {
+                profileName.textContent = 'Guest';
             }
-        } catch (error) {
-            console.error('Login error:', error);
-            return { success: false, message: 'Network error' };
         }
     }
 
@@ -194,7 +96,12 @@ class AuthManager {
 
             if (response.ok) {
                 this.currentUser = null;
-                this.updateNavigation(); // Update UI immediately
+
+                // Clear session storage
+                sessionStorage.removeItem('userLoggedIn');
+                sessionStorage.removeItem('userName');
+                sessionStorage.removeItem('userEmail');
+
                 this.showMessage('Logged out successfully', 'success');
 
                 // Redirect to home page after a short delay
@@ -279,6 +186,22 @@ class AuthManager {
     setUser(user) {
         this.currentUser = user;
         this.updateNavigation();
+    }
+
+    // Method to handle auto-login after registration
+    setUserFromRegistration(userData) {
+        this.currentUser = {
+            name: userData.name,
+            email: userData.email
+        };
+
+        // Store in session storage for persistence
+        sessionStorage.setItem('userLoggedIn', 'true');
+        sessionStorage.setItem('userName', userData.name);
+        sessionStorage.setItem('userEmail', userData.email);
+
+        this.updateNavigation();
+        console.log('✅ User auto-logged in after registration:', userData.name);
     }
 
     // Method to check if user is authenticated

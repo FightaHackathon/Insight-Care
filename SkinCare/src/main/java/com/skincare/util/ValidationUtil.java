@@ -18,18 +18,18 @@ public class ValidationUtil {
     /**
      * Validates name according to requirements:
      * - Cannot be blank
-     * - Cannot be more than 9 characters
+     * - Cannot be more than 50 characters
      */
     public static ValidationResult validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return new ValidationResult(false, "Name cannot be blank");
         }
-        
+
         String trimmedName = name.trim();
-        if (trimmedName.length() > 9) {
-            return new ValidationResult(false, "Name cannot be more than 9 characters");
+        if (trimmedName.length() > 50) {
+            return new ValidationResult(false, "Name cannot be more than 50 characters");
         }
-        
+
         return new ValidationResult(true, "Valid name");
     }
     
@@ -60,7 +60,7 @@ public class ValidationUtil {
     
     /**
      * Validates password according to requirements:
-     * - No more than 15 characters
+     * - No more than 16 characters
      * - At least 1 uppercase letter
      * - At least 1 special character
      */
@@ -68,23 +68,23 @@ public class ValidationUtil {
         if (password == null || password.isEmpty()) {
             return new ValidationResult(false, "Password cannot be blank");
         }
-        
-        if (password.length() > 15) {
-            return new ValidationResult(false, "Password cannot be more than 15 characters");
+
+        if (password.length() > 16) {
+            return new ValidationResult(false, "Password cannot be more than 16 characters");
         }
-        
+
         if (password.length() < 6) {
             return new ValidationResult(false, "Password must be at least 6 characters long");
         }
-        
+
         if (!UPPERCASE_PATTERN.matcher(password).matches()) {
             return new ValidationResult(false, "Password must contain at least 1 uppercase letter");
         }
-        
+
         if (!SPECIAL_CHAR_PATTERN.matcher(password).matches()) {
             return new ValidationResult(false, "Password must contain at least 1 special character (!@#$%^&*()_+-=[]{}|;':\"\\,.<>?/)");
         }
-        
+
         return new ValidationResult(true, "Valid password");
     }
     

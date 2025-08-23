@@ -344,8 +344,8 @@
           showMessage('Name cannot be blank', 'error');
           return;
         }
-        if (name.length > 9) {
-          showMessage('Name cannot be more than 9 characters', 'error');
+        if (name.length > 50) {
+          showMessage('Name cannot be more than 50 characters', 'error');
           return;
         }
 
@@ -370,8 +370,8 @@
           showMessage('Password cannot be blank', 'error');
           return;
         }
-        if (password.length > 15) {
-          showMessage('Password cannot be more than 15 characters', 'error');
+        if (password.length > 16) {
+          showMessage('Password cannot be more than 16 characters', 'error');
           return;
         }
         if (password.length < 6) {
@@ -419,11 +419,25 @@
             throw new Error(data.error || 'Registration failed');
           }
           
-          // Success
-          showMessage('Account created successfully! Redirecting...', 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
+          // Success - Check if user was automatically logged in
+          if (data.autoLogin && data.name) {
+            // Store user session data for automatic login
+            sessionStorage.setItem('userLoggedIn', 'true');
+            sessionStorage.setItem('userName', data.name);
+            sessionStorage.setItem('userEmail', data.email);
+
+            showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } else {
+            // Fallback if auto-login failed
+            showMessage('Account created successfully! Please log in to continue.', 'success');
+            setTimeout(() => {
+              // Switch to login form
+              document.querySelector('.auth-toggle a[href="#login"]').click();
+            }, 1500);
+          }
           
         } catch (err) {
           console.error('Signup error:', err);

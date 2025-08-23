@@ -12,6 +12,21 @@ class AuthManager {
     }
 
     async checkAuthStatus() {
+        // First check session storage for auto-login after registration
+        const userLoggedIn = sessionStorage.getItem('userLoggedIn');
+        const userName = sessionStorage.getItem('userName');
+        const userEmail = sessionStorage.getItem('userEmail');
+
+        if (userLoggedIn === 'true' && userName && userEmail) {
+            this.currentUser = {
+                name: userName,
+                email: userEmail
+            };
+            console.log('✅ User auto-logged in from session storage:', userName);
+            return;
+        }
+
+        // Fallback: Check server session
         try {
             const response = await fetch('/api/auth/status');
             if (response.ok) {
@@ -81,8 +96,14 @@ class AuthManager {
 
             if (response.ok) {
                 this.currentUser = null;
+
+                // Clear session storage
+                sessionStorage.removeItem('userLoggedIn');
+                sessionStorage.removeItem('userName');
+                sessionStorage.removeItem('userEmail');
+
                 this.showMessage('Logged out successfully', 'success');
-                
+
                 // Redirect to home page after a short delay
                 setTimeout(() => {
                     window.location.href = 'index.html';
@@ -165,6 +186,22 @@ class AuthManager {
     setUser(user) {
         this.currentUser = user;
         this.updateNavigation();
+    }
+
+    // Method to handle auto-login after registration
+    setUserFromRegistration(userData) {
+        this.currentUser = {
+            name: userData.name,
+            email: userData.email
+        };
+
+        // Store in session storage for persistence
+        sessionStorage.setItem('userLoggedIn', 'true');
+        sessionStorage.setItem('userName', userData.name);
+        sessionStorage.setItem('userEmail', userData.email);
+
+        this.updateNavigation();
+        console.log('✅ User auto-logged in after registration:', userData.name);
     }
 
     // Method to check if user is authenticated
