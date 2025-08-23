@@ -115,6 +115,16 @@
       background: rgba(255, 107, 157, 0.05);
     }
 
+    .upload-box.has-image {
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .upload-box.has-image:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+
     .results-section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -262,7 +272,7 @@
   <section class="skin-hero">
     <h1 class="skin-hero-title">🎨 Skin Tone Detector</h1>
     <p class="skin-hero-description">
-      Upload your photo to estimate undertone and tone depth. API integration coming soon.
+      Upload your photo to get accurate skin tone analysis with personalized color recommendations.
     </p>
   </section>
 
@@ -282,7 +292,10 @@
         </div>
         <input type="file" id="tone-photo-upload" accept="image/*" />
       </label>
-      <button class="analyze-btn" id="tone-analyze-btn">Detect Skin Tone</button>
+      <div style="margin-top: var(--space-lg); text-align: center;">
+        <button class="analyze-btn" id="tone-analyze-btn">Detect Skin Tone</button>
+        <button class="analyze-btn" id="tone-new-analysis-btn" style="margin-left: var(--space-md); opacity: 0.6;" disabled>Detect Next Image</button>
+      </div>
     </section>
 
     <!-- Results Section -->
@@ -335,31 +348,93 @@
     </div>
   </div>
 
+  <!-- Load skin tone analysis integration before inline script -->
+  <script src="skinToneAnalysisIntegration.js"></script>
+
   <script>
     // Elements
     const toneFileInput = document.getElementById('tone-photo-upload');
     const toneUploadBox = document.querySelector('.upload-box');
     const toneAnalyzeBtn = document.getElementById('tone-analyze-btn');
+    const toneNewAnalysisBtn = document.getElementById('tone-new-analysis-btn');
     const toneResults = document.getElementById('tone-results-text');
 
     // Handle file selection
     toneFileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        toneUploadBox.innerHTML = `
-          <div style="text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: var(--space-md);">✅</div>
-            <p style="font-size: 1.1rem; margin-bottom: var(--space-sm); color: var(--success);">Photo uploaded successfully!</p>
-            <p style="font-size: 0.9rem; color: var(--text-secondary);">${file.name}</p>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
-              Click "Detect Skin Tone" to continue
-            </p>
-          </div>
-        `;
+        displayUploadedImage(file);
         toneAnalyzeBtn.style.opacity = '1';
         toneAnalyzeBtn.disabled = false;
       }
     });
+
+    // Function to display uploaded image (same as skin.html)
+    function displayUploadedImage(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Clear any existing content and classes
+        toneUploadBox.classList.remove('has-image');
+        toneUploadBox.innerHTML = '';
+
+        // Force a reflow
+        toneUploadBox.offsetHeight;
+
+        // Add the image content without overlay
+        toneUploadBox.classList.add('has-image');
+        toneUploadBox.innerHTML = `
+          <img src="${e.target.result}" alt="Uploaded image" class="uploaded-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">
+          <input type="file" id="tone-photo-upload-hidden" accept="image/*" style="display: none;">
+        `;
+
+        // Re-attach event listener to the new hidden input
+        const hiddenInput = toneUploadBox.querySelector('#tone-photo-upload-hidden');
+        hiddenInput.addEventListener('change', (e) => {
+          const newFile = e.target.files[0];
+          if (newFile) {
+            // Update the main file input
+            const dt = new DataTransfer();
+            dt.items.add(newFile);
+            toneFileInput.files = dt.files;
+
+            displayUploadedImage(newFile);
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Function to reset upload box (same as skin.html)
+    function resetUploadBox() {
+      toneUploadBox.classList.remove('has-image');
+      toneUploadBox.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: var(--space-md);">📷</div>
+          <p style="font-size: 1.1rem; margin-bottom: var(--space-sm);">Drag & drop your photo here</p>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">or click to browse files</p>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
+            Supported formats: JPG, PNG, GIF, WebP
+          </p>
+        </div>
+        <input type="file" id="tone-photo-upload" accept="image/*">
+      `;
+
+      // Update toneFileInput reference to the new input element
+      const newFileInput = toneUploadBox.querySelector('#tone-photo-upload');
+
+      // Re-attach the change event listener
+      newFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          displayUploadedImage(file);
+          toneAnalyzeBtn.style.opacity = "1";
+          toneAnalyzeBtn.disabled = false;
+        }
+      });
+
+      toneAnalyzeBtn.style.opacity = "0.6";
+      toneAnalyzeBtn.disabled = true;
+    }
 
     // Drag and drop
     toneUploadBox.addEventListener('dragover', (e) => {
@@ -380,20 +455,16 @@
       if (files.length > 0) {
         const file = files[0];
         if (file.type.startsWith('image/')) {
-          toneFileInput.files = files;
-          toneUploadBox.innerHTML = `
-            <div style="text-align: center;">
-              <div style="font-size: 3rem; margin-bottom: var(--space-md);">✅</div>
-              <p style="font-size: 1.1rem; margin-bottom: var(--space-sm); color: var(--success);">Photo uploaded successfully!</p>
-              <p style="font-size: 0.9rem; color: var(--text-secondary);">${file.name}</p>
-              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: var(--space-sm);">
-                Click "Detect Skin Tone" to continue
-              </p>
-            </div>
-          `;
+          // Update the main file input
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          toneFileInput.files = dt.files;
+
+          displayUploadedImage(file);
           toneAnalyzeBtn.style.opacity = '1';
           toneAnalyzeBtn.disabled = false;
         } else {
+          toneUploadBox.classList.remove('has-image');
           toneUploadBox.innerHTML = `
             <div style="text-align: center;">
               <div style="font-size: 3rem; margin-bottom: var(--space-md);">❌</div>
@@ -408,25 +479,30 @@
       }
     });
 
-    // Placeholder for future API integration
-    async function analyzeSkinTone(file) {
-      // TODO: Replace with real API call
-      // Example:
-      // const formData = new FormData();
-      // formData.append('image', file);
-      // const res = await fetch('/api/skin-tone', { method: 'POST', body: formData });
-      // return await res.json();
+    // Initialize skin tone analysis integration
+    const skinToneAnalysis = new SkinToneAnalysisIntegration();
 
-      // Simulated response
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            undertone: 'Neutral',
-            depth: 'Medium',
-            suggestions: ['Earthy neutrals', 'Soft pastels', 'Gold or rose gold jewelry']
-          });
-        }, 1800);
-      });
+    // Real API integration for skin tone analysis
+    async function analyzeSkinTone(file) {
+      try {
+        console.log('🎨 Starting skin tone analysis with Roboflow API...');
+
+        // Use the integration class to analyze the skin tone
+        const result = await skinToneAnalysis.analyzeSkinTone(file);
+
+        // Format the result for display
+        const formattedResult = skinToneAnalysis.formatAnalysisResult(result);
+
+        if (!formattedResult.success) {
+          throw new Error(formattedResult.error);
+        }
+
+        return formattedResult;
+
+      } catch (error) {
+        console.error('❌ Skin tone analysis failed:', error);
+        throw error;
+      }
     }
 
     // Analyze button
@@ -438,25 +514,54 @@
         return;
       }
 
-      toneResults.style.color = 'var(--text-secondary)';
-      toneResults.textContent = '🎯 Detecting your skin tone...';
+      try {
+        // Show loading state
+        skinToneAnalysis.showLoadingState(toneResults);
 
-      const result = await analyzeSkinTone(file);
+        // Disable button during analysis
+        toneAnalyzeBtn.disabled = true;
+        toneAnalyzeBtn.style.opacity = '0.6';
+        toneAnalyzeBtn.textContent = 'Analyzing...';
 
-      toneResults.innerHTML = `
-        <div style="color: var(--text-primary);">
-          <h3 style="margin-bottom: 16px; color: var(--primary);">✅ Detection Complete</h3>
-          <p><strong>Undertone:</strong> ${result.undertone}</p>
-          <p><strong>Tone Depth:</strong> ${result.depth}</p>
-          <p><strong>Style Suggestions:</strong></p>
-          <ul style="margin-left: 20px; margin-top: 8px;">
-            ${result.suggestions.map((s) => `<li>${s}</li>`).join('')}
-          </ul>
-          <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-secondary);">
-            <em>Note: This is a simulated result. Real API integration will be added soon.</em>
-          </p>
-        </div>
-      `;
+        // Perform analysis
+        const result = await analyzeSkinTone(file);
+
+        // Display results using the integration's HTML generator
+        toneResults.innerHTML = skinToneAnalysis.generateResultsHTML(result);
+
+        // Enable "Detect Next Image" button and keep "Detect Skin Tone" button visible
+        toneNewAnalysisBtn.style.display = "inline-block";
+        toneNewAnalysisBtn.disabled = false;
+        toneNewAnalysisBtn.style.opacity = "1";
+
+        // Scroll to results
+        const resultsSection = document.querySelector('.results-section');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      } catch (error) {
+        console.error('❌ Skin tone analysis error:', error);
+
+        toneResults.innerHTML = `
+          <div style="color: var(--error); text-align: center; padding: 20px;">
+            <h3>❌ Analysis Failed</h3>
+            <p>${error.message}</p>
+            <p style="font-size: 0.9rem; margin-top: 10px; color: var(--text-secondary);">
+              Please try uploading a different image with good lighting and clear skin visibility.
+            </p>
+          </div>
+        `;
+      } finally {
+        // Re-enable button
+        toneAnalyzeBtn.disabled = false;
+        toneAnalyzeBtn.style.opacity = '1';
+        toneAnalyzeBtn.textContent = 'Detect Skin Tone';
+      }
+    });
+
+    // Detect Next Image button functionality
+    toneNewAnalysisBtn.addEventListener("click", () => {
+      // Trigger file input dialog
+      toneFileInput.click();
     });
 
     // Init state
