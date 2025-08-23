@@ -164,7 +164,7 @@
 
               <div class="form-options">
                 <label class="checkbox-container">
-                  <input type="checkbox" name="terms" required />
+                  <input type="checkbox" required />
                   <span class="checkmark"></span>
                   <span class="checkbox-text">I agree to the <a href="#" class="terms-link">Terms & Conditions</a></span>
                 </label>
@@ -329,73 +329,13 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-
-        // Get form values
-        const name = form.querySelector('input[name="name"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
+        
+        // Validate password confirmation
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
-        const termsAccepted = form.querySelector('input[name="terms"]').checked;
-
-        // Comprehensive validation
-
-        // Validate name
-        if (!name) {
-          showMessage('Name cannot be blank', 'error');
-          return;
-        }
-        if (name.length > 9) {
-          showMessage('Name cannot be more than 9 characters', 'error');
-          return;
-        }
-
-        // Validate email
-        if (!email) {
-          showMessage('Email cannot be blank', 'error');
-          return;
-        }
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
-        if (!emailRegex.test(email)) {
-          showMessage('Please enter a valid email address', 'error');
-          return;
-        }
-        if (!gmailRegex.test(email) && !emailRegex.test(email)) {
-          showMessage('Email must be a valid email address (preferably @gmail.com)', 'error');
-          return;
-        }
-
-        // Validate password
-        if (!password) {
-          showMessage('Password cannot be blank', 'error');
-          return;
-        }
-        if (password.length > 15) {
-          showMessage('Password cannot be more than 15 characters', 'error');
-          return;
-        }
-        if (password.length < 6) {
-          showMessage('Password must be at least 6 characters long', 'error');
-          return;
-        }
-        if (!/[A-Z]/.test(password)) {
-          showMessage('Password must contain at least 1 uppercase letter', 'error');
-          return;
-        }
-        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-          showMessage('Password must contain at least 1 special character (!@#$%^&*()_+-=[]{}|;\':"\\,.<>?/)', 'error');
-          return;
-        }
-
-        // Validate password confirmation
+        
         if (password !== confirmPassword) {
-          showMessage('Password and confirm password must match', 'error');
-          return;
-        }
-
-        // Validate terms acceptance
-        if (!termsAccepted) {
-          showMessage('You must agree to the Terms & Conditions to proceed', 'error');
+          showMessage('Passwords do not match', 'error');
           return;
         }
         

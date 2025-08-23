@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkinCare - Authentication</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>SkinCare - Authentication v4 - CACHE BYPASS</title>
   <link rel="stylesheet" href="modern-styles.css">
   <link rel="stylesheet" href="auth.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +51,7 @@
               <p class="auth-subtitle">Sign in to your account to continue your skincare journey</p>
             </div>
 
-            <form class="auth-form" id="login-form" action="LoginServlet" method="post">
+            <form class="auth-form" id="login-form">
               <div class="form-group">
                 <div class="input-container">
                   <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -164,7 +167,7 @@
 
               <div class="form-options">
                 <label class="checkbox-container">
-                  <input type="checkbox" name="terms" required />
+                  <input type="checkbox" required />
                   <span class="checkmark"></span>
                   <span class="checkbox-text">I agree to the <a href="#" class="terms-link">Terms & Conditions</a></span>
                 </label>
@@ -287,37 +290,36 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        
+
         // Show loading state
         submitBtn.innerHTML = '<span>Signing In...</span>';
         submitBtn.disabled = true;
-        
+
         const formData = new FormData(form);
-        const urlEncodedData = new URLSearchParams(formData);
+        const email = formData.get('email');
+        const password = formData.get('password');
+
         try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: urlEncodedData
-          });
-          const data = await res.json();
-          
-          if (!res.ok) {
-            throw new Error(data.error || 'Login failed');
+          // Use auth manager's login method
+          if (window.authManager) {
+            const result = await window.authManager.login(email, password);
+
+            if (result.success) {
+              showMessage('Login successful! Redirecting...', 'success');
+              setTimeout(() => {
+                window.location.href = 'index.html';
+              }, 1000);
+            } else {
+              throw new Error(result.message || 'Login failed');
+            }
+          } else {
+            throw new Error('Authentication manager not available');
           }
-          
-          // Success
-          showMessage('Login successful! Redirecting...', 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
-          
+
         } catch (err) {
           console.error('Login error:', err);
           showMessage('Login failed: ' + err.message, 'error');
-          
+
           // Reset button
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
@@ -329,73 +331,13 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-
-        // Get form values
-        const name = form.querySelector('input[name="name"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
+        
+        // Validate password confirmation
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
-        const termsAccepted = form.querySelector('input[name="terms"]').checked;
-
-        // Comprehensive validation
-
-        // Validate name
-        if (!name) {
-          showMessage('Name cannot be blank', 'error');
-          return;
-        }
-        if (name.length > 9) {
-          showMessage('Name cannot be more than 9 characters', 'error');
-          return;
-        }
-
-        // Validate email
-        if (!email) {
-          showMessage('Email cannot be blank', 'error');
-          return;
-        }
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
-        if (!emailRegex.test(email)) {
-          showMessage('Please enter a valid email address', 'error');
-          return;
-        }
-        if (!gmailRegex.test(email) && !emailRegex.test(email)) {
-          showMessage('Email must be a valid email address (preferably @gmail.com)', 'error');
-          return;
-        }
-
-        // Validate password
-        if (!password) {
-          showMessage('Password cannot be blank', 'error');
-          return;
-        }
-        if (password.length > 15) {
-          showMessage('Password cannot be more than 15 characters', 'error');
-          return;
-        }
-        if (password.length < 6) {
-          showMessage('Password must be at least 6 characters long', 'error');
-          return;
-        }
-        if (!/[A-Z]/.test(password)) {
-          showMessage('Password must contain at least 1 uppercase letter', 'error');
-          return;
-        }
-        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-          showMessage('Password must contain at least 1 special character (!@#$%^&*()_+-=[]{}|;\':"\\,.<>?/)', 'error');
-          return;
-        }
-
-        // Validate password confirmation
+        
         if (password !== confirmPassword) {
-          showMessage('Password and confirm password must match', 'error');
-          return;
-        }
-
-        // Validate terms acceptance
-        if (!termsAccepted) {
-          showMessage('You must agree to the Terms & Conditions to proceed', 'error');
+          showMessage('Passwords do not match', 'error');
           return;
         }
         
@@ -405,6 +347,15 @@
         
         const formData = new FormData(form);
         const urlEncodedData = new URLSearchParams(formData);
+
+        // Debug: Log form data (v3 - cache test)
+        console.log('Form data being sent (v3):');
+        for (let [key, value] of urlEncodedData.entries()) {
+          console.log(key + ': ' + value);
+        }
+        console.log('URL encoded data:', urlEncodedData.toString());
+        console.log('Cache test: This should show v3 if cache is cleared');
+
         try {
           const res = await fetch(form.action, {
             method: 'POST',
@@ -419,7 +370,14 @@
             throw new Error(data.error || 'Registration failed');
           }
           
-          // Success
+          // Success - update auth manager with user data
+          if (window.authManager && data.name) {
+            window.authManager.setUser({
+              name: data.name,
+              email: data.email
+            });
+          }
+
           showMessage('Account created successfully! Redirecting...', 'success');
           setTimeout(() => {
             window.location.href = 'index.html';
@@ -494,5 +452,6 @@
       });
     });
   </script>
+  <script src="auth-manager.js"></script>
 </body>
 </html>

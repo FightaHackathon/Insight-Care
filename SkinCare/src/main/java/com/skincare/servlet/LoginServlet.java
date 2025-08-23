@@ -2,7 +2,6 @@ package com.skincare.servlet;
 
 import com.skincare.dao.UserDao;
 import com.skincare.model.User;
-import com.skincare.util.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

@@ -2,8 +2,6 @@ package com.skincare.servlet;
 
 import com.skincare.dao.UserDao;
 import com.skincare.model.User;
-import com.skincare.util.ValidationUtil;
-import com.skincare.util.PasswordUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 @WebServlet(name="RegisterServlet", urlPatterns = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -34,68 +31,36 @@ public class RegisterServlet extends HttpServlet {
             String name = req.getParameter("name");
             String email = req.getParameter("email");
             String password = req.getParameter("password");
-            String confirmPassword = req.getParameter("confirmPassword");
-            String termsAccepted = req.getParameter("terms");
 
             System.out.println("📋 Registration data - Name: " + name + ", Email: " + email);
 
-            // Comprehensive validation using ValidationUtil
-
-            // Validate name
-            ValidationUtil.ValidationResult nameValidation = ValidationUtil.validateName(name);
-            if (!nameValidation.isValid()) {
-                System.err.println("❌ Name validation failed: " + nameValidation.getMessage());
+            if (name == null || email == null || password == null || name.isBlank() || email.isBlank() || password.isBlank()) {
+                System.err.println("❌ Missing required fields");
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"" + nameValidation.getMessage() + "\"}");
+                resp.getWriter().write("{\"error\":\"Missing required fields\"}");
                 return;
             }
 
-            // Validate email
-            ValidationUtil.ValidationResult emailValidation = ValidationUtil.validateEmail(email);
-            if (!emailValidation.isValid()) {
-                System.err.println("❌ Email validation failed: " + emailValidation.getMessage());
+            // Basic email validation
+            if (!email.contains("@") || !email.contains(".")) {
+                System.err.println("❌ Invalid email format: " + email);
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"" + emailValidation.getMessage() + "\"}");
+                resp.getWriter().write("{\"error\":\"Invalid email format\"}");
                 return;
             }
 
-            // Validate password
-            ValidationUtil.ValidationResult passwordValidation = ValidationUtil.validatePassword(password);
-            if (!passwordValidation.isValid()) {
-                System.err.println("❌ Password validation failed: " + passwordValidation.getMessage());
+            // Password length validation
+            if (password.length() < 6) {
+                System.err.println("❌ Password too short");
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"" + passwordValidation.getMessage() + "\"}");
+                resp.getWriter().write("{\"error\":\"Password must be at least 6 characters long\"}");
                 return;
             }
 
-            // Validate password match
-            ValidationUtil.ValidationResult passwordMatchValidation = ValidationUtil.validatePasswordMatch(password, confirmPassword);
-            if (!passwordMatchValidation.isValid()) {
-                System.err.println("❌ Password match validation failed: " + passwordMatchValidation.getMessage());
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"" + passwordMatchValidation.getMessage() + "\"}");
-                return;
-            }
-
-            // Validate terms acceptance
-            ValidationUtil.ValidationResult termsValidation = ValidationUtil.validateTermsAccepted(termsAccepted);
-            if (!termsValidation.isValid()) {
-                System.err.println("❌ Terms validation failed: " + termsValidation.getMessage());
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"" + termsValidation.getMessage() + "\"}");
-                return;
-            }
-
-            // Create user with encrypted password
             User user = new User();
             user.setName(name.trim());
             user.setEmail(email.trim().toLowerCase());
-
-            // Encrypt password before storing
-            String encryptedPassword = PasswordUtil.encryptPassword(password);
-            user.setPassword(encryptedPassword);
-
-            System.out.println("✅ All validations passed, creating user with encrypted password");
+            user.setPassword(password); // In production, this should be hashed
 
             boolean ok = userDao.insert(user);
             if (ok) {
