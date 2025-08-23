@@ -164,7 +164,7 @@
 
               <div class="form-options">
                 <label class="checkbox-container">
-                  <input type="checkbox" name="terms" required />
+                  <input type="checkbox" required />
                   <span class="checkmark"></span>
                   <span class="checkbox-text">I agree to the <a href="#" class="terms-link">Terms & Conditions</a></span>
                 </label>
@@ -329,12 +329,13 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-
-        // Get form values
-        const name = form.querySelector('input[name="name"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
+        
+        // Validate password confirmation
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+<<<<<<< HEAD
+        
+=======
         const termsAccepted = form.querySelector('input[name="terms"]').checked;
 
         // Comprehensive validation
@@ -388,14 +389,9 @@
         }
 
         // Validate password confirmation
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
         if (password !== confirmPassword) {
-          showMessage('Password and confirm password must match', 'error');
-          return;
-        }
-
-        // Validate terms acceptance
-        if (!termsAccepted) {
-          showMessage('You must agree to the Terms & Conditions to proceed', 'error');
+          showMessage('Passwords do not match', 'error');
           return;
         }
         
