@@ -251,40 +251,202 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--space-lg);
         }
-        
+
         .formula-item {
             background: var(--surface-hover);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             border: 1px solid var(--border);
         }
-        
+
         .formula-title {
             font-weight: 700;
             color: var(--primary);
             margin-bottom: var(--space-sm);
         }
-        
+
         .formula-text {
             color: var(--text-secondary);
             font-size: 0.9rem;
             font-family: var(--font-mono);
         }
-        
+
+        /* Detailed Body Shape Cards */
+        .detailed-shapes-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .detailed-shapes-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--text-primary);
+        }
+
+        .detailed-shapes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+        }
+
+        .detailed-shape-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .detailed-shape-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .detailed-shape-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: var(--space-xl);
+            text-align: center;
+            position: relative;
+        }
+
+        .detailed-shape-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 10px solid var(--primary);
+        }
+
+        .detailed-shape-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+        }
+
+        .detailed-shape-summary {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .detailed-shape-content {
+            padding: var(--space-xl);
+        }
+
+        .shape-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .shape-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .shape-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .shape-section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .shape-section-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .shape-tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .shape-tips-list li {
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            padding-left: var(--space-lg);
+        }
+
+        .shape-tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .shape-tips-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: var(--space-sm);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .shape-highlight {
+            background: rgba(255, 107, 157, 0.1);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary);
+            margin: var(--space-md) 0;
+        }
+
+        .shape-highlight-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+
         @media (max-width: 768px) {
             .body-hero-title {
                 font-size: 2rem;
             }
-            
+
             .calculator-section {
                 grid-template-columns: 1fr;
                 gap: var(--space-xl);
             }
-            
+
             .body-shapes-grid {
                 grid-template-columns: 1fr;
             }
-            
+
+            .detailed-shapes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detailed-shape-header {
+                padding: var(--space-lg);
+            }
+
+            .detailed-shape-name {
+                font-size: 1.25rem;
+            }
+
+            .detailed-shape-content {
+                padding: var(--space-lg);
+            }
+
             .shape-formulas {
                 grid-template-columns: 1fr;
             }
@@ -469,7 +631,236 @@
     <section class="body-shapes-section">
         <h2 class="body-shapes-title">Determine Your Body Shape</h2>
         <p class="body-shapes-subtitle">In the fashion industry, body shapes are often categorized into four classes.</p>
-        
+
+        <div class="body-shapes-grid">
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/hourglass.jpg" alt="Hourglass">
+                <div class="shape-content">
+                    <h3 class="shape-title">Hourglass</h3>
+                    <p class="shape-description">This body shape describes a person with hip and bust measurements nearly equal in size, with a narrower waist measurement.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/rectangle.jpg" alt="Rectangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Rectangle</h3>
+                    <p class="shape-description">This body shape describes a person who typically has waist measurements that are less than 9 inches smaller than the hip or bust measurements.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/invertedTri.jpg" alt="Inverted Triangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Inverted Triangle</h3>
+                    <p class="shape-description">This body shape describes a person who has broader shoulders and bust than they do hips.</p>
+                </div>
+            </div>
+
+            <div class="shape-card animate-on-scroll">
+                <img class="shape-image" src="Pics/pear.jpg" alt="Pear">
+                <div class="shape-content">
+                    <h3 class="shape-title">Pear</h3>
+                    <p class="shape-description">This body shape describes a person who has hip measurements greater than their bust measurements.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Body Shape Cards -->
+        <div class="detailed-shapes-section">
+            <h2 class="detailed-shapes-title">Complete Body Shape Guide</h2>
+
+            <div class="detailed-shapes-grid">
+                <!-- Hourglass Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">⏳ Hourglass Body Shape</h3>
+                        <p class="detailed-shape-summary">The hourglass shape features balanced bust and hips with a defined waist, creating natural curves. Clothing should accentuate the waist while maintaining proportional balance between upper and lower body.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Fitted styles like wrap tops, belted shirts, or V-neck blouses to highlight the waist</li>
+                                    <li>Lightweight knitwear that follows your natural curves</li>
+                                    <li>Avoid boxy or overly embellished designs</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Bootcut or straight-leg jeans/pants</li>
+                                    <li>High-waisted skirts (pencil, A-line, or tulip)</li>
+                                    <li>Wide-legged trousers</li>
+                                    <li>Steer clear of low-rise or heavily detailed hips</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Wrap dresses, fitted sheaths, or belted styles that nip at the waist</li>
+                                    <li>Full-circle or bias-cut skirts for added volume balance</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do emphasize the waist with belts and fitted cuts; don't add unbalanced volume to shoulders or hips. Best for showcasing curves naturally.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rectangle Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">📐 Rectangle Body Shape</h3>
+                        <p class="detailed-shape-summary">The rectangle shape has straight lines with little waist definition, resembling a column. Focus on creating curves and waist illusion through volume and details.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Ruffled or embellished blouses, scoop-neck shirts</li>
+                                    <li>Layered styles; belted or nipped-waist designs</li>
+                                    <li>Avoid fitted sleeves or boxy cuts</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Flared pants like bootcut or wide-leg</li>
+                                    <li>Low-rise jeans with pockets/whiskering</li>
+                                    <li>A-line or pleated skirts</li>
+                                    <li>Steer clear of straight-fitted trousers</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Belted or asymmetrical dresses</li>
+                                    <li>Wrap styles with ruching</li>
+                                    <li>Add volume with layers or patterns</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do add volume with ruffles, patterns, and belts; don't wear square necklines or high-rise bottoms that emphasize straightness. Ideal for athletic builds seeking dimension.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inverted Triangle Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">🔺 Inverted Triangle Body Shape</h3>
+                        <p class="detailed-shape-summary">This shape has broader shoulders/bust and narrower hips. Aim to balance by adding volume below the waist and minimizing the upper body.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>V-neck or scoop blouses, wrap styles in dark colors</li>
+                                    <li>Slim-fit knitwear</li>
+                                    <li>Avoid shoulder pads or wide necklines</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Wide-leg or flared pants</li>
+                                    <li>Palazzo trousers with patterns/pockets</li>
+                                    <li>Bootcut jeans in light colors</li>
+                                    <li>Steer clear of skinny fits</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Fit-and-flare or A-line dresses that cinch at waist and flare at hips</li>
+                                    <li>Asymmetric styles</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do use bright bottoms and flared sleeves; don't add embellishments to shoulders or wear off-shoulder tops. Suited for athletic upper bodies needing lower balance.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pear Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">🍐 Pear Body Shape</h3>
+                        <p class="detailed-shape-summary">The pear shape features wider hips/thighs and narrower shoulders with a defined waist. Emphasize the upper body to create balance and draw eyes upward.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Boat-neck or embellished blouses, structured shoulders</li>
+                                    <li>Bright/patterned styles; cropped or tucked-in shirts</li>
+                                    <li>Avoid boxy or peplum designs</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Bootcut or straight-leg pants in dark colors</li>
+                                    <li>Mid/high-waisted trousers</li>
+                                    <li>A-line skirts knee-length</li>
+                                    <li>Steer clear of skinny jeans or embellished pockets</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>A-line or X-line with fitted waists and flowing skirts</li>
+                                    <li>Looser fits to skim hips</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do use bold upper details and dark bottoms; don't add volume to hips with ruffles or patterns. Perfect for curvy lower bodies aiming for proportion.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="body-shapes-grid">
             <div class="shape-card animate-on-scroll">
                 <img class="shape-image" src="Pics/hourglass.jpg" alt="Hourglass">
@@ -510,7 +901,7 @@
             <p class="info-description">
                 The female body shapes are based on societal standards that are subjective and are different in different cultures. The algorithm used in this calculator is based on a study published in the International Journal of Clothing Science and Technology, which breaks down the body shapes of women into 7 categories. There are very wide ranges of actual sizes within each shape. Also, some body shapes may not fit into any of the shapes listed below.
             </p>
-            
+
             <div class="shape-formulas">
                 <div class="formula-item">
                     <h4 class="formula-title">Hourglass</h4>
@@ -595,6 +986,7 @@
 
     <!-- JavaScript -->
     <script>
+<<<<<<< HEAD
         // Profile dropdown toggle
         const profileBtn = document.querySelector('.profile-btn');
         const profileDropdown = document.querySelector('.profile-dropdown');
@@ -621,6 +1013,8 @@
             });
         }
 
+=======
+>>>>>>> 2de62f752e7ff56c27b6ebd3bed41082985742e1
         // Chat functionality is now handled by chat.js
 
         // Body shape calculator
