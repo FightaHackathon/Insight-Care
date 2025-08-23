@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Treatment Options - SkinCare</title>
+  <link rel="stylesheet" href="modern-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Treatment specific styles */
+    .treatment-hero {
+      background: var(--gradient-background);
+      padding: var(--space-3xl) 0;
+      text-align: center;
+    }
+    
+    .treatment-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+    
+    .treatment-hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .treatment-hero-description {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      line-height: 1.7;
+    }
+    
+    .treatments-section {
+      max-width: 1200px;
+      margin: var(--space-3xl) auto;
+      padding: 0 var(--space-lg);
+    }
+    
+    .treatments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-xl);
+    }
+    
+    .treatment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .treatment-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+    
+    .treatment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    
+    .treatment-card:hover::before {
+      opacity: 1;
+    }
+    
+    .treatment-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform var(--transition);
+    }
+    
+    .treatment-card:hover .treatment-image {
+      transform: scale(1.05);
+    }
+    
+    .treatment-content {
+      padding: var(--space-xl);
+    }
+    
+    .treatment-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+    
+    .treatment-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .treatment-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    
+    .treatment-cta:hover {
+      gap: var(--space-md);
+    }
+    
+    .treatment-cta svg {
+      transition: transform var(--transition);
+    }
+    
+    .treatment-cta:hover svg {
+      transform: translateX(4px);
+    }
+    
+    @media (max-width: 768px) {
+      .treatment-hero-title {
+        font-size: 2rem;
+      }
+      
+      .treatments-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Modern Navigation Bar -->
+  <nav class="modern-nav">
+    <div class="nav-container">
+            <div class="nav-brand" style="display: flex;">
+                <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+                <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+            </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger active">
+                    Services
+                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </a>
+                <div class="nav-dropdown-menu">
+                    <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                    <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                    <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                    <a href="skin.html" class="dropdown-item">Skin Test</a>
+                    <a href="skinTone.html" class="dropdown-item">Skin Tone Test</a>
+                    <a href="treatment.html" class="dropdown-item active">Treatments</a>
+                </div>
+            </div>
+            <a href="clinic.html" class="nav-link">Clinics</a>
+            <a href="bookingList.html" class="nav-link">Bookings</a>
+        </div>
+        
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        
+        <div class="nav-actions">
+            <!-- Notification Bell -->
+            <div class="notification-container">
+                <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="notification-badge" id="notification-badge">0</span>
+                </button>
+                
+                <!-- Notification Dropdown -->
+                <div class="notification-dropdown" id="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="nav-notification-list">
+                        <div class="empty-notifications" id="nav-empty-notifications">
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <p>No notifications yet</p>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-container">
+                <button class="profile-btn" aria-label="User profile menu">
+                    <div class="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                    </div>
+                    <span class="profile-name">Guest</span>
+                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <div class="profile-dropdown" role="menu">
+                    <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        My Profile
+                    </a>
+                    <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        My Bookings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="Login.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                            <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Log In
+                    </a>
+                    <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                            <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link active">Treatments</a>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="treatment-hero">
+    <div class="treatment-hero-content">
+      <h1 class="treatment-hero-title">🌟 Treatment Options</h1>
+      <p class="treatment-hero-description">
+        Discover our comprehensive range of professional treatments designed to address your specific skin and hair concerns with proven results.
+      </p>
+    </div>
+  </section>
+
+  <!-- Treatments Section -->
+  <section class="treatments-section">
+    <div class="treatments-grid">
+      <div class="treatment-card animate-on-scroll" onclick="goToTreatment('acne')">
+        <img src="Pics/hormonal-acne.jpg" alt="Acne Treatment" class="treatment-image">
+        <div class="treatment-content">
+          <h3 class="treatment-title">Acne Treatment</h3>
+          <p class="treatment-description">Clear up breakouts & prevent future ones.</p>
+          <div class="treatment-cta">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="treatment-card animate-on-scroll" onclick="goToTreatment('hair-breakage')">
+        <img src="Pics/breakage.jpg" alt="Hair Breakage" class="treatment-image">
+        <div class="treatment-content">
+          <h3 class="treatment-title">Hair Breakage</h3>
+          <p class="treatment-description">Repair and strengthen damaged hair.</p>
+          <div class="treatment-cta">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="treatment-card animate-on-scroll" onclick="goToTreatment('anti-aging')">
+        <img src="Pics/antiAging.jpg" alt="Anti Aging" class="treatment-image">
+        <div class="treatment-content">
+          <h3 class="treatment-title">Anti-Aging</h3>
+          <p class="treatment-description">Smooth wrinkles and rejuvenate skin.</p>
+          <div class="treatment-cta">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="treatment-card animate-on-scroll" onclick="goToTreatment('dry-skin')">
+        <img src="Pics/skin.jpg" alt="Dry Skin" class="treatment-image">
+        <div class="treatment-content">
+          <h3 class="treatment-title">Dry Skin</h3>
+          <p class="treatment-description">Hydration solutions for flaky, itchy skin.</p>
+          <div class="treatment-cta">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat Component -->
+  <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+    <div class="chat-header" id="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="chat-title">SkinCare Support</span>
+          <span class="chat-status">Online</span>
+        </div>
+      </div>
+      <button id="close-chat" class="chat-close" aria-label="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+          <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-welcome">
+        <p>Hi! How can we help you with treatments today?</p>
+      </div>
+      <div class="question-list">
+        <button class="question">What's the best skincare routine for oily skin?</button>
+        <button class="question">Do your products contain parabens?</button>
+        <button class="question">Are your products cruelty-free?</button>
+        <button class="question">How long does shipping take?</button>
+        <button class="question">Can I return a product?</button>
+      </div>
+      <div id="chat-response" class="chat-response"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Treatment navigation function
+    function goToTreatment(slug) {
+      window.location.href = `treatment-details.html?treatment=${slug}`;
+    }
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    
+    if (mobileNavToggle && mobileNavMenu) {
+        mobileNavToggle.addEventListener('click', function() {
+            mobileNavMenu.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                mobileNavMenu.classList.remove('show');
+            }
+        });
+    }
+    
+    // Notification Dropdown Toggle
+    const notificationBtn = document.getElementById('notification-btn');
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    
+    if (notificationBtn && notificationDropdown) {
+        notificationBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('show');
+        });
+        
+        // Close notification dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                notificationDropdown.classList.remove('show');
+            }
+        });
+    }
+
+    // Profile dropdown toggle
+    const profileBtn = document.querySelector('.profile-btn');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    
+    profileBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const isOpen = profileDropdown.classList.contains('dropdown-open');
+      if (isOpen) {
+        profileDropdown.classList.remove('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        profileDropdown.classList.add('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    
+    window.addEventListener('click', function (e) {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove('dropdown-open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Chat functionality is now handled by chat.js
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+  <!-- TypeScript Modules -->
+  <script type="module" src="app.js"></script>
+  <script type="module" src="notifications.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>

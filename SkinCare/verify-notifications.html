@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification System Verification - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <style>
+        body {
+            padding: 2rem;
+            background: var(--background);
+            font-family: 'Inter', sans-serif;
+        }
+        .verification-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .page-card {
+            background: var(--surface-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+        }
+        .page-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .page-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .test-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .test-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        .status-success { background: #10b981; }
+        .status-warning { background: #f59e0b; }
+        .status-error { background: #ef4444; }
+        .instructions {
+            background: var(--surface-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+        .test-results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--surface-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+        }
+        .global-test-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+        }
+        .global-test-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .global-test-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <h1>🔔 Notification System Verification</h1>
+        <p>This page helps verify that the notification system is properly implemented across all pages in the SkinCare application.</p>
+
+        <div class="instructions">
+            <h3>📋 How to Test:</h3>
+            <ol>
+                <li><strong>Click "Test Page"</strong> buttons below to open each page in a new tab</li>
+                <li><strong>Look for the notification bell</strong> 🔔 in the top navigation bar</li>
+                <li><strong>Click the bell</strong> to see the dropdown with notifications</li>
+                <li><strong>Use demo buttons</strong> (if available) to trigger test notifications</li>
+                <li><strong>Verify cross-page sync</strong> by triggering notifications on one page and checking another</li>
+            </ol>
+        </div>
+
+        <div class="global-test-section">
+            <h3>🚀 Global Notification Tests</h3>
+            <p>Test the notification system from this page and see updates across all open pages:</p>
+            <button class="test-btn global-test-btn" onclick="triggerGlobalBookingTest()">
+                📅 Trigger Booking Notification
+            </button>
+            <button class="test-btn global-test-btn" onclick="triggerGlobalClinicTest()">
+                🏥 Trigger Clinic Update
+            </button>
+            <button class="test-btn global-test-btn" onclick="triggerBatchTest()">
+                📊 Trigger Batch Test (5 notifications)
+            </button>
+            <button class="test-btn global-test-btn" onclick="clearAllNotifications()">
+                🗑️ Clear All Notifications
+            </button>
+        </div>
+
+        <h2>📄 Pages with Notification System</h2>
+        <div class="page-grid">
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Home Page
+                </div>
+                <div class="page-description">Main landing page with search functionality</div>
+                <a href="index.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Profile Page
+                </div>
+                <div class="page-description">User profile with separate notifications section</div>
+                <a href="myProfile.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Clinics Listing
+                </div>
+                <div class="page-description">Browse all available clinics</div>
+                <a href="clinic.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Clinic Details
+                </div>
+                <div class="page-description">Individual clinic information and booking</div>
+                <a href="clinic-details.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Booking List
+                </div>
+                <div class="page-description">Manage your appointments and bookings</div>
+                <a href="bookingList.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Body Shape Analysis
+                </div>
+                <div class="page-description">Analyze your body shape for recommendations</div>
+                <a href="bodyShape.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Color Analysis
+                </div>
+                <div class="page-description">Discover your perfect color palette</div>
+                <a href="colorAnalysis.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Hair Test
+                </div>
+                <div class="page-description">Analyze your hair type and needs</div>
+                <a href="hairTest.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-success"></span>
+                    Treatments
+                </div>
+                <div class="page-description">Browse available skincare treatments</div>
+                <a href="treatment.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+
+            <div class="page-card">
+                <div class="page-title">
+                    <span class="status-indicator status-warning"></span>
+                    Notification Test Page
+                </div>
+                <div class="page-description">Dedicated testing page for notifications</div>
+                <a href="test-notifications.html" target="_blank" class="test-btn">Test Page</a>
+            </div>
+        </div>
+
+        <div class="test-results">
+            <h3>✅ Implementation Status</h3>
+            <ul>
+                <li><strong>9 Main Pages</strong> - All have notification bells implemented</li>
+                <li><strong>Cross-Page Sync</strong> - Notifications sync across all open tabs</li>
+                <li><strong>Persistent Storage</strong> - Notifications saved in localStorage</li>
+                <li><strong>Real-time Updates</strong> - Badge counts update automatically</li>
+                <li><strong>Mobile Responsive</strong> - Works on all device sizes</li>
+                <li><strong>Consistent Styling</strong> - Same look and feel everywhere</li>
+            </ul>
+        </div>
+
+        <div class="instructions">
+            <h3>🔍 What to Look For:</h3>
+            <ul>
+                <li><strong>Notification Bell</strong> - Should appear next to profile dropdown</li>
+                <li><strong>Badge Counter</strong> - Shows number of unread notifications</li>
+                <li><strong>Dropdown Menu</strong> - Click bell to see recent notifications</li>
+                <li><strong>Clear All Button</strong> - Removes all notifications</li>
+                <li><strong>View All Button</strong> - Opens full notifications page</li>
+                <li><strong>Toast Notifications</strong> - Appear when new notifications are triggered</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Global test functions
+        function triggerGlobalBookingTest() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.triggerBookingNotification({
+                    clinicName: 'Verification Test Clinic',
+                    date: new Date().toLocaleDateString(),
+                    time: '3:00 PM',
+                    service: 'Global Test Booking'
+                });
+                alert('✅ Booking notification triggered! Check all open pages to see the update.');
+            } else {
+                alert('⚠️ Notification system not loaded. Please wait a moment and try again.');
+            }
+        }
+
+        function triggerGlobalClinicTest() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.triggerClinicUpdateNotification({
+                    clinicName: 'Verification Test Clinic',
+                    updateType: 'System Verification',
+                    description: 'Global notification test from verification page'
+                });
+                alert('✅ Clinic update notification triggered! Check all open pages to see the update.');
+            } else {
+                alert('⚠️ Notification system not loaded. Please wait a moment and try again.');
+            }
+        }
+
+        function triggerBatchTest() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.examples.sampleBatch();
+                alert('✅ Batch test triggered! 5 notifications added. Check all open pages.');
+            } else {
+                alert('⚠️ Notification system not loaded. Please wait a moment and try again.');
+            }
+        }
+
+        function clearAllNotifications() {
+            if (window.skinCareApp) {
+                window.skinCareApp.clearAllNotifications();
+                alert('🗑️ All notifications cleared! Check all open pages to see the update.');
+            } else {
+                localStorage.removeItem('skincare-notifications');
+                alert('🗑️ Notifications cleared from storage. Refresh pages to see the update.');
+            }
+        }
+
+        // Display current notification count
+        function updateNotificationCount() {
+            const notifications = JSON.parse(localStorage.getItem('skincare-notifications') || '[]');
+            const count = notifications.length;
+            const unreadCount = notifications.filter(n => !n.read).length;
+            
+            console.log(`📊 Current notifications: ${count} total, ${unreadCount} unread`);
+        }
+
+        // Update count every 2 seconds
+        setInterval(updateNotificationCount, 2000);
+        updateNotificationCount();
+
+        // Instructions for console testing
+        console.log(`
+🔔 NOTIFICATION SYSTEM VERIFICATION
+==================================
+
+Current Status: All 9 main pages have notification bells implemented
+
+Console Commands:
+- SkinCareNotifications.examples.sampleBooking()
+- SkinCareNotifications.examples.sampleClinicUpdate()
+- SkinCareNotifications.examples.sampleBatch()
+
+Manual Testing:
+1. Open multiple pages in different tabs
+2. Trigger notifications on one page
+3. Check that badges update on all pages
+4. Verify dropdown shows recent notifications
+5. Test "View All" and "Clear All" functionality
+
+Pages with Notifications:
+✅ index.html (Home)
+✅ myProfile.html (Profile)
+✅ clinic.html (Clinics)
+✅ clinic-details.html (Clinic Details)
+✅ bookingList.html (Bookings)
+✅ bodyShape.html (Body Shape)
+✅ colorAnalysis.html (Color Analysis)
+✅ hairTest.html (Hair Test)
+✅ treatment.html (Treatments)
+        `);
+    </script>
+
+    <!-- Load notification system -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkinCare - Authentication</title>
+  <link rel="stylesheet" href="modern-styles.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Back to Home Button -->
+  <div class="back-to-home">
+    <a href="index.html" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Back to Home
+    </a>
+  </div>
+
+  <!-- Main Authentication Container -->
+  <div class="auth-container">
+    <!-- Background Elements -->
+    <div class="auth-background">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+      <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Authentication Card -->
+    <div class="auth-card">
+      <!-- Sliding Panel Container -->
+      <div class="auth-panels-container">
+        
+        <!-- Login Panel -->
+        <div class="auth-panel login-panel active" id="login-panel">
+          <div class="panel-content">
+            <div class="auth-header">
+              <div class="brand-logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">SkinCare</span>
+              </div>
+              <h1 class="auth-title">Welcome Back</h1>
+              <p class="auth-subtitle">Sign in to your account to continue your skincare journey</p>
+            </div>
+
+            <form class="auth-form" id="login-form" action="LoginServlet" method="post">
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="email" name="email" placeholder="Email" required class="auth-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="password" name="password" placeholder="Password" required class="auth-input" />
+                  <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" />
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">Remember me</span>
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+              </div>
+
+              <button type="submit" class="auth-btn primary">
+                <span>Sign In</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </form>
+
+
+
+            <div class="auth-switch">
+              <p>Don't have an account? <button type="button" class="switch-btn" onclick="switchToSignup()">Sign up</button></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Signup Panel -->
+        <div class="auth-panel signup-panel" id="signup-panel">
+          <div class="panel-content">
+            <div class="auth-header">
+              <div class="brand-logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">SkinCare</span>
+              </div>
+              <h1 class="auth-title">Create Account</h1>
+              <p class="auth-subtitle">Join us today and start your personalized skincare journey</p>
+            </div>
+
+            <form class="auth-form" id="signup-form" action="RegisterServlet" method="post">
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="text" name="name" placeholder="Full Name" required class="auth-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="m22 7-10 5L2 7" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="email" name="email" placeholder="Email Address" required class="auth-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="password" name="password" placeholder="Password" required class="auth-input" />
+                  <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-container">
+                  <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <input type="password" name="confirmPassword" placeholder="Confirm Password" required class="auth-input" />
+                </div>
+              </div>
+
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" required />
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">I agree to the <a href="#" class="terms-link">Terms & Conditions</a></span>
+                </label>
+              </div>
+
+              <button type="submit" class="auth-btn primary">
+                <span>Create Account</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </form>
+
+
+
+            <div class="auth-switch">
+              <p>Already have an account? <button type="button" class="switch-btn" onclick="switchToLogin()">Sign in</button></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Authentication functionality
+    let currentPanel = 'login';
+
+    // Check URL hash on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.location.hash === '#signup') {
+        switchToSignup();
+      }
+    });
+
+    function switchToSignup() {
+      if (currentPanel === 'signup') return;
+      
+      const loginPanel = document.getElementById('login-panel');
+      const signupPanel = document.getElementById('signup-panel');
+      
+      // Add slide-out animation to login panel
+      loginPanel.style.transform = 'translateX(-100%)';
+      loginPanel.style.opacity = '0';
+      
+      setTimeout(() => {
+        loginPanel.classList.remove('active');
+        signupPanel.classList.add('active');
+        
+        // Reset signup panel position and animate in
+        signupPanel.style.transform = 'translateX(100%)';
+        signupPanel.style.opacity = '0';
+        
+        setTimeout(() => {
+          signupPanel.style.transform = 'translateX(0)';
+          signupPanel.style.opacity = '1';
+        }, 50);
+      }, 300);
+      
+      currentPanel = 'signup';
+      document.title = 'SkinCare - Sign Up';
+    }
+
+    function switchToLogin() {
+      if (currentPanel === 'login') return;
+      
+      const loginPanel = document.getElementById('login-panel');
+      const signupPanel = document.getElementById('signup-panel');
+      
+      // Add slide-out animation to signup panel
+      signupPanel.style.transform = 'translateX(100%)';
+      signupPanel.style.opacity = '0';
+      
+      setTimeout(() => {
+        signupPanel.classList.remove('active');
+        loginPanel.classList.add('active');
+        
+        // Reset login panel position and animate in
+        loginPanel.style.transform = 'translateX(-100%)';
+        loginPanel.style.opacity = '0';
+        
+        setTimeout(() => {
+          loginPanel.style.transform = 'translateX(0)';
+          loginPanel.style.opacity = '1';
+        }, 50);
+      }, 300);
+      
+      currentPanel = 'login';
+      document.title = 'SkinCare - Login';
+    }
+
+    // Password toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const passwordToggles = document.querySelectorAll('.password-toggle');
+      
+      passwordToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          const input = this.previousElementSibling;
+          const icon = this.querySelector('.eye-icon');
+          
+          if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerHTML = `
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke="currentColor" stroke-width="2"/>
+              <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2"/>
+            `;
+          } else {
+            input.type = 'password';
+            icon.innerHTML = `
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            `;
+          }
+        });
+      });
+
+      // Form submission handlers
+      document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+<<<<<<< HEAD
+
+        // Show loading state
+        submitBtn.innerHTML = '<span>Signing In...</span>';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+
+        // Try different server URLs in case of port issues
+        const possibleUrls = [
+          '/api/auth/login', // New REST API endpoint (preferred)
+          form.action, // Original URL
+          'http://localhost:8085/api/auth/login', // Spring Boot REST API
+          'http://localhost:8085/LoginServlet', // Spring Boot servlet
+          'http://localhost:8080/LoginServlet', // Alternative port
+          '/LoginServlet' // Relative URL
+        ];
+
+        let lastError = null;
+        let success = false;
+
+        for (const url of possibleUrls) {
+          try {
+            console.log('Trying login URL:', url);
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: urlEncodedData
+            });
+
+            console.log('Response status:', res.status);
+
+            // Check if response is actually JSON
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+              const textResponse = await res.text();
+              console.log('Non-JSON response:', textResponse);
+              console.log('Response status:', res.status);
+              console.log('Response URL:', res.url);
+
+              // Show more detailed error information
+              if (res.status === 404) {
+                throw new Error(`Servlet not found (404). Server response: ${textResponse.substring(0, 200)}`);
+              } else if (res.status === 500) {
+                throw new Error(`Server error (500). Server response: ${textResponse.substring(0, 200)}`);
+              } else {
+                throw new Error(`Server returned non-JSON response (${res.status}): ${textResponse.substring(0, 200)}`);
+              }
+            }
+
+            const data = await res.json();
+            console.log('Response data:', data);
+
+            if (!res.ok) {
+              throw new Error(data.error || 'Login failed');
+            }
+
+            // Success
+            showMessage('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1000);
+
+            success = true;
+            break; // Exit the loop on success
+
+          } catch (err) {
+            console.error(`Failed with URL ${url}:`, err);
+            lastError = err;
+            continue; // Try next URL
+          }
+        }
+
+        if (!success) {
+          console.error('All login attempts failed. Last error:', lastError);
+          let errorMessage = 'Login failed: ';
+
+          if (lastError.message.includes('Failed to fetch')) {
+            errorMessage += 'Cannot connect to server. Please ensure the server is running on port 8085.';
+          } else if (lastError.message.includes('unexpected end of json input')) {
+            errorMessage += 'Server returned invalid response. Please check server logs.';
+          } else {
+            errorMessage += lastError.message;
+          }
+
+          showMessage(errorMessage, 'error');
+
+=======
+        
+        // Show loading state
+        submitBtn.innerHTML = '<span>Signing In...</span>';
+        submitBtn.disabled = true;
+        
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodedData
+          });
+          const data = await res.json();
+          
+          if (!res.ok) {
+            throw new Error(data.error || 'Login failed');
+          }
+          
+          // Success
+          showMessage('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1000);
+          
+        } catch (err) {
+          console.error('Login error:', err);
+          showMessage('Login failed: ' + err.message, 'error');
+          
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
+          // Reset button
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      document.getElementById('signup-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+<<<<<<< HEAD
+
+        // Get form values
+        const name = form.querySelector('input[name="name"]').value;
+        const email = form.querySelector('input[name="email"]').value;
+        const password = form.querySelector('input[name="password"]').value;
+        const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+=======
+        
+        // Validate password confirmation
+        const password = form.querySelector('input[name="password"]').value;
+        const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+<<<<<<< HEAD
+        
+=======
+        const termsAccepted = form.querySelector('input[name="terms"]').checked;
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
+
+        // Comprehensive validation
+
+        // Validate name
+        if (!name) {
+          showMessage('Name cannot be blank', 'error');
+          return;
+        }
+        if (name.length > 50) {
+          showMessage('Name cannot be more than 50 characters', 'error');
+          return;
+        }
+
+        // Validate email
+        if (!email) {
+          showMessage('Email cannot be blank', 'error');
+          return;
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+        if (!emailRegex.test(email)) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        if (!gmailRegex.test(email) && !emailRegex.test(email)) {
+          showMessage('Email must be a valid email address (preferably @gmail.com)', 'error');
+          return;
+        }
+
+        // Validate password
+        if (!password) {
+          showMessage('Password cannot be blank', 'error');
+          return;
+        }
+        if (password.length > 16) {
+          showMessage('Password cannot be more than 16 characters', 'error');
+          return;
+        }
+        if (password.length < 6) {
+          showMessage('Password must be at least 6 characters long', 'error');
+          return;
+        }
+        if (!/[A-Z]/.test(password)) {
+          showMessage('Password must contain at least 1 uppercase letter', 'error');
+          return;
+        }
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+          showMessage('Password must contain at least 1 special character (!@#$%^&*()_+-=[]{}|;\':"\\,.<>?/)', 'error');
+          return;
+        }
+
+        // Validate password confirmation
+<<<<<<< HEAD
+=======
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
+        if (password !== confirmPassword) {
+          showMessage('Passwords do not match', 'error');
+          return;
+        }
+<<<<<<< HEAD
+
+        // Show loading state
+        submitBtn.innerHTML = '<span>Creating Account...</span>';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+
+        // Try different server URLs in case of port issues
+        const possibleUrls = [
+          '/api/auth/register', // New REST API endpoint (preferred)
+          form.action, // Original URL
+          'http://localhost:8085/api/auth/register', // Spring Boot REST API
+          'http://localhost:8085/RegisterServlet', // Spring Boot servlet
+          'http://localhost:8080/RegisterServlet', // Alternative port
+          '/RegisterServlet' // Relative URL
+        ];
+
+        let lastError = null;
+        let success = false;
+
+        for (const url of possibleUrls) {
+          try {
+            console.log('Trying registration URL:', url);
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: urlEncodedData
+            });
+
+            console.log('Response status:', res.status);
+            console.log('Response headers:', res.headers);
+
+            // Check if response is actually JSON
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+              const textResponse = await res.text();
+              console.log('Non-JSON response:', textResponse);
+              console.log('Response status:', res.status);
+              console.log('Response URL:', res.url);
+
+              // Show more detailed error information
+              if (res.status === 404) {
+                throw new Error(`Servlet not found (404). Server response: ${textResponse.substring(0, 200)}`);
+              } else if (res.status === 500) {
+                throw new Error(`Server error (500). Server response: ${textResponse.substring(0, 200)}`);
+              } else {
+                throw new Error(`Server returned non-JSON response (${res.status}): ${textResponse.substring(0, 200)}`);
+              }
+            }
+
+            const data = await res.json();
+            console.log('Response data:', data);
+
+            if (!res.ok) {
+              throw new Error(data.error || 'Registration failed');
+            }
+
+            // Success - Check if user was automatically logged in
+            if (data.autoLogin && data.name) {
+              // Store user session data for automatic login
+              sessionStorage.setItem('userLoggedIn', 'true');
+              sessionStorage.setItem('userName', data.name);
+              sessionStorage.setItem('userEmail', data.email);
+
+              showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+              setTimeout(() => {
+                window.location.href = 'index.html';
+              }, 1500);
+            } else {
+              // Fallback if auto-login failed
+              showMessage('Account created successfully! Please log in to continue.', 'success');
+              setTimeout(() => {
+                switchToLogin();
+              }, 1500);
+            }
+
+            success = true;
+            break; // Exit the loop on success
+
+          } catch (err) {
+            console.error(`Failed with URL ${url}:`, err);
+            lastError = err;
+            continue; // Try next URL
+          }
+        }
+
+        if (!success) {
+          console.error('All registration attempts failed. Last error:', lastError);
+          let errorMessage = 'Registration failed: ';
+
+          if (lastError.message.includes('Failed to fetch')) {
+            errorMessage += 'Cannot connect to server. Please ensure the server is running on port 8085.';
+          } else if (lastError.message.includes('unexpected end of json input')) {
+            errorMessage += 'Server returned invalid response. Please check server logs.';
+          } else {
+            errorMessage += lastError.message;
+          }
+
+          showMessage(errorMessage, 'error');
+
+=======
+        
+        // Show loading state
+        submitBtn.innerHTML = '<span>Creating Account...</span>';
+        submitBtn.disabled = true;
+        
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodedData
+          });
+          const data = await res.json();
+          
+          if (!res.ok) {
+            throw new Error(data.error || 'Registration failed');
+          }
+          
+          // Success - Check if user was automatically logged in
+          if (data.autoLogin && data.name) {
+            // Store user session data for automatic login
+            sessionStorage.setItem('userLoggedIn', 'true');
+            sessionStorage.setItem('userName', data.name);
+            sessionStorage.setItem('userEmail', data.email);
+
+            showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } else {
+            // Fallback if auto-login failed
+            showMessage('Account created successfully! Please log in to continue.', 'success');
+            setTimeout(() => {
+              // Switch to login form
+              document.querySelector('.auth-toggle a[href="#login"]').click();
+            }, 1500);
+          }
+          
+        } catch (err) {
+          console.error('Signup error:', err);
+          showMessage('Registration failed: ' + err.message, 'error');
+          
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
+          // Reset button
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      // Message display function
+      function showMessage(message, type = 'info') {
+        // Remove existing messages
+        const existingMessages = document.querySelectorAll('.auth-message');
+        existingMessages.forEach(msg => msg.remove());
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `auth-message auth-message-${type}`;
+        messageDiv.textContent = message;
+        
+        // Add styles if not present
+        if (!document.querySelector('#message-styles')) {
+          const styles = document.createElement('style');
+          styles.id = 'message-styles';
+          styles.textContent = `
+            .auth-message {
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              padding: 12px 20px;
+              border-radius: 8px;
+              color: white;
+              font-weight: 500;
+              z-index: 10000;
+              animation: slideIn 0.3s ease-out;
+              max-width: 300px;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+            .auth-message-success { background: linear-gradient(135deg, #10b981, #059669); }
+            .auth-message-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+            .auth-message-info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+            @keyframes slideIn {
+              from { transform: translateX(100%); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+          `;
+          document.head.appendChild(styles);
+        }
+        
+        document.body.appendChild(messageDiv);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+          if (messageDiv.parentElement) {
+            messageDiv.remove();
+          }
+        }, 5000);
+      }
+
+      // Add floating animation to background shapes
+      const shapes = document.querySelectorAll('.floating-shape');
+      shapes.forEach((shape, index) => {
+        const delay = index * 0.5;
+        const duration = 3 + (index * 0.5);
+        shape.style.animationDelay = `${delay}s`;
+        shape.style.animationDuration = `${duration}s`;
+      });
+    });
+  </script>
+</body>
+</html>
