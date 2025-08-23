@@ -12,8 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         System.out.println("🔧 Configuring static resource handlers...");
 
-        // Serve static resources with specific patterns to avoid conflicts
-        registry.addResourceHandler("/css/**", "/js/**", "/images/**", "/*.html", "/*.css", "/*.js")
+        // Serve all static resources from classpath:/static/
+        registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
                 .setCachePeriod(3600);
 

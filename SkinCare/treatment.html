@@ -441,24 +441,27 @@
     const profileBtn = document.querySelector('.profile-btn');
     const profileDropdown = document.querySelector('.profile-dropdown');
     
-    profileBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const isOpen = profileDropdown.classList.contains('dropdown-open');
-      if (isOpen) {
-        profileDropdown.classList.remove('dropdown-open');
-        profileBtn.setAttribute('aria-expanded', 'false');
-      } else {
-        profileDropdown.classList.add('dropdown-open');
-        profileBtn.setAttribute('aria-expanded', 'true');
-      }
-    });
-    
-    window.addEventListener('click', function (e) {
-      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-        profileDropdown.classList.remove('dropdown-open');
-        profileBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isOpen = profileDropdown.classList.contains('dropdown-open');
+            if (isOpen) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                profileDropdown.classList.add('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('dropdown-open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 
     // Chat functionality is now handled by chat.js
 

@@ -9,6 +9,7 @@ class AuthManager {
         // Check if user is logged in on page load
         this.checkAuthStatus();
         this.updateNavigation();
+        this.setupProfileDropdown();
     }
 
     async checkAuthStatus() {
@@ -82,6 +83,62 @@ class AuthManager {
             if (profileName) {
                 profileName.textContent = 'Guest';
             }
+        }
+    }
+
+    async login(email, password) {
+        try {
+            console.log('Attempting login for:', email);
+
+            // Use the existing LoginServlet endpoint with form data
+            const formData = new URLSearchParams();
+            formData.append('email', email);
+            formData.append('password', password);
+
+            const response = await fetch('/LoginServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.status === 'ok') {
+                // Set user data
+                this.currentUser = {
+                    name: data.name,
+                    email: data.email
+                };
+
+                // Store in session storage for persistence
+                sessionStorage.setItem('userLoggedIn', 'true');
+                sessionStorage.setItem('userName', data.name);
+                sessionStorage.setItem('userEmail', data.email);
+
+                this.updateNavigation();
+
+                console.log('✅ Login successful for user:', data.name);
+
+                return {
+                    success: true,
+                    message: 'Login successful',
+                    user: this.currentUser
+                };
+            } else {
+                console.error('❌ Login failed:', data.error || 'Unknown error');
+                return {
+                    success: false,
+                    message: data.error || 'Login failed'
+                };
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            return {
+                success: false,
+                message: 'Network error during login'
+            };
         }
     }
 
@@ -213,11 +270,83 @@ class AuthManager {
     getCurrentUser() {
         return this.currentUser;
     }
+
+    // Setup profile dropdown functionality
+    setupProfileDropdown() {
+        // Use a small delay to ensure DOM is fully loaded
+        setTimeout(() => {
+            const profileBtn = document.querySelector('.profile-btn');
+            const profileDropdown = document.querySelector('.profile-dropdown');
+
+            console.log('Setting up profile dropdown...', { profileBtn, profileDropdown });
+
+            if (profileBtn && profileDropdown) {
+                // Remove any existing event listeners to avoid duplicates
+                if (this.profileClickHandler) {
+                    profileBtn.removeEventListener('click', this.profileClickHandler);
+                }
+
+                // Create bound handler
+                this.profileClickHandler = (e) => {
+                    console.log('Profile button clicked!');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const isOpen = profileDropdown.classList.contains('dropdown-open');
+                    console.log('Dropdown is currently open:', isOpen);
+                    if (isOpen) {
+                        profileDropdown.classList.remove('dropdown-open');
+                        profileBtn.setAttribute('aria-expanded', 'false');
+                        console.log('Closing dropdown');
+                    } else {
+                        profileDropdown.classList.add('dropdown-open');
+                        profileBtn.setAttribute('aria-expanded', 'true');
+                        console.log('Opening dropdown');
+                    }
+                };
+
+                // Add click handler
+                profileBtn.addEventListener('click', this.profileClickHandler);
+                console.log('Profile dropdown event listener added');
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                        profileDropdown.classList.remove('dropdown-open');
+                        profileBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            } else {
+                console.warn('Profile button or dropdown not found');
+            }
+        }, 100);
+    }
 }
 
+// Make AuthManager available globally
+window.AuthManager = AuthManager;
+
 // Initialize auth manager when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    window.authManager = new AuthManager();
+function initializeAuthManager() {
+    if (!window.authManager) {
+        console.log('Initializing AuthManager...');
+        window.authManager = new AuthManager();
+    }
+}
+
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAuthManager);
+} else {
+    // DOM is already loaded, initialize immediately
+    initializeAuthManager();
+}
+
+// Also initialize on window load as a fallback
+window.addEventListener('load', function() {
+    if (!window.authManager) {
+        console.log('Fallback: Initializing AuthManager on window load...');
+        window.authManager = new AuthManager();
+    }
 });
 
 // Export for use in other scripts
