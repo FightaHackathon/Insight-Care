@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile Settings - SkinCare</title>
+  <link rel="stylesheet" href="modern-styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Modern Navigation Bar -->
+  <nav class="modern-nav">
+    <div class="nav-container">
+        <div class="nav-brand" style="display: flex;">
+            <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+            <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger">
+                    Services
+                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </a>
+                <div class="nav-dropdown-menu">
+                    <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                    <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                    <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                    <a href="skin.html" class="dropdown-item">Skin Test</a>
+                    <a href="skinTone.html" class="dropdown-item">Skin Tone Test</a>
+                    <a href="treatment.html" class="dropdown-item">Treatments</a>
+                </div>
+            </div>
+            <a href="clinic.html" class="nav-link">Clinics</a>
+            <a href="bookingList.html" class="nav-link">Bookings</a>
+        </div>
+        
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        
+        <div class="nav-actions">
+            <!-- Notification Bell -->
+            <div class="notification-container">
+                <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="notification-badge" id="notification-badge">0</span>
+                </button>
+                
+                <!-- Notification Dropdown -->
+                <div class="notification-dropdown" id="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="nav-notification-list">
+                        <div class="empty-notifications" id="nav-empty-notifications">
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <p>No notifications yet</p>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <button class="view-all-btn" onclick="window.location.href='#notifications-section'">View All</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-container">
+                <button class="profile-btn active" aria-label="User profile menu">
+                    <div class="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                    </div>
+                    <span class="profile-name">Guest</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link">Treatments</a>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <div class="profile-page">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-cover">
+        <div class="cover-gradient"></div>
+        <input type="file" id="cover-upload" accept="image/*" style="display: none;">
+        <button class="cover-change-btn" id="cover-change-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Change Cover
+        </button>
+      </div>
+      
+      <div class="profile-info">
+        <div class="profile-avatar-large">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=120&h=120&fit=crop&crop=face" alt="Sarah Johnson" id="profile-avatar-img" />
+          <div class="avatar-status online"></div>
+          <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+          <button class="avatar-change-btn" id="avatar-change-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="profile-details">
+          <h1 class="profile-name">Guest</h1>
+          <p class="profile-title"></p>
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-number">127</span>
+              <span class="stat-label">Clinic Expats</span>
+            </div>
+              <div class="stat-item">
+              <span class="stat-number">67</span>
+              <span class="stat-label">Past relationships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Quick Stats</h3>
+          <div class="quick-stats">
+            <div class="quick-stat">
+              <div class="quick-stat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/>
+                  <path d="m2 17 10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                  <path d="m2 12 10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="quick-stat-info">
+                <span class="quick-stat-number">47</span>
+                <span class="quick-stat-label">Favorite Products</span>
+              </div>
+            </div>
+            
+            <div class="quick-stat">
+              <div class="quick-stat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="quick-stat-info">
+                <span class="quick-stat-number">23</span>
+                <span class="quick-stat-label">Reviews Written</span>
+              </div>
+            </div>
+            
+            <div class="quick-stat">
+              <div class="quick-stat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="quick-stat-info">
+                <span class="quick-stat-number">12</span>
+                <span class="quick-stat-label">Orders This Year</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Skin Profile</h3>
+          <div class="skin-profile">
+            <div class="skin-type">
+              <span class="skin-label">Skin Type:</span>
+              <span class="skin-value">Combination</span>
+            </div>
+            <div class="skin-concerns">
+              <span class="skin-label">Main Concerns:</span>
+              <div class="concern-tags">
+                <span class="concern-tag">Situationship</span>
+                <span class="concern-tag">10/10</span>
+                <span class="concern-tag">Red flag</span>
+                <span class="concern-tag">Aries</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="profile-main">
+        <div class="profile-tabs">
+          <nav class="tabs">
+            <button class="tab active" data-tab-id="account-settings">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Account Settings
+            </button>
+            <button class="tab" data-tab-id="journal">
+            <svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-journal-check">
+              <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+              Journal
+            </button>
+
+          </nav>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-panel active" id="account-settings">
+            <div class="panel-header">
+              <h2 class="panel-title">Account Settings</h2>
+              <p class="panel-description">Manage your personal information and account details</p>
+            </div>
+            
+            <form class="profile-form" id="profile-form">
+              <div class="form-section">
+                <h3 class="section-title">Personal Information</h3>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="firstName" class="field-label">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="field-input" value="Gin" required readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="lastName" class="field-label">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="field-input" value="-" required readonly />
+                  </div>
+                  
+                  <div class="form-field full-width">
+                    <label for="email" class="field-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="field-input" value="asonethone@gmail.com" required readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="phone" class="field-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="field-input" value="09-687114652" readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="birthdate" class="field-label">Birth Date</label>
+                    <input type="date" id="birthdate" name="birthdate" class="field-input" value="2004-12-23" readonly />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="section-title">Address Information</h3>
+                <div class="form-grid">
+                  <div class="form-field full-width">
+                    <label for="address" class="field-label">Street Address</label>
+                    <input type="text" id="address" name="address" class="field-input" value="190/110 slums" readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="city" class="field-label">City</label>
+                    <input type="text" id="city" name="city" class="field-input" value="ygn" readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="state" class="field-label">Township</label>
+                    <select id="state" name="state" class="field-input" disabled>
+                      <option value="sc" selected>Sanchaung</option>
+                      <option value="kmy">Kamaryut</option>
+                      <option value="kba">Kabaraye</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="zipCode" class="field-label">ZIP Code</label>
+                    <input type="text" id="zipCode" name="zipCode" class="field-input" value="90210" readonly />
+                  </div>
+                  
+                  <div class="form-field">
+                    <label for="country" class="field-label">Country</label>
+                    <select id="country" name="country" class="field-input" disabled>
+                      <option value="mm" selected>Myanmar</option>
+                      <option value="jpn">Japan</option>
+                      <option value="atk">Anteiku</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <!-- Edit Mode Button (visible by default) -->
+                <button type="button" class="btn btn-primary" id="edit-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  Edit Profile
+                </button>
+                
+                <!-- Save/Cancel Buttons (hidden by default) -->
+                <div class="edit-actions" id="edit-actions" style="display: none;">
+                  <button type="button" class="btn btn-secondary" id="cancel-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                      <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btn-primary" id="save-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="tab-panel" id="journal">
+            <div class="panel-header">
+              <h2 class="panel-title">Progress Journal</h2>
+              <p class="panel-description">Track your skincare journey with photos and progress notes</p>
+            </div>
+            
+            <div class="journal-content">
+              <!-- Upload Section -->
+              <div class="journal-section">
+                <div class="section-header">
+                  <h3 class="section-title">Upload Progress Photos</h3>
+                  <div class="upload-actions">
+                    <input type="file" id="photo-upload" accept="image/*" multiple style="display: none;">
+                    <button class="btn btn-primary" id="upload-btn">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2"/>
+                        <polyline points="17,8 12,3 7,8" stroke="currentColor" stroke-width="2"/>
+                        <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                      Upload Photos
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="upload-zone" id="upload-zone">
+                  <div class="upload-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <p>Drag and drop photos here or click upload button</p>
+                    <span class="upload-hint">Supports JPG, PNG, WebP (Max 5MB each)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filter and Sort Controls -->
+              <div class="journal-controls">
+                <div class="filter-controls">
+                  <h3 class="section-title">View Progress</h3>
+                  <div class="control-group">
+                    <div class="filter-item">
+                      <label for="time-filter" class="filter-label">Time Period:</label>
+                      <select id="time-filter" class="field-input">
+                        <option value="all">All Time</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="3months">Last 3 Months</option>
+                        <option value="6months">Last 6 Months</option>
+                        <option value="year">This Year</option>
+                      </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                      <label for="sort-filter" class="filter-label">Sort By:</label>
+                      <select id="sort-filter" class="field-input">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="progress">Progress Score</option>
+                      </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                      <label for="view-mode" class="filter-label">View:</label>
+                      <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                            <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                            <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                            <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                        <button class="view-btn" data-view="timeline">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <line x1="8" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Progress Gallery -->
+              <div class="progress-gallery" id="progress-gallery">
+                <div class="gallery-grid" id="gallery-grid">
+                  <!-- Sample Progress Entry -->
+                  <div class="progress-entry" data-date="2024-01-15">
+                    <div class="progress-image">
+                      <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=300&h=300&fit=crop" alt="Progress photo">
+                      <div class="image-overlay">
+                        <button class="overlay-btn edit-btn" title="Edit">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                        <button class="overlay-btn delete-btn" title="Delete">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2"/>
+                            <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="progress-info">
+                      <div class="progress-date">January 15, 2024</div>
+                      <div class="progress-notes">Starting my skincare journey. Focusing on acne treatment.</div>
+                      <div class="progress-tags">
+                        <span class="progress-tag">Week 1</span>
+                        <span class="progress-tag">Acne Treatment</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sample Progress Entry 2 -->
+                  <div class="progress-entry" data-date="2024-01-22">
+                    <div class="progress-image">
+                      <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=300&h=300&fit=crop&sat=-100" alt="Progress photo">
+                      <div class="image-overlay">
+                        <button class="overlay-btn edit-btn" title="Edit">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                        <button class="overlay-btn delete-btn" title="Delete">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2"/>
+                            <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="progress-info">
+                      <div class="progress-date">January 22, 2024</div>
+                      <div class="progress-notes">Week 2 - Some improvement visible. Continuing routine.</div>
+                      <div class="progress-tags">
+                        <span class="progress-tag">Week 2</span>
+                        <span class="progress-tag">Improvement</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sample Progress Entry 3 -->
+                  <div class="progress-entry" data-date="2024-02-15">
+                    <div class="progress-image">
+                      <img src="Pics/winterjpg.jpg" alt="Progress photo">
+                      <div class="image-overlay">
+                        <button class="overlay-btn edit-btn" title="Edit">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                        <button class="overlay-btn delete-btn" title="Delete">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2"/>
+                            <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="progress-info">
+                      <div class="progress-date">February 15, 2024</div>
+                      <div class="progress-notes">Month 1 complete! Significant improvement in skin texture.</div>
+                      <div class="progress-tags">
+                        <span class="progress-tag">Month 1</span>
+                        <span class="progress-tag">Great Progress</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Timeline View (hidden by default) -->
+                <div class="gallery-timeline" id="gallery-timeline" style="display: none;">
+                  <div class="timeline-container">
+                    <div class="timeline-item">
+                      <div class="timeline-marker"></div>
+                      <div class="timeline-content">
+                        <div class="timeline-date">February 15, 2024</div>
+                        <div class="timeline-entry">
+                          <img src="Pics/summer.jpg" alt="Progress photo">
+                          <div class="timeline-info">
+                            <h4>Month 1 Complete</h4>
+                            <p>Significant improvement in skin texture and reduced acne.</p>
+                            <div class="timeline-tags">
+                              <span class="progress-tag">Month 1</span>
+                              <span class="progress-tag">Great Progress</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-item">
+                      <div class="timeline-marker"></div>
+                      <div class="timeline-content">
+                        <div class="timeline-date">January 22, 2024</div>
+                        <div class="timeline-entry">
+                          <img src="Pics/autumn.jpg" alt="Progress photo">
+                          <div class="timeline-info">
+                            <h4>Week 2 Update</h4>
+                            <p>Some improvement visible. Continuing with current routine.</p>
+                            <div class="timeline-tags">
+                              <span class="progress-tag">Week 2</span>
+                              <span class="progress-tag">Improvement</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="timeline-item">
+                      <div class="timeline-marker"></div>
+                      <div class="timeline-content">
+                        <div class="timeline-date">January 15, 2024</div>
+                        <div class="timeline-entry">
+                          <img src="Pics/autumn.jpg" alt="Progress photo">
+                          <div class="timeline-info">
+                            <h4>Starting Journey</h4>
+                            <p>Beginning my skincare journey with focus on acne treatment.</p>
+                            <div class="timeline-tags">
+                              <span class="progress-tag">Week 1</span>
+                              <span class="progress-tag">Acne Treatment</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-gallery" id="empty-gallery" style="display: none;">
+                  <div class="empty-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <h3>No Progress Photos Yet</h3>
+                  <p>Start documenting your skincare journey by uploading your first photo!</p>
+                  <button class="btn btn-primary" onclick="document.getElementById('upload-btn').click()">
+                    Upload First Photo
+                  </button>
+                </div>
+              </div>
+
+              <!-- Progress Statistics -->
+              <div class="progress-stats">
+                <h3 class="section-title">Progress Overview</h3>
+                <div class="stats-grid">
+                  <div class="stat-card">
+                    <div class="stat-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <div class="stat-info">
+                      <div class="stat-number">24</div>
+                      <div class="stat-label">Total Photos</div>
+                    </div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <div class="stat-info">
+                      <div class="stat-number">8</div>
+                      <div class="stat-label">Weeks Tracked</div>
+                    </div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <polyline points="22,12 18,12 15,21 9,9 6,12 2,12" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <div class="stat-info">
+                      <div class="stat-number">85%</div>
+                      <div class="stat-label">Improvement</div>
+                    </div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <div class="stat-info">
+                      <div class="stat-number">3</div>
+                      <div class="stat-label">Goals Achieved</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Separate Notifications Section -->
+  <div class="notifications-section" id="notifications-section" style="display: none;">
+    <div class="container">
+      <div class="notifications-page">
+        <div class="notifications-header">
+          <h1>Notifications</h1>
+          <p>Stay updated with your appointments and clinic updates</p>
+          <button class="close-notifications-btn" onclick="closeNotificationsSection()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+              <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="notifications-content">
+          <!-- Demo Section (for testing) -->
+          <div class="notification-demo" style="margin-bottom: var(--space-xl);">
+            <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+              <button class="btn btn-primary" id="demo-booking-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Simulate Booking Notification
+              </button>
+              <button class="btn btn-secondary" id="demo-clinic-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Simulate Clinic Update
+              </button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--space-sm);">
+              Click to test the notification system
+            </p>
+          </div>
+
+          <!-- Notification List Container -->
+          <div class="notification-list" id="notification-list">
+            <!-- Empty State (shown when no notifications) -->
+            <div class="empty-notifications" id="empty-notifications">
+              <div class="empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <h3 class="empty-title">No notifications yet</h3>
+              <p class="empty-description">Your booking appointments and updates will appear here</p>
+            </div>
+          </div>
+
+          <!-- Notification Settings Section -->
+          <div class="notification-settings">
+            <h4 class="settings-title">Notification Preferences</h4>
+            <div class="notification-group">
+              <div class="notification-item">
+                <div class="notification-info">
+                  <span class="notification-title">Booking Confirmations</span>
+                  <span class="notification-description">Get notified when appointments are confirmed</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked id="booking-notifications">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              
+              <div class="notification-item">
+                <div class="notification-info">
+                  <span class="notification-title">Appointment Reminders</span>
+                  <span class="notification-description">Receive reminders 24 hours before appointments</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked id="reminder-notifications">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <span class="notification-title">Treatment Updates</span>
+                  <span class="notification-description">Updates about your skincare treatments</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked id="treatment-notifications">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Component -->
+  <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+    <div class="chat-header" id="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="chat-title">SkinCare Support</span>
+          <span class="chat-status">Online</span>
+        </div>
+      </div>
+      <button id="close-chat" class="chat-close" aria-label="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+          <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-welcome">
+        <p>Hi Sarah! How can we help you today?</p>
+      </div>
+      <div class="question-list">
+        <button class="question">What's the best skincare routine for oily skin?</button>
+        <button class="question">Do your products contain parabens?</button>
+        <button class="question">Are your products cruelty-free?</button>
+        <button class="question">How long does shipping take?</button>
+        <button class="question">Can I return a product?</button>
+      </div>
+      <div id="chat-response" class="chat-response"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Functions -->
+  <script>
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    
+    if (mobileNavToggle && mobileNavMenu) {
+        mobileNavToggle.addEventListener('click', function() {
+            mobileNavMenu.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                mobileNavMenu.classList.remove('show');
+            }
+        });
+    }
+    
+    // Notification Dropdown Toggle
+    const notificationBtn = document.getElementById('notification-btn');
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    
+    if (notificationBtn && notificationDropdown) {
+        notificationBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('show');
+        });
+        
+        // Close notification dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                notificationDropdown.classList.remove('show');
+            }
+        });
+    }
+    
+    function closeNotificationsSection() {
+      const notificationsSection = document.getElementById('notifications-section');
+      if (notificationsSection) {
+        notificationsSection.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // Close notifications section when clicking outside
+    document.addEventListener('click', function(e) {
+      const notificationsSection = document.getElementById('notifications-section');
+      const notificationsPage = document.querySelector('.notifications-page');
+      
+      if (notificationsSection && notificationsSection.style.display === 'flex') {
+        if (!notificationsPage.contains(e.target)) {
+          closeNotificationsSection();
+        }
+      }
+    });
+
+    // Profile photo and cover functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cover photo change functionality
+      const coverChangeBtn = document.getElementById('cover-change-btn');
+      const coverUpload = document.getElementById('cover-upload');
+      const profileCover = document.querySelector('.profile-cover');
+
+      if (coverChangeBtn && coverUpload) {
+        coverChangeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          coverUpload.click();
+        });
+
+        coverUpload.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              // Update the cover background
+              profileCover.style.backgroundImage = `url(${e.target.result})`;
+              profileCover.style.backgroundSize = 'cover';
+              profileCover.style.backgroundPosition = 'center';
+              
+              // Show success message
+              showImageUploadSuccess('Cover photo updated successfully!');
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      // Avatar photo change functionality
+      const avatarChangeBtn = document.getElementById('avatar-change-btn');
+      const avatarUpload = document.getElementById('avatar-upload');
+      const profileAvatarImg = document.getElementById('profile-avatar-img');
+      const navProfileImg = document.querySelector('.nav-actions .profile-avatar img');
+
+      if (avatarChangeBtn && avatarUpload) {
+        avatarChangeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          avatarUpload.click();
+        });
+
+        avatarUpload.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              // Update the profile avatar
+              if (profileAvatarImg) {
+                profileAvatarImg.src = e.target.result;
+              }
+              
+              // Update navigation avatar
+              if (navProfileImg) {
+                navProfileImg.src = e.target.result;
+              }
+              
+              // Show success message
+              showImageUploadSuccess('Profile photo updated successfully!');
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+    });
+
+    // Function to show image upload success message
+    function showImageUploadSuccess(message) {
+      // Create success notification
+      const notification = document.createElement('div');
+      notification.className = 'image-upload-success';
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--success);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        font-weight: 500;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      `;
+      
+      notification.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        ${message}
+      `;
+
+      document.body.appendChild(notification);
+
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Journal functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Photo upload functionality
+      const uploadBtn = document.getElementById('upload-btn');
+      const photoUpload = document.getElementById('photo-upload');
+      const uploadZone = document.getElementById('upload-zone');
+      
+      if (uploadBtn && photoUpload) {
+        uploadBtn.addEventListener('click', () => {
+          photoUpload.click();
+        });
+
+        photoUpload.addEventListener('change', handleFileUpload);
+      }
+
+      // Drag and drop functionality
+      if (uploadZone) {
+        uploadZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          uploadZone.classList.add('drag-over');
+        });
+
+        uploadZone.addEventListener('dragleave', (e) => {
+          e.preventDefault();
+          uploadZone.classList.remove('drag-over');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          uploadZone.classList.remove('drag-over');
+          const files = e.dataTransfer.files;
+          handleFiles(files);
+        });
+      }
+
+      // View toggle functionality
+      const viewBtns = document.querySelectorAll('.view-btn');
+      const galleryGrid = document.getElementById('gallery-grid');
+      const galleryTimeline = document.getElementById('gallery-timeline');
+
+      viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          
+          // Update active button
+          viewBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          // Toggle views
+          if (view === 'grid') {
+            galleryGrid.style.display = 'grid';
+            galleryTimeline.style.display = 'none';
+          } else {
+            galleryGrid.style.display = 'none';
+            galleryTimeline.style.display = 'block';
+          }
+        });
+      });
+
+      // Filter functionality
+      const timeFilter = document.getElementById('time-filter');
+      const sortFilter = document.getElementById('sort-filter');
+
+      if (timeFilter) {
+        timeFilter.addEventListener('change', filterPhotos);
+      }
+
+      if (sortFilter) {
+        sortFilter.addEventListener('change', sortPhotos);
+      }
+
+      // Edit and delete functionality
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.edit-btn')) {
+          handleEditPhoto(e.target.closest('.progress-entry'));
+        }
+        
+        if (e.target.closest('.delete-btn')) {
+          handleDeletePhoto(e.target.closest('.progress-entry'));
+        }
+      });
+    });
+
+    function handleFileUpload(e) {
+      const files = e.target.files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            addPhotoToGallery(e.target.result, file.name);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert('Please upload images only (max 5MB each)');
+        }
+      });
+    }
+
+    function addPhotoToGallery(imageSrc, fileName) {
+      const galleryGrid = document.getElementById('gallery-grid');
+      const currentDate = new Date().toISOString().split('T')[0];
+      const displayDate = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+
+      const progressEntry = document.createElement('div');
+      progressEntry.className = 'progress-entry';
+      progressEntry.dataset.date = currentDate;
+      
+      progressEntry.innerHTML = `
+        <div class="progress-image">
+          <img src="${imageSrc}" alt="Progress photo">
+          <div class="image-overlay">
+            <button class="overlay-btn edit-btn" title="Edit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+            <button class="overlay-btn delete-btn" title="Delete">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2"/>
+                <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="progress-info">
+          <div class="progress-date">${displayDate}</div>
+          <div class="progress-notes" contenteditable="true">Click to add notes about your progress...</div>
+          <div class="progress-tags">
+            <span class="progress-tag">New Upload</span>
+          </div>
+        </div>
+      `;
+
+      galleryGrid.insertBefore(progressEntry, galleryGrid.firstChild);
+      
+      // Hide empty state if visible
+      const emptyGallery = document.getElementById('empty-gallery');
+      if (emptyGallery) {
+        emptyGallery.style.display = 'none';
+      }
+    }
+
+    function handleEditPhoto(entry) {
+      const notesElement = entry.querySelector('.progress-notes');
+      const tagsContainer = entry.querySelector('.progress-tags');
+      
+      // Make notes editable
+      notesElement.contentEditable = true;
+      notesElement.focus();
+      
+      // Add save button
+      if (!entry.querySelector('.save-btn')) {
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'btn btn-sm btn-primary save-btn';
+        saveBtn.innerHTML = 'Save';
+        saveBtn.style.marginTop = '8px';
+        
+        saveBtn.addEventListener('click', () => {
+          notesElement.contentEditable = false;
+          saveBtn.remove();
+          // Here you would typically save to a database
+          console.log('Saved notes:', notesElement.textContent);
+        });
+        
+        entry.querySelector('.progress-info').appendChild(saveBtn);
+      }
+    }
+
+    function handleDeletePhoto(entry) {
+      if (confirm('Are you sure you want to delete this photo?')) {
+        entry.remove();
+        
+        // Show empty state if no photos left
+        const remainingPhotos = document.querySelectorAll('.progress-entry');
+        if (remainingPhotos.length === 0) {
+          const emptyGallery = document.getElementById('empty-gallery');
+          if (emptyGallery) {
+            emptyGallery.style.display = 'block';
+          }
+        }
+      }
+    }
+
+    function filterPhotos() {
+      const timeFilter = document.getElementById('time-filter').value;
+      const entries = document.querySelectorAll('.progress-entry');
+      const now = new Date();
+      
+      entries.forEach(entry => {
+        const entryDate = new Date(entry.dataset.date);
+        let show = true;
+        
+        switch(timeFilter) {
+          case 'week':
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            show = entryDate >= weekAgo;
+            break;
+          case 'month':
+            const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+            show = entryDate >= monthAgo;
+            break;
+          case '3months':
+            const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+            show = entryDate >= threeMonthsAgo;
+            break;
+          case '6months':
+            const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+            show = entryDate >= sixMonthsAgo;
+            break;
+          case 'year':
+            const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+            show = entryDate >= yearAgo;
+            break;
+          default:
+            show = true;
+        }
+        
+        entry.style.display = show ? 'block' : 'none';
+      });
+    }
+
+    function sortPhotos() {
+      const sortFilter = document.getElementById('sort-filter').value;
+      const galleryGrid = document.getElementById('gallery-grid');
+      const entries = Array.from(document.querySelectorAll('.progress-entry'));
+      
+      entries.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        
+        switch(sortFilter) {
+          case 'newest':
+            return dateB - dateA;
+          case 'oldest':
+            return dateA - dateB;
+          case 'progress':
+            // Simple progress scoring based on tags
+            const scoreA = a.querySelectorAll('.progress-tag').length;
+            const scoreB = b.querySelectorAll('.progress-tag').length;
+            return scoreB - scoreA;
+          default:
+            return dateB - dateA;
+        }
+      });
+      
+      // Re-append sorted entries
+      entries.forEach(entry => {
+        galleryGrid.appendChild(entry);
+      });
+    }
+  </script>
+
+  <!-- TypeScript Modules -->
+  <script type="module" src="app.js"></script>
+  <script type="module" src="notifications.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>
