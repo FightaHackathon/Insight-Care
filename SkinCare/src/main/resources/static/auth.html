@@ -296,10 +296,88 @@
         submitBtn.disabled = true;
 
         const formData = new FormData(form);
-        const email = formData.get('email');
-        const password = formData.get('password');
+        const urlEncodedData = new URLSearchParams(formData);
 
-        try {
+        // Try different server URLs in case of port issues
+        const possibleUrls = [
+          '/api/auth/login', // New REST API endpoint (preferred)
+          form.action, // Original URL
+          'http://localhost:8085/api/auth/login', // Spring Boot REST API
+          'http://localhost:8085/LoginServlet', // Spring Boot servlet
+          'http://localhost:8080/LoginServlet', // Alternative port
+          '/LoginServlet' // Relative URL
+        ];
+
+        let lastError = null;
+        let success = false;
+
+        for (const url of possibleUrls) {
+          try {
+            console.log('Trying login URL:', url);
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: urlEncodedData
+            });
+
+            console.log('Response status:', res.status);
+
+            // Check if response is actually JSON
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+              const textResponse = await res.text();
+              console.log('Non-JSON response:', textResponse);
+              console.log('Response status:', res.status);
+              console.log('Response URL:', res.url);
+
+              // Show more detailed error information
+              if (res.status === 404) {
+                throw new Error(`Servlet not found (404). Server response: ${textResponse.substring(0, 200)}`);
+              } else if (res.status === 500) {
+                throw new Error(`Server error (500). Server response: ${textResponse.substring(0, 200)}`);
+              } else {
+                throw new Error(`Server returned non-JSON response (${res.status}): ${textResponse.substring(0, 200)}`);
+              }
+            }
+
+            const data = await res.json();
+            console.log('Response data:', data);
+
+            if (!res.ok) {
+              throw new Error(data.error || 'Login failed');
+            }
+
+            // Success
+            showMessage('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1000);
+
+            success = true;
+            break; // Exit the loop on success
+
+          } catch (err) {
+            console.error(`Failed with URL ${url}:`, err);
+            lastError = err;
+            continue; // Try next URL
+          }
+        }
+
+        if (!success) {
+          console.error('All login attempts failed. Last error:', lastError);
+          let errorMessage = 'Login failed: ';
+
+          if (lastError.message.includes('Failed to fetch')) {
+            errorMessage += 'Cannot connect to server. Please ensure the server is running on port 8085.';
+          } else if (lastError.message.includes('unexpected end of json input')) {
+            errorMessage += 'Server returned invalid response. Please check server logs.';
+          } else {
+            errorMessage += lastError.message;
+          }
+
+          showMessage(errorMessage, 'error');
           // Ensure authManager is initialized
           if (!window.authManager) {
             // Initialize authManager if not available
@@ -330,9 +408,7 @@
             throw new Error('window.authManager.login is not a function');
           }
 
-        } catch (err) {
-          console.error('Login error:', err);
-          showMessage('Login failed: ' + err.message, 'error');
+        }
 
           // Reset button
           submitBtn.innerHTML = originalText;
@@ -345,8 +421,10 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        
-        // Validate password confirmation
+
+        // Get form values
+        const name = form.querySelector('input[name="name"]').value;
+        const email = form.querySelector('input[name="email"]').value;
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
         const termsAccepted = form.querySelector('input[name="terms"]').checked;
@@ -406,10 +484,108 @@
           showMessage('Passwords do not match', 'error');
           return;
         }
-        
+
         // Show loading state
         submitBtn.innerHTML = '<span>Creating Account...</span>';
         submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+
+        // Try different server URLs in case of port issues
+        const possibleUrls = [
+          '/api/auth/register', // New REST API endpoint (preferred)
+          form.action, // Original URL
+          'http://localhost:8085/api/auth/register', // Spring Boot REST API
+          'http://localhost:8085/RegisterServlet', // Spring Boot servlet
+          'http://localhost:8080/RegisterServlet', // Alternative port
+          '/RegisterServlet' // Relative URL
+        ];
+
+        let lastError = null;
+        let success = false;
+
+        for (const url of possibleUrls) {
+          try {
+            console.log('Trying registration URL:', url);
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: urlEncodedData
+            });
+
+            console.log('Response status:', res.status);
+            console.log('Response headers:', res.headers);
+
+            // Check if response is actually JSON
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+              const textResponse = await res.text();
+              console.log('Non-JSON response:', textResponse);
+              console.log('Response status:', res.status);
+              console.log('Response URL:', res.url);
+
+              // Show more detailed error information
+              if (res.status === 404) {
+                throw new Error(`Servlet not found (404). Server response: ${textResponse.substring(0, 200)}`);
+              } else if (res.status === 500) {
+                throw new Error(`Server error (500). Server response: ${textResponse.substring(0, 200)}`);
+              } else {
+                throw new Error(`Server returned non-JSON response (${res.status}): ${textResponse.substring(0, 200)}`);
+              }
+            }
+
+            const data = await res.json();
+            console.log('Response data:', data);
+
+            if (!res.ok) {
+              throw new Error(data.error || 'Registration failed');
+            }
+
+            // Success - Check if user was automatically logged in
+            if (data.autoLogin && data.name) {
+              // Store user session data for automatic login
+              sessionStorage.setItem('userLoggedIn', 'true');
+              sessionStorage.setItem('userName', data.name);
+              sessionStorage.setItem('userEmail', data.email);
+
+              showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+              setTimeout(() => {
+                window.location.href = 'index.html';
+              }, 1500);
+            } else {
+              // Fallback if auto-login failed
+              showMessage('Account created successfully! Please log in to continue.', 'success');
+              setTimeout(() => {
+                switchToLogin();
+              }, 1500);
+            }
+
+            success = true;
+            break; // Exit the loop on success
+
+          } catch (err) {
+            console.error(`Failed with URL ${url}:`, err);
+            lastError = err;
+            continue; // Try next URL
+          }
+        }
+
+        if (!success) {
+          console.error('All registration attempts failed. Last error:', lastError);
+          let errorMessage = 'Registration failed: ';
+
+          if (lastError.message.includes('Failed to fetch')) {
+            errorMessage += 'Cannot connect to server. Please ensure the server is running on port 8085.';
+          } else if (lastError.message.includes('unexpected end of json input')) {
+            errorMessage += 'Server returned invalid response. Please check server logs.';
+          } else {
+            errorMessage += lastError.message;
+          }
+
+          showMessage(errorMessage, 'error');
         
         const formData = new FormData(form);
         const urlEncodedData = new URLSearchParams(formData);
@@ -464,10 +640,7 @@
             }, 1500);
           }
           
-        } catch (err) {
-          console.error('Signup error:', err);
-          showMessage('Registration failed: ' + err.message, 'error');
-          
+        }
           // Reset button
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;

@@ -153,16 +153,16 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
-                    Transform Your Skin
-                    <span class="hero-highlight">Naturally</span>
+                    Discover your body 
+                    <span class="hero-highlight">Aesthetics Sense</span>
                 </h1>
                 <p class="hero-description">
-                    Discover premium skincare products crafted with natural ingredients 
-                    for radiant, healthy skin that glows from within.
+                    Discover clinics curated and tailored to your body and treatment needs.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn btn-primary">
-                        <span>Shop Now</span>
+                    <button class="btn btn-primary" onclick="window.location.href='clinic.html'">
+                        <span>Book Now</span>
+
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
                         </svg>
@@ -171,18 +171,9 @@
             </div>
             <div class="hero-image">
                 <div class="hero-card">
-                    <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=500&fit=crop" alt="Skincare Products" />
-                    <div class="hero-card-overlay">
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <span class="stat-number">50K+</span>
-                                <span class="stat-label">Happy Customers</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">4.9</span>
-                                <span class="stat-label">Rating</span>
-                            </div>
-                        </div>
+
+                    <img src="https://iskin-care.co.uk/wp-content/uploads/2025/03/clinic.webp" alt="Skincare Products" />
+
                     </div>
                 </div>
             </div>
@@ -571,7 +562,36 @@
             });
         }
         
+<<<<<<< HEAD
         // Profile Dropdown Toggle is now handled by auth-manager.js
+=======
+        // Profile Dropdown Toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isOpen = profileDropdown.classList.contains('dropdown-open');
+                if (isOpen) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    profileDropdown.classList.add('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+>>>>>>> 6c0520b12a64fe663ec4a1d64c25057198b513da
         
         // Services Dropdown Toggle
         const servicesDropdown = document.querySelector('.nav-dropdown');

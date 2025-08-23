@@ -19,7 +19,11 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
+<<<<<<< HEAD
+        <url-pattern>/api/*</url-pattern>
+=======
         <url-pattern>/</url-pattern>
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
     </servlet-mapping>
 
     <welcome-file-list>
