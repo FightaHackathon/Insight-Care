@@ -121,10 +121,104 @@
             text-align: center;
             display: none;
         }
-        
+
         .result-message.show {
             display: block;
             animation: slideInUp 0.3s ease-out;
+        }
+
+        .result-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .result-image-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+
+        .result-image-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .result-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-image-label {
+            padding: var(--space-md);
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            font-size: 0.9rem;
+            text-transform: capitalize;
+        }
+
+        .result-image-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            background: var(--surface-hover);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            background: var(--surface-hover);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .result-loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: var(--space-sm);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @keyframes slideInUp {
@@ -251,42 +345,212 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--space-lg);
         }
-        
+
         .formula-item {
             background: var(--surface-hover);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             border: 1px solid var(--border);
         }
-        
+
         .formula-title {
             font-weight: 700;
             color: var(--primary);
             margin-bottom: var(--space-sm);
         }
-        
+
         .formula-text {
             color: var(--text-secondary);
             font-size: 0.9rem;
             font-family: var(--font-mono);
         }
-        
+
+        /* Detailed Body Shape Cards */
+        .detailed-shapes-section {
+            max-width: 1200px;
+            margin: var(--space-3xl) auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .detailed-shapes-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            color: var(--text-primary);
+        }
+
+        .detailed-shapes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+        }
+
+        .detailed-shape-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .detailed-shape-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .detailed-shape-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: var(--space-xl);
+            text-align: center;
+            position: relative;
+        }
+
+        .detailed-shape-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 10px solid var(--primary);
+        }
+
+        .detailed-shape-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+        }
+
+        .detailed-shape-summary {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .detailed-shape-content {
+            padding: var(--space-xl);
+        }
+
+        .shape-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .shape-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .shape-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .shape-section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .shape-section-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .shape-tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .shape-tips-list li {
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            padding-left: var(--space-lg);
+        }
+
+        .shape-tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .shape-tips-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: var(--space-sm);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .shape-highlight {
+            background: rgba(255, 107, 157, 0.1);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary);
+            margin: var(--space-md) 0;
+        }
+
+        .shape-highlight-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+
         @media (max-width: 768px) {
             .body-hero-title {
                 font-size: 2rem;
             }
-            
+
             .calculator-section {
                 grid-template-columns: 1fr;
                 gap: var(--space-xl);
             }
-            
+
             .body-shapes-grid {
                 grid-template-columns: 1fr;
             }
-            
+
+            .detailed-shapes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detailed-shape-header {
+                padding: var(--space-lg);
+            }
+
+            .detailed-shape-name {
+                font-size: 1.25rem;
+            }
+
+            .detailed-shape-content {
+                padding: var(--space-lg);
+            }
+
             .shape-formulas {
                 grid-template-columns: 1fr;
+            }
+
+            .result-images {
+                grid-template-columns: 1fr;
+            }
+
+            .result-image {
+                height: 150px;
             }
         }
     </style>
@@ -365,9 +629,6 @@
                 
                 <div class="profile-container">
                     <button class="profile-btn" aria-label="User profile menu">
-                        <div class="profile-avatar">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
-                        </div>
                         <span class="profile-name">Guest</span>
                         <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
@@ -447,7 +708,12 @@
                 <input type="number" class="form-input" placeholder="High Hip Size (cm)" required />
                 <input type="number" class="form-input" placeholder="Hip Size (cm)" required />
                 <button type="submit" class="calculate-btn">Calculate Body Shape</button>
-                <div id="result-message" class="result-message"></div>
+                <div id="result-message" class="result-message">
+                    <div class="result-content">
+                        <div class="result-title" id="result-title"></div>
+                        <div class="result-images" id="result-images"></div>
+                    </div>
+                </div>
             </form>
         </div>
 
@@ -469,37 +735,199 @@
     <section class="body-shapes-section">
         <h2 class="body-shapes-title">Determine Your Body Shape</h2>
         <p class="body-shapes-subtitle">In the fashion industry, body shapes are often categorized into four classes.</p>
-        
-        <div class="body-shapes-grid">
-            <div class="shape-card animate-on-scroll">
-                <img class="shape-image" src="Pics/hourglass.jpg" alt="Hourglass">
-                <div class="shape-content">
-                    <h3 class="shape-title">Hourglass</h3>
-                    <p class="shape-description">This body shape describes a person with hip and bust measurements nearly equal in size, with a narrower waist measurement.</p>
-                </div>
-            </div>
 
-            <div class="shape-card animate-on-scroll">
-                <img class="shape-image" src="Pics/rectangle.jpg" alt="Rectangle">
-                <div class="shape-content">
-                    <h3 class="shape-title">Rectangle</h3>
-                    <p class="shape-description">This body shape describes a person who typically has waist measurements that are less than 9 inches smaller than the hip or bust measurements.</p>
-                </div>
-            </div>
+        <!-- Detailed Body Shape Cards -->
+        <div class="detailed-shapes-section">
+            <h2 class="detailed-shapes-title">Complete Body Shape Guide</h2>
 
-            <div class="shape-card animate-on-scroll">
-                <img class="shape-image" src="Pics/invertedTri.jpg" alt="Inverted Triangle">
-                <div class="shape-content">
-                    <h3 class="shape-title">Inverted Triangle</h3>
-                    <p class="shape-description">This body shape describes a person who has broader shoulders and bust than they do hips.</p>
-                </div>
-            </div>
+            <div class="detailed-shapes-grid">
+                <!-- Hourglass Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">⏳ Hourglass Body Shape</h3>
+                        <p class="detailed-shape-summary">The hourglass shape features balanced bust and hips with a defined waist, creating natural curves. Clothing should accentuate the waist while maintaining proportional balance between upper and lower body.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Fitted styles like wrap tops, belted shirts, or V-neck blouses to highlight the waist</li>
+                                    <li>Lightweight knitwear that follows your natural curves</li>
+                                    <li>Avoid boxy or overly embellished designs</li>
+                                </ul>
+                            </div>
+                        </div>
 
-            <div class="shape-card animate-on-scroll">
-                <img class="shape-image" src="Pics/pear.jpg" alt="Pear">
-                <div class="shape-content">
-                    <h3 class="shape-title">Pear</h3>
-                    <p class="shape-description">This body shape describes a person who has hip measurements greater than their bust measurements.</p>
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Bootcut or straight-leg jeans/pants</li>
+                                    <li>High-waisted skirts (pencil, A-line, or tulip)</li>
+                                    <li>Wide-legged trousers</li>
+                                    <li>Steer clear of low-rise or heavily detailed hips</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Wrap dresses, fitted sheaths, or belted styles that nip at the waist</li>
+                                    <li>Full-circle or bias-cut skirts for added volume balance</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do emphasize the waist with belts and fitted cuts; don't add unbalanced volume to shoulders or hips. Best for showcasing curves naturally.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rectangle Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">📐 Rectangle Body Shape</h3>
+                        <p class="detailed-shape-summary">The rectangle shape has straight lines with little waist definition, resembling a column. Focus on creating curves and waist illusion through volume and details.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Ruffled or embellished blouses, scoop-neck shirts</li>
+                                    <li>Layered styles; belted or nipped-waist designs</li>
+                                    <li>Avoid fitted sleeves or boxy cuts</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Flared pants like bootcut or wide-leg</li>
+                                    <li>Low-rise jeans with pockets/whiskering</li>
+                                    <li>A-line or pleated skirts</li>
+                                    <li>Steer clear of straight-fitted trousers</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Belted or asymmetrical dresses</li>
+                                    <li>Wrap styles with ruching</li>
+                                    <li>Add volume with layers or patterns</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do add volume with ruffles, patterns, and belts; don't wear square necklines or high-rise bottoms that emphasize straightness. Ideal for athletic builds seeking dimension.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inverted Triangle Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">🔺 Inverted Triangle Body Shape</h3>
+                        <p class="detailed-shape-summary">This shape has broader shoulders/bust and narrower hips. Aim to balance by adding volume below the waist and minimizing the upper body.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>V-neck or scoop blouses, wrap styles in dark colors</li>
+                                    <li>Slim-fit knitwear</li>
+                                    <li>Avoid shoulder pads or wide necklines</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Wide-leg or flared pants</li>
+                                    <li>Palazzo trousers with patterns/pockets</li>
+                                    <li>Bootcut jeans in light colors</li>
+                                    <li>Steer clear of skinny fits</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Fit-and-flare or A-line dresses that cinch at waist and flare at hips</li>
+                                    <li>Asymmetric styles</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do use bright bottoms and flared sleeves; don't add embellishments to shoulders or wear off-shoulder tops. Suited for athletic upper bodies needing lower balance.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pear Body Shape Card -->
+                <div class="detailed-shape-card animate-on-scroll">
+                    <div class="detailed-shape-header">
+                        <h3 class="detailed-shape-name">🍐 Pear Body Shape</h3>
+                        <p class="detailed-shape-summary">The pear shape features wider hips/thighs and narrower shoulders with a defined waist. Emphasize the upper body to create balance and draw eyes upward.</p>
+                    </div>
+                    <div class="detailed-shape-content">
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Tops</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Boat-neck or embellished blouses, structured shoulders</li>
+                                    <li>Bright/patterned styles; cropped or tucked-in shirts</li>
+                                    <li>Avoid boxy or peplum designs</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Bottoms</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>Bootcut or straight-leg pants in dark colors</li>
+                                    <li>Mid/high-waisted trousers</li>
+                                    <li>A-line skirts knee-length</li>
+                                    <li>Steer clear of skinny jeans or embellished pockets</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-section">
+                            <h4 class="shape-section-title">Suitable Dresses</h4>
+                            <div class="shape-section-content">
+                                <ul class="shape-tips-list">
+                                    <li>A-line or X-line with fitted waists and flowing skirts</li>
+                                    <li>Looser fits to skim hips</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="shape-highlight">
+                            <div class="shape-highlight-title">General Tips</div>
+                            <div class="shape-section-content">Do use bold upper details and dark bottoms; don't add volume to hips with ruffles or patterns. Perfect for curvy lower bodies aiming for proportion.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -510,7 +938,7 @@
             <p class="info-description">
                 The female body shapes are based on societal standards that are subjective and are different in different cultures. The algorithm used in this calculator is based on a study published in the International Journal of Clothing Science and Technology, which breaks down the body shapes of women into 7 categories. There are very wide ranges of actual sizes within each shape. Also, some body shapes may not fit into any of the shapes listed below.
             </p>
-            
+
             <div class="shape-formulas">
                 <div class="formula-item">
                     <h4 class="formula-title">Hourglass</h4>
@@ -595,6 +1023,31 @@
 
     <!-- JavaScript -->
     <script>
+        // Profile dropdown toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const isOpen = profileDropdown.classList.contains('dropdown-open');
+                if (isOpen) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    profileDropdown.classList.add('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
         // Chat functionality is now handled by chat.js
 
         // Body shape calculator
@@ -604,7 +1057,7 @@
             const inputs = document.querySelectorAll('.form-input');
             const bust = parseFloat(inputs[0].value);
             const waist = parseFloat(inputs[1].value);
-            const highHip = parseFloat(inputs[2].value); 
+            const highHip = parseFloat(inputs[2].value);
             const hip = parseFloat(inputs[3].value);
 
             let result = "";
@@ -622,10 +1075,108 @@
                 result = "Rectangle";
             }
 
-            const resultElement = document.getElementById("result-message");
-            resultElement.textContent = "Your body shape is: " + result + "!";
-            resultElement.classList.add('show');
+            // Display result with images
+            displayBodyShapeResult(result);
         });
+
+        function displayBodyShapeResult(bodyShape) {
+            const resultElement = document.getElementById("result-message");
+            const resultTitle = document.getElementById("result-title");
+            const resultImages = document.getElementById("result-images");
+
+            // Set the title
+            resultTitle.textContent = `Your body shape is: ${bodyShape}!`;
+
+            // Clear previous images
+            resultImages.innerHTML = '';
+
+            // Map body shape names to folder names
+            const folderMap = {
+                "Hourglass": "Hourglass",
+                "Inverted Triangle": "Inverted triangle",
+                "Pear": "Pear",
+                "Rectangle": "Rectangle",
+                "Apple": "Rectangle" // Apple shape uses Rectangle images as fallback
+            };
+
+            const folderName = folderMap[bodyShape] || "Rectangle";
+            const basePath = `body%20shapes%20results/${encodeURIComponent(folderName)}/`;
+
+            // Image categories to display
+            const imageCategories = [
+                { file: "suitable tops.webp", label: "Suitable Tops" },
+                { file: "suitable bottoms.webp", label: "Suitable Bottoms" },
+                { file: "suitable dresses.webp", label: "Suitable Dresses" }
+            ];
+
+            // Create image cards
+            imageCategories.forEach(category => {
+                const imageCard = document.createElement('div');
+                imageCard.className = 'result-image-card';
+
+                // Create loading placeholder
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'result-loading';
+                loadingDiv.textContent = 'Loading...';
+
+                const img = document.createElement('img');
+                img.className = 'result-image';
+                img.src = basePath + encodeURIComponent(category.file);
+                img.alt = `${bodyShape} - ${category.label}`;
+                img.loading = 'lazy';
+                img.style.display = 'none'; // Hide initially
+
+                // Debug: Log the image path to console
+                console.log('Loading image:', img.src);
+
+                // Add timeout for loading state (10 seconds)
+                const loadingTimeout = setTimeout(() => {
+                    if (loadingDiv.style.display !== 'none') {
+                        console.warn('Image loading timeout:', img.src);
+                        img.onerror(); // Trigger error handler
+                    }
+                }, 10000);
+
+                // Add load handler
+                img.onload = function() {
+                    console.log('Image loaded successfully:', this.src);
+                    clearTimeout(loadingTimeout);
+                    loadingDiv.style.display = 'none';
+                    this.style.display = 'block';
+                };
+
+                // Add error handling for missing images
+                img.onerror = function() {
+                    console.error('Failed to load image:', this.src);
+                    clearTimeout(loadingTimeout);
+                    loadingDiv.style.display = 'none';
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'result-image-error';
+                    errorMsg.innerHTML = `
+                        <div style="text-align: center;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin-bottom: 8px; opacity: 0.5;">
+                                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+                            </svg>
+                            <div>Image not available</div>
+                            <div style="font-size: 0.8rem; margin-top: 4px;">Path: ${this.src}</div>
+                        </div>
+                    `;
+                    imageCard.appendChild(errorMsg);
+                };
+
+                const label = document.createElement('div');
+                label.className = 'result-image-label';
+                label.textContent = category.label;
+
+                imageCard.appendChild(loadingDiv);
+                imageCard.appendChild(img);
+                imageCard.appendChild(label);
+                resultImages.appendChild(imageCard);
+            });
+
+            // Show the result with animation
+            resultElement.classList.add('show');
+        }
 
         // Mobile Navigation Toggle
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -662,7 +1213,7 @@
             });
         }
         
-        // Profile Dropdown Toggle is now handled by auth-manager.js
+
 
         // Scroll animations
         const observerOptions = {
@@ -685,10 +1236,7 @@
 
     <!-- Chat Module -->
     <script src="chat.js"></script>
-
-    <!-- Authentication Manager -->
-    <script src="auth-manager.js"></script>
-
+    
     <!-- TypeScript Modules -->
     <script type="module" src="app.js"></script>
     <script type="module" src="notifications.js"></script>

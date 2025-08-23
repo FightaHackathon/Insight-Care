@@ -308,9 +308,6 @@
                 
                 <div class="profile-container">
                     <button class="profile-btn" aria-label="User profile menu">
-                        <div class="profile-avatar">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
-                        </div>
                         <span class="profile-name">Guest</span>
                         <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
@@ -665,24 +662,27 @@
         const profileBtn = document.querySelector('.profile-btn');
         const profileDropdown = document.querySelector('.profile-dropdown');
         
-        profileBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const isOpen = profileDropdown.classList.contains('dropdown-open');
-            if (isOpen) {
-                profileDropdown.classList.remove('dropdown-open');
-                profileBtn.setAttribute('aria-expanded', 'false');
-            } else {
-                profileDropdown.classList.add('dropdown-open');
-                profileBtn.setAttribute('aria-expanded', 'true');
-            }
-        });
-        
-        window.addEventListener('click', function (e) {
-            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-                profileDropdown.classList.remove('dropdown-open');
-                profileBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const isOpen = profileDropdown.classList.contains('dropdown-open');
+                if (isOpen) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    profileDropdown.classList.add('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+            
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
 
         // Chat functionality is now handled by chat.js
 
@@ -784,19 +784,12 @@
     <script src="chat.js"></script>
 <<<<<<< HEAD
 
-    <!-- Authentication Manager -->
-    <script src="auth-manager.js"></script>
-
-=======
-<<<<<<< HEAD
-
     <!-- Admin Sync Module -->
     <script src="clinic-admin-sync.js"></script>
 
 =======
     
 >>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
->>>>>>> 6c0520b12a64fe663ec4a1d64c25057198b513da
     <!-- TypeScript Modules -->
     <script type="module" src="app.js"></script>
     <script type="module" src="notifications.js"></script>
