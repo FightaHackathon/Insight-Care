@@ -2,6 +2,7 @@ package com.skincare.dao;
 
 import com.skincare.DBconnection;
 import com.skincare.model.User;
+import com.skincare.util.PasswordUtil;
 
 import java.sql.*;
 
@@ -10,9 +11,9 @@ public class UserDao {
         // Check if the table exists and matches your existing structure
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                "name VARCHAR(255) NOT NULL, " +
+                "name VARCHAR(9) NOT NULL, " +
                 "email VARCHAR(255) NOT NULL UNIQUE, " +
-                "password VARCHAR(255) NOT NULL, " +
+                "password VARCHAR(60) NOT NULL, " +
                 "role ENUM('user', 'admin') DEFAULT 'user', " +
                 "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                 "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" +
@@ -65,24 +66,32 @@ public class UserDao {
     }
 
     public User findByEmailAndPassword(String email, String password) throws SQLException {
-        String sql = "SELECT id, name, email, password, role FROM users WHERE email=? AND password=?";
+        // First find user by email only
+        String sql = "SELECT id, name, email, password, role FROM users WHERE email=?";
         try (Connection conn = DBconnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             System.out.println("🔍 Attempting to find user: " + email);
 
             ps.setString(1, email);
-            ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    User u = new User();
-                    u.setId(rs.getInt("id"));
-                    u.setName(rs.getString("name"));
-                    u.setEmail(rs.getString("email"));
-                    u.setPassword(rs.getString("password"));
-                    u.setRole(rs.getString("role"));
-                    System.out.println("✅ User found: " + u.getName() + " (ID: " + u.getId() + ", Role: " + u.getRole() + ")");
-                    return u;
+                    String storedPassword = rs.getString("password");
+
+                    // Verify password using BCrypt
+                    if (PasswordUtil.verifyPassword(password, storedPassword)) {
+                        User u = new User();
+                        u.setId(rs.getInt("id"));
+                        u.setName(rs.getString("name"));
+                        u.setEmail(rs.getString("email"));
+                        u.setPassword(storedPassword);
+                        u.setRole(rs.getString("role"));
+                        System.out.println("✅ User found and password verified: " + u.getName() + " (ID: " + u.getId() + ", Role: " + u.getRole() + ")");
+                        return u;
+                    } else {
+                        System.out.println("❌ Password verification failed for email: " + email);
+                        return null;
+                    }
                 } else {
                     System.out.println("❌ No user found with email: " + email);
                     return null;
