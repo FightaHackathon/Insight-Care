@@ -153,6 +153,7 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
+<<<<<<< HEAD
                     Discover your body 
                     <span class="hero-highlight">Aesthetics Sense</span>
                 </h1>
@@ -162,6 +163,18 @@
                 <div class="hero-actions">
                     <button class="btn btn-primary" onclick="window.location.href='clinic.html'">
                         <span>Book Now</span>
+=======
+                    Transform Your Skin
+                    <span class="hero-highlight">Naturally</span>
+                </h1>
+                <p class="hero-description">
+                    Discover premium skincare products crafted with natural ingredients 
+                    for radiant, healthy skin that glows from within.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">
+                        <span>Shop Now</span>
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
                         </svg>
@@ -170,8 +183,13 @@
             </div>
             <div class="hero-image">
                 <div class="hero-card">
+<<<<<<< HEAD
                     <img src="https://iskin-care.co.uk/wp-content/uploads/2025/03/clinic.webp" alt="Skincare Products" />
                     <!-- <div class="hero-card-overlay">
+=======
+                    <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=500&fit=crop" alt="Skincare Products" />
+                    <div class="hero-card-overlay">
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
                         <div class="hero-stats">
                             <div class="stat-item">
                                 <span class="stat-number">50K+</span>
@@ -182,7 +200,11 @@
                                 <span class="stat-label">Rating</span>
                             </div>
                         </div>
+<<<<<<< HEAD
                     </div> -->
+=======
+                    </div>
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
                 </div>
             </div>
         </div>
@@ -573,6 +595,7 @@
         // Profile Dropdown Toggle
         const profileBtn = document.querySelector('.profile-btn');
         const profileDropdown = document.querySelector('.profile-dropdown');
+<<<<<<< HEAD
 
         if (profileBtn && profileDropdown) {
             profileBtn.addEventListener('click', function(e) {
@@ -593,6 +616,19 @@
                 if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
                     profileDropdown.classList.remove('dropdown-open');
                     profileBtn.setAttribute('aria-expanded', 'false');
+=======
+        
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('show');
+            });
+            
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('show');
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
                 }
             });
         }

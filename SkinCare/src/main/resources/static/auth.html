@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<<<<<<< HEAD
   <title>SkinCare - Authentication</title>
+=======
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>SkinCare - Authentication v4 - CACHE BYPASS</title>
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
   <link rel="stylesheet" href="modern-styles.css">
   <link rel="stylesheet" href="auth.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +55,11 @@
               <p class="auth-subtitle">Sign in to your account to continue your skincare journey</p>
             </div>
 
+<<<<<<< HEAD
             <form class="auth-form" id="login-form" action="LoginServlet" method="post">
+=======
+            <form class="auth-form" id="login-form">
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
               <div class="form-group">
                 <div class="input-container">
                   <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -293,6 +304,7 @@
         submitBtn.disabled = true;
 
         const formData = new FormData(form);
+<<<<<<< HEAD
         const urlEncodedData = new URLSearchParams(formData);
 
         // Try different server URLs in case of port issues
@@ -375,6 +387,31 @@
           }
 
           showMessage(errorMessage, 'error');
+=======
+        const email = formData.get('email');
+        const password = formData.get('password');
+
+        try {
+          // Use auth manager's login method
+          if (window.authManager) {
+            const result = await window.authManager.login(email, password);
+
+            if (result.success) {
+              showMessage('Login successful! Redirecting...', 'success');
+              setTimeout(() => {
+                window.location.href = 'index.html';
+              }, 1000);
+            } else {
+              throw new Error(result.message || 'Login failed');
+            }
+          } else {
+            throw new Error('Authentication manager not available');
+          }
+
+        } catch (err) {
+          console.error('Login error:', err);
+          showMessage('Login failed: ' + err.message, 'error');
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
 
           // Reset button
           submitBtn.innerHTML = originalText;
@@ -387,12 +424,23 @@
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
+<<<<<<< HEAD
 
         // Get form values
         const name = form.querySelector('input[name="name"]').value;
         const email = form.querySelector('input[name="email"]').value;
         const password = form.querySelector('input[name="password"]').value;
         const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+=======
+        
+        // Validate password confirmation
+        const password = form.querySelector('input[name="password"]').value;
+        const confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
+<<<<<<< HEAD
+        
+=======
+        const termsAccepted = form.querySelector('input[name="terms"]').checked;
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
 
         // Comprehensive validation
 
@@ -445,10 +493,15 @@
         }
 
         // Validate password confirmation
+<<<<<<< HEAD
+=======
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
         if (password !== confirmPassword) {
           showMessage('Passwords do not match', 'error');
           return;
         }
+<<<<<<< HEAD
 
         // Show loading state
         submitBtn.innerHTML = '<span>Creating Account...</span>';
@@ -552,6 +605,77 @@
 
           showMessage(errorMessage, 'error');
 
+=======
+        
+        // Show loading state
+        submitBtn.innerHTML = '<span>Creating Account...</span>';
+        submitBtn.disabled = true;
+        
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData);
+
+        // Debug: Log form data (v3 - cache test)
+        console.log('Form data being sent (v3):');
+        for (let [key, value] of urlEncodedData.entries()) {
+          console.log(key + ': ' + value);
+        }
+        console.log('URL encoded data:', urlEncodedData.toString());
+        console.log('Cache test: This should show v3 if cache is cleared');
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodedData
+          });
+          const data = await res.json();
+          
+          if (!res.ok) {
+            throw new Error(data.error || 'Registration failed');
+          }
+          
+<<<<<<< HEAD
+          // Success - update auth manager with user data
+          if (window.authManager && data.name) {
+            window.authManager.setUser({
+              name: data.name,
+              email: data.email
+            });
+          }
+
+          showMessage('Account created successfully! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1000);
+=======
+          // Success - Check if user was automatically logged in
+          if (data.autoLogin && data.name) {
+            // Store user session data for automatic login
+            sessionStorage.setItem('userLoggedIn', 'true');
+            sessionStorage.setItem('userName', data.name);
+            sessionStorage.setItem('userEmail', data.email);
+
+            showMessage('Account created successfully! You are now logged in. Redirecting to home...', 'success');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } else {
+            // Fallback if auto-login failed
+            showMessage('Account created successfully! Please log in to continue.', 'success');
+            setTimeout(() => {
+              // Switch to login form
+              document.querySelector('.auth-toggle a[href="#login"]').click();
+            }, 1500);
+          }
+>>>>>>> cfb02d9f23aa1a1d54d598ad0af3ff375b3435d4
+          
+        } catch (err) {
+          console.error('Signup error:', err);
+          showMessage('Registration failed: ' + err.message, 'error');
+          
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
           // Reset button
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
@@ -617,5 +741,9 @@
       });
     });
   </script>
+<<<<<<< HEAD
+=======
+  <script src="auth-manager.js"></script>
+>>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
 </body>
 </html>
