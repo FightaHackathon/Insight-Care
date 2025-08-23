@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Notifications - SkinCare</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <style>
+        body {
+            padding: 2rem;
+            background: var(--background);
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+        }
+        .test-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .nav-demo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-demo h2 {
+            margin: 0;
+            color: var(--primary);
+        }
+        .main-content {
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Navigation with Notification Bell -->
+    <div class="nav-demo">
+        <h2>SkinCare - Notification Test</h2>
+        <div class="nav-actions">
+            <!-- Notification Bell -->
+            <div class="notification-container">
+                <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="notification-badge" id="notification-badge">0</span>
+                </button>
+                
+                <!-- Notification Dropdown -->
+                <div class="notification-dropdown" id="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="nav-notification-list">
+                        <div class="empty-notifications" id="nav-empty-notifications">
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <p>No notifications yet</p>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <button class="view-all-btn" onclick="alert('Would navigate to full notifications page')">View All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="test-container">
+            <h1>🔔 Notification System Test</h1>
+            <p>Test the notification system by clicking the buttons below. Watch the notification bell in the top navigation!</p>
+
+            <div class="test-section">
+                <h3>📅 Booking Notifications</h3>
+                <p>Simulate appointment booking notifications</p>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testBookingNotification()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Test Booking Notification
+                    </button>
+                    <button class="btn btn-success" onclick="testMultipleBookings()">Multiple Bookings</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🏥 Clinic Update Notifications</h3>
+                <p>Simulate clinic information update notifications</p>
+                <div class="test-buttons">
+                    <button class="btn btn-secondary" onclick="testClinicUpdate()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Test Clinic Update
+                    </button>
+                    <button class="btn btn-info" onclick="testMultipleUpdates()">Multiple Updates</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🎯 Batch Testing</h3>
+                <p>Test multiple notifications at once</p>
+                <div class="test-buttons">
+                    <button class="btn btn-warning" onclick="testBatchNotifications()">Batch Test (5 notifications)</button>
+                    <button class="btn btn-danger" onclick="clearAllNotifications()">Clear All Notifications</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📊 Console Testing</h3>
+                <p>Open browser console and try these commands:</p>
+                <pre style="background: var(--surface-secondary); padding: 1rem; border-radius: var(--radius-md); font-size: 0.9rem;">
+// Trigger booking notification
+SkinCareNotifications.triggerBookingNotification({
+  clinicName: 'Test Clinic',
+  date: '2024-01-15',
+  time: '2:30 PM',
+  service: 'Test Service'
+});
+
+// Trigger clinic update
+SkinCareNotifications.triggerClinicUpdateNotification({
+  clinicName: 'Test Clinic',
+  updateType: 'New Services',
+  description: 'Added new treatments'
+});
+
+// Use examples
+SkinCareNotifications.examples.sampleBooking();
+SkinCareNotifications.examples.sampleClinicUpdate();
+SkinCareNotifications.examples.sampleBatch();
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test functions
+        function testBookingNotification() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.triggerBookingNotification({
+                    clinicName: 'Glow Skin Clinic',
+                    date: new Date().toLocaleDateString(),
+                    time: '2:30 PM',
+                    service: 'Hydrating Facial Treatment'
+                });
+            } else {
+                alert('Notification system not loaded yet. Please wait a moment and try again.');
+            }
+        }
+
+        function testClinicUpdate() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.triggerClinicUpdateNotification({
+                    clinicName: 'Radiance Beauty Center',
+                    updateType: 'New Services Available',
+                    description: 'Added advanced laser treatments'
+                });
+            } else {
+                alert('Notification system not loaded yet. Please wait a moment and try again.');
+            }
+        }
+
+        function testMultipleBookings() {
+            if (window.SkinCareNotifications) {
+                const clinics = ['Pure Skin Spa', 'Beauty Haven', 'Skin Perfect Clinic'];
+                const services = ['Facial Treatment', 'Acne Therapy', 'Anti-Aging Treatment'];
+                
+                clinics.forEach((clinic, index) => {
+                    setTimeout(() => {
+                        SkinCareNotifications.triggerBookingNotification({
+                            clinicName: clinic,
+                            date: new Date(Date.now() + (index * 86400000)).toLocaleDateString(),
+                            time: `${10 + index}:00 AM`,
+                            service: services[index]
+                        });
+                    }, index * 1000);
+                });
+            }
+        }
+
+        function testMultipleUpdates() {
+            if (window.SkinCareNotifications) {
+                const updates = [
+                    { clinic: 'Glow Skin Clinic', type: 'Special Promotion', desc: '20% off all services' },
+                    { clinic: 'Radiance Beauty', type: 'Schedule Update', desc: 'Extended weekend hours' },
+                    { clinic: 'Pure Skin Spa', type: 'New Equipment', desc: 'Latest laser technology' }
+                ];
+                
+                updates.forEach((update, index) => {
+                    setTimeout(() => {
+                        SkinCareNotifications.triggerClinicUpdateNotification({
+                            clinicName: update.clinic,
+                            updateType: update.type,
+                            description: update.desc
+                        });
+                    }, index * 1000);
+                });
+            }
+        }
+
+        function testBatchNotifications() {
+            if (window.SkinCareNotifications) {
+                SkinCareNotifications.examples.sampleBatch();
+            }
+        }
+
+        function clearAllNotifications() {
+            if (window.skinCareApp) {
+                window.skinCareApp.clearAllNotifications();
+            } else {
+                localStorage.removeItem('skincare-notifications');
+                location.reload();
+            }
+        }
+    </script>
+
+    <!-- Load the notification system -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+</body>
+</html>

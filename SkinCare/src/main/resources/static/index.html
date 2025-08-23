@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinCare - Premium Beauty & Wellness</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand" style="display: flex;">
+                <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+                <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        Services
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+                        <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+                        <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+                        <a href="skin.html" class="dropdown-item">Skin Test</a>
+                        <a href="skinTone.html" class="dropdown-item">Skin Tone Test</a>
+                        <a href="treatment.html" class="dropdown-item">Treatments</a>
+                    </div>
+                </div>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+            
+            <!-- Mobile Navigation Toggle -->
+            <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <div class="notification-container">
+                    <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="notification-badge" id="notification-badge">0</span>
+                    </button>
+                    
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notification-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="nav-notification-list">
+                            <div class="empty-notifications" id="nav-empty-notifications">
+                                <div class="empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <p>No notifications yet</p>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <button class="profile-btn" aria-label="User profile menu">
+                        <div class="profile-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
+                        </div>
+                        <span class="profile-name">Guest</span>
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown" role="menu">
+                        <a href="myProfile.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="bookingList.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            My Bookings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="Login.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Log In
+                        </a>
+                        <a href="SignUp.html" class="dropdown-item" role="menuitem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <div class="mobile-nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+                <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+                <a href="hairTest.html" class="nav-link">Hair Test</a>
+                <a href="treatment.html" class="nav-link">Treatments</a>
+                <a href="clinic.html" class="nav-link">Clinics</a>
+                <a href="bookingList.html" class="nav-link">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Transform Your Skin
+                    <span class="hero-highlight">Naturally</span>
+                </h1>
+                <p class="hero-description">
+                    Discover premium skincare products crafted with natural ingredients 
+                    for radiant, healthy skin that glows from within.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">
+                        <span>Shop Now</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <!-- <button class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+                        </svg>
+                        <span>Watch Story</span>
+                    </button> -->
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=500&fit=crop" alt="Skincare Products" />
+                    <!-- <div class="hero-card-overlay">
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">50K+</span>
+                                <span class="stat-label">Happy Customers</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">4.9</span>
+                                <span class="stat-label">Rating</span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose SkinCare?</h2>
+                <p class="section-subtitle">Premium quality meets natural ingredients</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/>
+                            <path d="m2 17 10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                            <path d="m2 12 10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Natural Ingredients</h3>
+                    <p class="feature-description">
+                        100% natural and organic ingredients sourced from sustainable farms worldwide.
+                    </p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Dermatologist Tested</h3>
+                    <p class="feature-description">
+                        All products are clinically tested and approved by certified dermatologists.
+                    </p>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="3.27,6.96 12,12.01 20.73,6.96" stroke="currentColor" stroke-width="2"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Fast Delivery</h3>
+                    <p class="feature-description">
+                        Free shipping worldwide with express delivery options available.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Preview Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Products</h2>
+                <p class="section-subtitle">Our most loved skincare essentials</p>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card animate-on-scroll">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&h=300&fit=crop" alt="Vitamin C Serum" />
+                        <div class="product-badge">Best Seller</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Vitamin C Brightening Serum</h3>
+                        <p class="product-description">Powerful antioxidant serum for radiant skin</p>
+                        <div class="product-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="rating-text">(4.9)</span>
+                        </div>
+                        <div class="product-price">$49.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=300&h=300&fit=crop" alt="Hydrating Moisturizer" />
+                        <div class="product-badge new">New</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hyaluronic Acid Moisturizer</h3>
+                        <p class="product-description">Deep hydration for all skin types</p>
+                        <div class="product-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="rating-text">(4.8)</span>
+                        </div>
+                        <div class="product-price">$39.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop" alt="Gentle Cleanser" />
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Gentle Foaming Cleanser</h3>
+                        <p class="product-description">Mild cleanser for sensitive skin</p>
+                        <div class="product-rating">
+                            <div class="stars">★★★★☆</div>
+                            <span class="rating-text">(4.7)</span>
+                        </div>
+                        <div class="product-price">$29.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Component -->
+    <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="chat-title">SkinCare Support</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="close-chat" class="chat-close" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+                    <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-welcome">
+                <p>Hi! How can we help you today?</p>
+            </div>
+            <div class="question-list">
+                <button class="question">What's the best skincare routine for oily skin?</button>
+                <button class="question">Do your products contain parabens?</button>
+                <button class="question">Are your products cruelty-free?</button>
+                <button class="question">How long does shipping take?</button>
+                <button class="question">Can I return a product?</button>
+            </div>
+            <div id="chat-response" class="chat-response"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Navigation and Notifications -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileNavToggle && mobileNavMenu) {
+            mobileNavToggle.addEventListener('click', function() {
+                mobileNavMenu.classList.toggle('show');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('show');
+                }
+            });
+        }
+        
+        // Notification Dropdown Toggle
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationDropdown = document.getElementById('notification-dropdown');
+        
+        if (notificationBtn && notificationDropdown) {
+            notificationBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('show');
+            });
+            
+            // Close notification dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                    notificationDropdown.classList.remove('show');
+                }
+            });
+        }
+        
+        // Profile Dropdown Toggle
+        const profileBtn = document.querySelector('.profile-btn');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isOpen = profileDropdown.classList.contains('dropdown-open');
+                if (isOpen) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    profileDropdown.classList.add('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+            
+            // Close profile dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('dropdown-open');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    
+    <!-- TypeScript Modules -->
+    <script type="module" src="index-app.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script src="chat.js"></script>
+    <script src="auth-manager.js"></script>
+</body>
+</html>

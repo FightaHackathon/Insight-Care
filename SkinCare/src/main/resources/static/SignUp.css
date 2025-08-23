@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background-color: #f5e8d5;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-box {
+  width: 300px;
+}
+
+.signup-box h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.signup-box input {
+  width: 100%;
+  padding: 12px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.signup-box button {
+  width: 100%;
+  padding: 12px;
+  background: #F1C27D;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.signup-box button:hover {
+  background: #d0a25d;
+}
+
+.right-side {
+  flex: 1;
+  background: linear-gradient(180deg, #dab987, #F1C27D);
+  display: flex;
+  flex-direction: column;  /* Stack logo + login link vertically */
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo {
+  position: relative;
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.right-side .login {
+  text-align: center;
+}
+
+.right-side .login p {
+  font-size: small;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.right-side .login a {
+  display: block;
+  width: 200px;
+  padding: 12px;
+  background: black;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.right-side .login a:hover {
+  background: #bb8d48;
+}

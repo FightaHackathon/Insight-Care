@@ -1,0 +1,327 @@
+*{
+    font-family:sans-serif;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    
+}
+body {
+  background-color: #f5e8d5; /* soft beige, warm but not dark */
+}
+
+:root{
+    --white-color:  #fff; 
+    --dark-color: []#252525; 
+    --primary-color: []#3b141c; 
+    --secondary-color: #715c3b; 
+    --light-pink-color: #faf4f5; 
+    --skin-color: #F1C27D;
+    
+    --font-size-s: 0.9rem; 
+    --font-size-n: 1rem; 
+    --font-size-m: 1.12rem;  
+    --font-size-l: 1.5rem; 
+    --font-size-xl: 2rem; 
+    --font-size-xxl: 2.3rem;  
+    
+    --font-weight-normal: 400; 
+    -font-weight-medium: 500;
+    -font-weight-bold: 700;
+    --font-weight-semibold: 600;
+
+    --border-radius-s: 8px;
+    --border-radius-m: 30px;
+    --border-radius-circle: 50%;
+
+    --site-max-wdith: 3000px;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style: none;
+}
+.second-name{
+    
+    margin: 0 auto;
+    max-width: var(--site-max-wdith);
+    
+}
+.menu li {
+  position: relative; /* needed for dropdown positioning */
+  margin-left: 20px;
+}
+.header .bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--skin-color);
+    padding: 20px;
+}
+.bar .logo .logoT {
+    color: white;
+    font-weight: var(--font-weight-semibold);
+}
+.bar .menu .link{
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--border-radius-m);
+    transition: 0.3s ease;
+}
+.bar .menu{
+    display: flex;
+    gap: 50px;
+}
+.bar .menu .link:hover{
+    color: brown;
+}
+
+.chatbox-icon {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #007bff; /* blue color */
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+}
+
+.chatbox-icon:hover {
+      background-color: #0056b3; /* darker on hover */
+}
+
+.profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;   /* Circle size */
+  height: 40px;
+
+  background-color: rgb(248, 253, 253); /* Blue background */
+  color: #fff; /* White icon */
+
+  border-radius: 50%; /* Makes it a circle */
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+
+  margin-left: 20px;
+
+  transition: background-color 0.3s;
+}
+
+.profile-icon:hover {
+  background-color: #dbd9d6; /* Darker on hover */
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* places below the parent li */
+  left: 0;
+  background: #fff; /* white dropdown */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none; /* hide by default */
+  min-width: 150px; /* adjust width */
+  z-index: 999;
+}
+
+.dropdown-menu li {
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-link:hover {
+  background-color: #f5f5f5;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+
+.profile-container {
+  position: relative;
+  margin-left: 20px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  min-width: 150px;
+
+  display: none; /* Hidden by default */
+}
+
+.profile-dropdown li {
+  border-bottom: 1px solid #eee;
+}
+
+.profile-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.profile-dropdown a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.profile-dropdown a:hover {
+  background-color: #f5f5f5;
+}
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  justify-content: center;
+  background-color: #f5e8d5;
+  border-bottom: 0px solid #ddd;
+
+}
+
+.search-container input,
+.search-container select,
+.search-container button {
+  flex: 1 1 200px;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid var(--skin-color);
+  border-radius: 6px;
+  color: black;
+}
+
+.search-container button {
+  background-color: var(--skin-color);
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.search-container button:hover {
+  background-color: var(--secondary-color);
+}
+
+#clinic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.clinic-card {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.clinic-card:hover {
+  transform: translateY(-4px);
+}
+
+.clinic-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.clinic-info {
+  flex: 1;
+}
+
+.clinic-name {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #333;
+}
+
+.stars {
+  font-size: 18px;
+  color: gold;
+}
+
+
+.treatment-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin: 100px;
+    }
+
+.treatment-card {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 250px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+.treatment-card:hover {
+      transform: scale(1.05);
+    }
+
+.treatment-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+.treatment-card h3 {
+      margin-bottom: 10px;
+      color: #3b141c;
+    }
+
+.treatment-card p {
+      color: #555;
+    }
