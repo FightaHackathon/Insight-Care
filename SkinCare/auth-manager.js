@@ -118,22 +118,20 @@ class AuthManager {
     }
 
     showMessage(message, type = 'info') {
-        // Create a toast notification
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <div class="toast-content">
-                <span class="toast-message">${message}</span>
-                <button class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
-            </div>
-        `;
-
-        // Add toast styles if not already present
-        if (!document.querySelector('#toast-styles')) {
+        // Remove existing messages
+        const existingMessages = document.querySelectorAll('.auth-message');
+        existingMessages.forEach(msg => msg.remove());
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `auth-message auth-message-${type}`;
+        messageDiv.textContent = message;
+        
+        // Add styles if not present
+        if (!document.querySelector('#message-styles')) {
             const styles = document.createElement('style');
-            styles.id = 'toast-styles';
+            styles.id = 'message-styles';
             styles.textContent = `
-                .toast {
+                .auth-message {
                     position: fixed;
                     top: 20px;
                     right: 20px;
@@ -146,24 +144,9 @@ class AuthManager {
                     max-width: 300px;
                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 }
-                .toast-success { background: linear-gradient(135deg, #10b981, #059669); }
-                .toast-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
-                .toast-info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-                .toast-content {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-                .toast-close {
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 18px;
-                    cursor: pointer;
-                    margin-left: 10px;
-                    opacity: 0.8;
-                }
-                .toast-close:hover { opacity: 1; }
+                .auth-message-success { background: linear-gradient(135deg, #10b981, #059669); }
+                .auth-message-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+                .auth-message-info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
                 @keyframes slideIn {
                     from { transform: translateX(100%); opacity: 0; }
                     to { transform: translateX(0); opacity: 1; }
@@ -171,13 +154,13 @@ class AuthManager {
             `;
             document.head.appendChild(styles);
         }
-
-        document.body.appendChild(toast);
-
+        
+        document.body.appendChild(messageDiv);
+        
         // Auto remove after 5 seconds
         setTimeout(() => {
-            if (toast.parentElement) {
-                toast.remove();
+            if (messageDiv.parentElement) {
+                messageDiv.remove();
             }
         }, 5000);
     }
