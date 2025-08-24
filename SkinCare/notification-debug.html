@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Debug - Bell Click Issue</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .test-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 500;
+        }
+        .test-btn.success { background: #28a745; color: white; }
+        .test-btn.info { background: #17a2b8; color: white; }
+        .test-btn.warning { background: #ffc107; color: #333; }
+        .debug-output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #dee2e6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .notification-test {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Notification Bell (Fixed Position) -->
+    <div class="notification-test">
+        <div class="notification-container">
+            <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span class="notification-badge" id="notification-badge">0</span>
+            </button>
+            
+            <div class="notification-dropdown" id="notification-dropdown">
+                <div class="notification-header">
+                    <h3>Notifications</h3>
+                    <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                </div>
+                <div class="notification-list" id="notification-list">
+                    <div class="empty-notifications" id="empty-notifications">
+                        <div class="empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <p>No notifications yet</p>
+                    </div>
+                </div>
+                <div class="notification-footer">
+                    <button class="view-all-btn">View All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="debug-container">
+        <h1>🐛 Notification Bell Debug Tool</h1>
+        <p><strong>Purpose:</strong> Debug why notification bell isn't clickable on pages other than index.html</p>
+        
+        <h2>🧪 Debug Tests</h2>
+        <button class="test-btn success" onclick="testBellClickability()">
+            🖱️ Test Bell Clickability
+        </button>
+        <button class="test-btn info" onclick="testNotificationSystem()">
+            🔧 Test Notification System
+        </button>
+        <button class="test-btn warning" onclick="testElementsExist()">
+            📋 Check Elements Exist
+        </button>
+        <button class="test-btn info" onclick="testCSSStyles()">
+            🎨 Check CSS Styles
+        </button>
+        <button class="test-btn success" onclick="manualInitialization()">
+            🔄 Manual Initialization
+        </button>
+        <button class="test-btn warning" onclick="clearDebugOutput()">
+            🗑️ Clear Output
+        </button>
+        
+        <div id="debug-output" class="debug-output">
+            <strong>Debug Output:</strong><br>
+            Click the test buttons above to debug the notification bell issue.<br>
+            ---<br>
+        </div>
+        
+        <h2>🔍 Manual Tests</h2>
+        <ol>
+            <li><strong>Click the bell icon</strong> in the top-right corner (blue border)</li>
+            <li><strong>Check if dropdown opens</strong> when you click it</li>
+            <li><strong>Try the debug buttons</strong> to identify the issue</li>
+            <li><strong>Check browser console</strong> for any error messages (F12)</li>
+        </ol>
+        
+        <h2>📋 Common Issues & Solutions</h2>
+        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <h3>Possible Causes:</h3>
+            <ul>
+                <li><strong>JavaScript not loaded:</strong> notification-functions.js not included</li>
+                <li><strong>Initialization failed:</strong> DOM not ready when script runs</li>
+                <li><strong>CSS conflicts:</strong> Other elements blocking the button</li>
+                <li><strong>Event handler conflicts:</strong> Multiple handlers interfering</li>
+                <li><strong>Z-index issues:</strong> Button behind other elements</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Include notification system -->
+    <script src="notification-functions.js"></script>
+    
+    <script>
+        let debugOutput = document.getElementById('debug-output');
+        
+        function addDebugMessage(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            debugOutput.innerHTML += `[${timestamp}] ${message}<br>`;
+            debugOutput.scrollTop = debugOutput.scrollHeight;
+        }
+        
+        function testBellClickability() {
+            addDebugMessage('🖱️ Testing bell clickability...');
+            
+            const btn = document.getElementById('notification-btn');
+            const dropdown = document.getElementById('notification-dropdown');
+            
+            if (!btn) {
+                addDebugMessage('❌ Notification button not found!');
+                return;
+            }
+            
+            if (!dropdown) {
+                addDebugMessage('❌ Notification dropdown not found!');
+                return;
+            }
+            
+            addDebugMessage('✅ Elements found');
+            
+            // Test if button is clickable
+            const rect = btn.getBoundingClientRect();
+            const elementAtPoint = document.elementFromPoint(rect.left + rect.width/2, rect.top + rect.height/2);
+            
+            if (elementAtPoint === btn || btn.contains(elementAtPoint)) {
+                addDebugMessage('✅ Button is accessible at its position');
+            } else {
+                addDebugMessage(`❌ Button is blocked by: ${elementAtPoint?.tagName || 'unknown element'}`);
+            }
+            
+            // Test click simulation
+            try {
+                btn.click();
+                addDebugMessage('✅ Button click simulation successful');
+                
+                setTimeout(() => {
+                    const isVisible = dropdown.classList.contains('show');
+                    addDebugMessage(`Dropdown visibility after click: ${isVisible ? '✅ Visible' : '❌ Hidden'}`);
+                }, 100);
+            } catch (error) {
+                addDebugMessage(`❌ Button click failed: ${error.message}`);
+            }
+        }
+        
+        function testNotificationSystem() {
+            addDebugMessage('🔧 Testing notification system...');
+            
+            // Check if functions exist
+            const functions = ['addNotification', 'initNotificationSystem', 'handleNotificationClick'];
+            functions.forEach(func => {
+                if (typeof window[func] === 'function') {
+                    addDebugMessage(`✅ Function ${func} exists`);
+                } else {
+                    addDebugMessage(`❌ Function ${func} missing`);
+                }
+            });
+            
+            // Test adding notification
+            if (typeof addNotification === 'function') {
+                try {
+                    addNotification('info', 'Debug Test', 'This is a test notification');
+                    addDebugMessage('✅ addNotification function works');
+                } catch (error) {
+                    addDebugMessage(`❌ addNotification failed: ${error.message}`);
+                }
+            }
+        }
+        
+        function testElementsExist() {
+            addDebugMessage('📋 Checking if all required elements exist...');
+            
+            const elements = [
+                'notification-btn',
+                'notification-dropdown', 
+                'notification-badge',
+                'notification-list',
+                'empty-notifications',
+                'clear-all-btn'
+            ];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    addDebugMessage(`✅ Element #${id} exists`);
+                } else {
+                    addDebugMessage(`❌ Element #${id} missing`);
+                }
+            });
+        }
+        
+        function testCSSStyles() {
+            addDebugMessage('🎨 Checking CSS styles...');
+            
+            const btn = document.getElementById('notification-btn');
+            if (!btn) {
+                addDebugMessage('❌ Button not found for CSS test');
+                return;
+            }
+            
+            const styles = getComputedStyle(btn);
+            const important = [
+                'pointer-events',
+                'z-index',
+                'position',
+                'cursor',
+                'display'
+            ];
+            
+            important.forEach(prop => {
+                const value = styles.getPropertyValue(prop);
+                addDebugMessage(`CSS ${prop}: ${value}`);
+            });
+            
+            // Check if button is visible
+            const rect = btn.getBoundingClientRect();
+            addDebugMessage(`Button position: x=${rect.left}, y=${rect.top}, width=${rect.width}, height=${rect.height}`);
+        }
+        
+        function manualInitialization() {
+            addDebugMessage('🔄 Attempting manual initialization...');
+            
+            if (typeof initNotificationSystem === 'function') {
+                try {
+                    initNotificationSystem();
+                    addDebugMessage('✅ Manual initialization completed');
+                } catch (error) {
+                    addDebugMessage(`❌ Manual initialization failed: ${error.message}`);
+                }
+            } else {
+                addDebugMessage('❌ initNotificationSystem function not available');
+            }
+        }
+        
+        function clearDebugOutput() {
+            debugOutput.innerHTML = '<strong>Debug Output:</strong><br>Debug output cleared.<br>---<br>';
+        }
+        
+        // Auto-run basic tests on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                addDebugMessage('🚀 Page loaded, running automatic tests...');
+                testElementsExist();
+                testNotificationSystem();
+                addDebugMessage('---');
+                addDebugMessage('Manual tests available above. Click the bell icon to test clickability.');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

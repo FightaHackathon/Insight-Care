@@ -2565,24 +2565,30 @@ input:checked + .toggle-slider:before {
 
 /* Notification Styles */
 .notification-container {
-  position: relative;
+  position: relative !important;
+  z-index: 999 !important;
+  pointer-events: auto !important;
 }
 
 .notification-btn {
-  position: relative;
-  background: var(--surface, #ffffff);
-  border: 1px solid var(--border, #e5e7eb);
-  border-radius: var(--radius-full, 50%);
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative !important;
+  background: var(--surface, #ffffff) !important;
+  border: 1px solid var(--border, #e5e7eb) !important;
+  border-radius: var(--radius-full, 50%) !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   cursor: pointer !important;
-  transition: all var(--transition, 0.2s ease);
-  color: var(--text-secondary, #6b7280);
-  z-index: 100;
+  transition: all var(--transition, 0.2s ease) !important;
+  color: var(--text-secondary, #6b7280) !important;
+  z-index: 1000 !important;
   pointer-events: auto !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
 }
 
 .notification-btn:hover {

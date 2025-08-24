@@ -292,8 +292,16 @@ function initNotificationSystem() {
             // Remove any existing listeners to prevent duplicates
             notificationBtn.removeEventListener('click', handleNotificationClick);
 
-            // Add click handler
-            notificationBtn.addEventListener('click', handleNotificationClick);
+            // Force button to be clickable
+            notificationBtn.style.pointerEvents = 'auto';
+            notificationBtn.style.zIndex = '1000';
+            notificationBtn.style.position = 'relative';
+
+            // Add multiple event listeners for better compatibility
+            notificationBtn.addEventListener('click', handleNotificationClick, true);
+            notificationBtn.addEventListener('mousedown', function(e) {
+                console.log('🖱️ Mouse down on notification button');
+            });
 
             // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
@@ -302,9 +310,22 @@ function initNotificationSystem() {
                 }
             });
 
-            console.log('Notification click handler attached');
+            console.log('✅ Notification click handler attached with enhanced compatibility');
+
+            // Test the button immediately
+            setTimeout(() => {
+                const rect = notificationBtn.getBoundingClientRect();
+                const elementAtPoint = document.elementFromPoint(rect.left + rect.width/2, rect.top + rect.height/2);
+                if (elementAtPoint === notificationBtn || notificationBtn.contains(elementAtPoint)) {
+                    console.log('✅ Notification button is accessible');
+                } else {
+                    console.warn('⚠️ Notification button may be blocked by:', elementAtPoint?.tagName);
+                }
+            }, 100);
         } else {
-            console.warn('Notification elements not found');
+            console.warn('❌ Notification elements not found during initialization');
+            console.warn('Button element:', notificationBtn);
+            console.warn('Dropdown element:', notificationDropdown);
         }
 
         // Clear all notifications button
@@ -324,33 +345,68 @@ function initNotificationSystem() {
  * Handle notification button click
  */
 function handleNotificationClick(e) {
-    console.log('Notification button clicked');
+    console.log('🔔 Notification button clicked');
     e.preventDefault();
     e.stopPropagation();
+    e.stopImmediatePropagation();
 
     const notificationDropdown = document.getElementById('notification-dropdown');
     if (notificationDropdown) {
         const isVisible = notificationDropdown.classList.contains('show');
         if (isVisible) {
             notificationDropdown.classList.remove('show');
-            console.log('Notification dropdown hidden');
+            console.log('📤 Notification dropdown hidden');
         } else {
             notificationDropdown.classList.add('show');
-            console.log('Notification dropdown shown');
+            console.log('📥 Notification dropdown shown');
         }
+    } else {
+        console.error('❌ Notification dropdown not found during click');
+    }
+
+    return false;
+}
+
+// Multiple initialization attempts to ensure it works
+let initializationAttempts = 0;
+const maxAttempts = 5;
+
+function attemptInitialization() {
+    initializationAttempts++;
+    console.log(`Notification initialization attempt ${initializationAttempts}`);
+
+    const notificationBtn = document.getElementById('notification-btn');
+    const notificationDropdown = document.getElementById('notification-dropdown');
+
+    if (notificationBtn && notificationDropdown) {
+        initNotificationSystem();
+        console.log('✅ Notification system initialized successfully');
+        return true;
+    } else {
+        console.warn(`❌ Notification elements not found (attempt ${initializationAttempts})`);
+        console.warn('Button found:', !!notificationBtn);
+        console.warn('Dropdown found:', !!notificationDropdown);
+
+        if (initializationAttempts < maxAttempts) {
+            setTimeout(attemptInitialization, 200 * initializationAttempts);
+        } else {
+            console.error('❌ Failed to initialize notification system after', maxAttempts, 'attempts');
+        }
+        return false;
     }
 }
 
 // Auto-initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initNotificationSystem);
+document.addEventListener('DOMContentLoaded', attemptInitialization);
 
 // Also initialize when window loads (backup)
 window.addEventListener('load', function() {
-    setTimeout(initNotificationSystem, 500);
+    setTimeout(attemptInitialization, 100);
 });
 
 // Manual initialization function for troubleshooting
 window.initNotifications = initNotificationSystem;
+window.attemptNotificationInit = attemptInitialization;
 
 // ===== QUICK EXAMPLES =====
 
