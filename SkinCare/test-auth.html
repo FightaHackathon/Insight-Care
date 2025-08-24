@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        h1 { color: #333; }
+        h2 { color: #666; }
+        p { color: #777; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Auth Page Testing</h1>
+        <p>Test different ways to access the signup and login forms:</p>
+        
+        <h2>📝 Direct Access Tests:</h2>
+        <a href="auth.html" class="test-link">Default (Login)</a>
+        <a href="auth.html#login" class="test-link">Login with Hash</a>
+        <a href="auth.html#signup" class="test-link">Signup with Hash</a>
+        <a href="auth.html#register" class="test-link">Register with Hash</a>
+        <a href="auth.html?mode=signup" class="test-link">Signup with Query</a>
+        <a href="auth.html?mode=register" class="test-link">Register with Query</a>
+        
+        <h2>🔧 What Should Work:</h2>
+        <ul>
+            <li>✅ Default link should show login form</li>
+            <li>✅ Hash #signup and #register should show signup form</li>
+            <li>✅ Query ?mode=signup and ?mode=register should show signup form</li>
+            <li>✅ Signup button should work and validate all fields</li>
+            <li>✅ Terms checkbox should be required</li>
+            <li>✅ Password validation should work</li>
+        </ul>
+        
+        <h2>📋 Test Checklist:</h2>
+        <ol>
+            <li>Click each link above to test direct access</li>
+            <li>Try switching between login and signup using the buttons</li>
+            <li>Test signup form validation:
+                <ul>
+                    <li>Try submitting without filling fields</li>
+                    <li>Try weak passwords</li>
+                    <li>Try mismatched passwords</li>
+                    <li>Try without accepting terms</li>
+                </ul>
+            </li>
+            <li>Test login form functionality</li>
+        </ol>
+    </div>
+    
+    <div class="test-container">
+        <h2>🐛 Common Issues Fixed:</h2>
+        <ul>
+            <li>✅ Added name="terms" to terms checkbox</li>
+            <li>✅ Added terms validation in JavaScript</li>
+            <li>✅ Enhanced URL hash handling for direct signup access</li>
+            <li>✅ Added query parameter support (?mode=signup)</li>
+            <li>✅ Fixed JavaScript variable references</li>
+        </ul>
+    </div>
+</body>
+</html>
