@@ -535,6 +535,15 @@
         const resultsSection = document.querySelector('.results-section');
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+        // Add notification for skin tone analysis completion
+        if (typeof addNotification === 'function') {
+          addNotification(
+            'success',
+            'Skin Tone Analysis Complete!',
+            'Your skin tone has been analyzed successfully. Check out your personalized color recommendations!'
+          );
+        }
+
       } catch (error) {
         console.error('❌ Skin tone analysis error:', error);
 
@@ -566,10 +575,12 @@
     toneAnalyzeBtn.disabled = true;
   </script>
 
+  <!-- Include Notification System -->
+  <script src="notification-functions.js"></script>
+
   <!-- Scripts -->
   <script type="module" src="index-app.js"></script>
   <script type="module" src="app.js"></script>
-  <script type="module" src="notifications.js"></script>
   <script src="chat.js"></script>
 </body>
 

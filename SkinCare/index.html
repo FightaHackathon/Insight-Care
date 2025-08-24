@@ -518,6 +518,9 @@
         </div>
     </section>
 
+    <!-- Include Notification System -->
+    <script src="notification-functions.js"></script>
+
     <!-- JavaScript for Navigation and Notifications -->
     <script>
         // Mobile Navigation Toggle
@@ -537,23 +540,7 @@
             });
         }
         
-        // Notification Dropdown Toggle
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationDropdown = document.getElementById('notification-dropdown');
-        
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('show');
-            });
-            
-            // Close notification dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-        }
+        // Notification system is handled by notification-functions.js
         
         // Profile Dropdown Toggle
         const profileBtn = document.querySelector('.profile-btn');
@@ -663,9 +650,31 @@
                     </div>
                 `;
                 chatResponse.style.display = 'block';
+
+                // Add notification when user asks a question
+                if (typeof addNotification === 'function') {
+                    addNotification(
+                        'info',
+                        'Chat Question Asked',
+                        `You asked: "${questionText}"`
+                    );
+                }
             });
         });
         
+        // Add welcome notification when page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (typeof addNotification === 'function') {
+                    addNotification(
+                        'info',
+                        'Welcome to SkinCare!',
+                        'Explore our personalized skincare solutions and book your consultation today.'
+                    );
+                }
+            }, 2000); // Show after 2 seconds
+        });
+
         // Scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -685,5 +694,34 @@
             observer.observe(el);
         });
     </script>
+
+    <!-- Minimal Professional Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Brand -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="Pics/logo2.png" alt="InsightCare Logo" class="footer-logo-img">
+                        <h3 class="footer-brand-name">InsightCare</h3>
+                    </div>
+                    <p class="footer-brand-description">
+                        Your trusted partner in personalized skincare solutions. Discover clinic-tailored treatments
+                        that cater to your unique skin needs and preferences.
+                    </p>
+                </div>
+
+                <!-- About Us Link -->
+                <div class="footer-about">
+                    <a href="#about" class="about-link">About Us</a>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 InsightCare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

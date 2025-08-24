@@ -726,6 +726,15 @@
         });
         resultContainer.appendChild(swatch);
       });
+
+      // Add notification for color analysis completion
+      if (typeof addNotification === 'function') {
+        addNotification(
+          'update',
+          'Color Analysis Complete!',
+          `Your ${schemeType} color scheme has been generated. Click any color to copy it!`
+        );
+      }
     });
 
     // Scroll animations
@@ -747,9 +756,11 @@
     });
   </script>
 
+  <!-- Include Notification System -->
+  <script src="notification-functions.js"></script>
+
   <!-- TypeScript Modules -->
   <script type="module" src="app.js"></script>
-  <script type="module" src="notifications.js"></script>
   <script src="chat.js"></script>
 </body>
 </html>

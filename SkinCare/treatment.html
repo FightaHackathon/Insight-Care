@@ -416,23 +416,7 @@
         });
     }
     
-    // Notification Dropdown Toggle
-    const notificationBtn = document.getElementById('notification-btn');
-    const notificationDropdown = document.getElementById('notification-dropdown');
-    
-    if (notificationBtn && notificationDropdown) {
-        notificationBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            notificationDropdown.classList.toggle('show');
-        });
-        
-        // Close notification dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                notificationDropdown.classList.remove('show');
-            }
-        });
-    }
+    // Notification system is handled by notification-functions.js
 
     // Profile dropdown toggle
     const profileBtn = document.querySelector('.profile-btn');
@@ -481,9 +465,11 @@
     });
   </script>
 
+  <!-- Include Notification System -->
+  <script src="notification-functions.js"></script>
+
   <!-- TypeScript Modules -->
   <script type="module" src="app.js"></script>
-  <script type="module" src="notifications.js"></script>
   <script src="chat.js"></script>
 </body>
 </html>

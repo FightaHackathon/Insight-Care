@@ -516,23 +516,7 @@
             });
         }
         
-        // Notification Dropdown Toggle
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationDropdown = document.getElementById('notification-dropdown');
-        
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('show');
-            });
-            
-            // Close notification dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-        }
+        // Notification system is handled by notification-functions.js
 
         // Booking Table Logic
         const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
@@ -582,16 +566,29 @@
 
         function deleteBooking(index) {
             if (confirm('Are you sure you want to delete this booking?')) {
+                const deletedBooking = bookings[index];
                 bookings.splice(index, 1);
                 localStorage.setItem("bookings", JSON.stringify(bookings));
+
+                // Add notification for deleted booking
+                if (typeof addNotification === 'function') {
+                    addNotification(
+                        'warning',
+                        'Appointment Cancelled',
+                        `Your ${deletedBooking.treatment} appointment at ${deletedBooking.clinic} on ${deletedBooking.date} has been cancelled.`
+                    );
+                }
+
                 location.reload();
             }
         }
     </script>
 
+    <!-- Include Notification System -->
+    <script src="notification-functions.js"></script>
+
     <!-- TypeScript Modules -->
     <script type="module" src="app.js"></script>
-    <script type="module" src="notifications.js"></script>
     <script src="chat.js"></script>
 </body>
 </html>

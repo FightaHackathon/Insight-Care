@@ -365,20 +365,14 @@
         bookings.push(newBooking);
         localStorage.setItem("bookings", JSON.stringify(bookings));
 
-        // Trigger booking notification
-        const bookingNotificationData = {
-          clinicName: data.name,
-          date: new Date().toLocaleDateString(),
-          time: "2:00 PM",
-          service: data.specialty || "Skincare Consultation"
-        };
-
-        // Import and trigger notification using utility
-        import('./notifications.js').then(module => {
-          module.triggerBookingNotification(bookingNotificationData);
-        }).catch(error => {
-          console.log('Notification system not available:', error);
-        });
+        // Add booking confirmation notification
+        if (typeof addNotification === 'function') {
+          addNotification(
+            'booking',
+            'Appointment Booked Successfully!',
+            `Your ${data.specialty || 'Skincare Consultation'} appointment at ${data.name} has been confirmed for ${new Date().toLocaleDateString()} at 2:00 PM.`
+          );
+        }
 
         window.location.href = "bookingList.html";
       });
@@ -415,9 +409,11 @@
     }
   </script>
 
+  <!-- Include Notification System -->
+  <script src="notification-functions.js"></script>
+
   <!-- TypeScript Modules -->
   <script type="module" src="app.js"></script>
-  <script type="module" src="notifications.js"></script>
 </body>
 </html>
 

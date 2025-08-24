@@ -1176,6 +1176,15 @@
 
             // Show the result with animation
             resultElement.classList.add('show');
+
+            // Add notification for body shape analysis completion
+            if (typeof addNotification === 'function') {
+                addNotification(
+                    'success',
+                    'Body Shape Analysis Complete!',
+                    `Your body shape is ${bodyShape}! Check out your personalized style recommendations below.`
+                );
+            }
         }
 
         // Mobile Navigation Toggle
@@ -1195,23 +1204,7 @@
             });
         }
         
-        // Notification Dropdown Toggle
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationDropdown = document.getElementById('notification-dropdown');
-        
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('show');
-            });
-            
-            // Close notification dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-        }
+        // Notification system is handled by notification-functions.js
         
 
 
@@ -1237,8 +1230,10 @@
     <!-- Chat Module -->
     <script src="chat.js"></script>
     
+    <!-- Include Notification System -->
+    <script src="notification-functions.js"></script>
+
     <!-- TypeScript Modules -->
     <script type="module" src="app.js"></script>
-    <script type="module" src="notifications.js"></script>
 </body>
 </html>
