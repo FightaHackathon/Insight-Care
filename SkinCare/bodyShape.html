@@ -629,9 +629,6 @@
                 
                 <div class="profile-container">
                     <button class="profile-btn" aria-label="User profile menu">
-                        <div class="profile-avatar">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
-                        </div>
                         <span class="profile-name">Guest</span>
                         <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
@@ -1026,11 +1023,10 @@
 
     <!-- JavaScript -->
     <script>
-<<<<<<< HEAD
         // Profile dropdown toggle
         const profileBtn = document.querySelector('.profile-btn');
         const profileDropdown = document.querySelector('.profile-dropdown');
-        
+
         if (profileBtn && profileDropdown) {
             profileBtn.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1043,7 +1039,7 @@
                     profileBtn.setAttribute('aria-expanded', 'true');
                 }
             });
-            
+
             // Close profile dropdown when clicking outside
             document.addEventListener('click', function (e) {
                 if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
@@ -1052,9 +1048,6 @@
                 }
             });
         }
-
-=======
->>>>>>> 2de62f752e7ff56c27b6ebd3bed41082985742e1
         // Chat functionality is now handled by chat.js
 
         // Body shape calculator

@@ -83,9 +83,6 @@
             
             <div class="profile-container">
                 <button class="profile-btn active" aria-label="User profile menu">
-                    <div class="profile-avatar">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Profile" />
-                    </div>
                     <span class="profile-name">Guest</span>
                 </button>
             </div>
@@ -899,7 +896,6 @@
       const avatarChangeBtn = document.getElementById('avatar-change-btn');
       const avatarUpload = document.getElementById('avatar-upload');
       const profileAvatarImg = document.getElementById('profile-avatar-img');
-      const navProfileImg = document.querySelector('.nav-actions .profile-avatar img');
 
       if (avatarChangeBtn && avatarUpload) {
         avatarChangeBtn.addEventListener('click', function(e) {
@@ -917,12 +913,7 @@
               if (profileAvatarImg) {
                 profileAvatarImg.src = e.target.result;
               }
-              
-              // Update navigation avatar
-              if (navProfileImg) {
-                navProfileImg.src = e.target.result;
-              }
-              
+
               // Show success message
               showImageUploadSuccess('Profile photo updated successfully!');
             };
