@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test - Signup Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        .success { color: #28a745; }
+        .info { color: #17a2b8; }
+        h1 { color: #333; }
+        h2 { color: #666; }
+        p { color: #777; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .page-test {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔗 Navigation Links Test - Signup Access</h1>
+        <p class="success">✅ <strong>All navigation links have been updated!</strong></p>
+        <p>Test signup access from all pages in your application:</p>
+        
+        <h2>📱 Updated Pages (All now link to auth.html#signup):</h2>
+        <div class="grid">
+            <div class="page-test">
+                <h3>🏠 index.html</h3>
+                <a href="index.html" class="test-link">Test Home Page</a>
+                <p class="info">✅ Added "Get Started" button in hero section</p>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>🏥 clinic.html</h3>
+                <a href="clinic.html" class="test-link">Test Clinic Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>💄 skin.html</h3>
+                <a href="skin.html" class="test-link">Test Skin Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>💇 hairTest.html</h3>
+                <a href="hairTest.html" class="test-link">Test Hair Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>🎨 colorAnalysis.html</h3>
+                <a href="colorAnalysis.html" class="test-link">Test Color Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>👗 bodyShape.html</h3>
+                <a href="bodyShape.html" class="test-link">Test Body Shape Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>🌈 skinTone.html</h3>
+                <a href="skinTone.html" class="test-link">Test Skin Tone Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>💊 treatment.html</h3>
+                <a href="treatment.html" class="test-link">Test Treatment Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>📅 bookingList.html</h3>
+                <a href="bookingList.html" class="test-link">Test Booking Page</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+            
+            <div class="page-test">
+                <h3>🏥 clinic-details.html</h3>
+                <a href="clinic-details.html" class="test-link">Test Clinic Details</a>
+                <p class="info">✅ Profile dropdown links updated</p>
+            </div>
+        </div>
+        
+        <h2>🎯 How to Test:</h2>
+        <ol>
+            <li><strong>Click any page link above</strong></li>
+            <li><strong>Look for the profile dropdown</strong> (usually in top-right corner)</li>
+            <li><strong>Click the profile dropdown</strong></li>
+            <li><strong>Click "Sign Up"</strong> - should take you to auth.html#signup</li>
+            <li><strong>Verify signup form appears</strong> (not login form)</li>
+        </ol>
+        
+        <h2>🚀 Direct Signup Access:</h2>
+        <a href="auth.html#signup" class="test-link">Direct Signup Link</a>
+        <a href="auth.html#register" class="test-link">Direct Register Link</a>
+        <a href="auth.html?mode=signup" class="test-link">Signup with Query</a>
+        
+        <h2>✅ What Was Fixed:</h2>
+        <ul>
+            <li>✅ Changed all <code>Login.html</code> links to <code>auth.html#login</code></li>
+            <li>✅ Changed all <code>SignUp.html</code> links to <code>auth.html#signup</code></li>
+            <li>✅ Added "Get Started" button on homepage</li>
+            <li>✅ Fixed auth.html signup form validation</li>
+            <li>✅ Added terms checkbox validation</li>
+            <li>✅ Enhanced URL hash handling</li>
+        </ul>
+    </div>
+</body>
+</html>

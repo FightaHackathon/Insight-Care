@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Conversation Demo - Question + Response</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .demo-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .success { color: #28a745; }
+        .info { color: #17a2b8; }
+        h1 { color: #333; }
+        h2 { color: #666; }
+        p { color: #777; }
+        
+        .chat-demo {
+            border: 2px solid #007bff;
+            border-radius: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            margin: 20px 0;
+        }
+        
+        .before-section, .after-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .before-section {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .after-section {
+            border-left: 4px solid #28a745;
+        }
+        
+        .user-message-demo {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin: 10px 0;
+            justify-content: flex-end;
+        }
+        
+        .ai-message-demo {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin: 10px 0;
+        }
+        
+        .user-avatar-demo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .ai-avatar-demo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .user-content-demo {
+            background: #007bff;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        
+        .ai-content-demo {
+            background: #e9ecef;
+            padding: 12px 16px;
+            border-radius: 15px;
+            color: #333;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        
+        .plain-response {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            color: #333;
+        }
+        
+        .test-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            font-weight: 500;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>💬 Chat Conversation Fix - Question + Response</h1>
+        <p class="success">✅ <strong>Chat now shows both user questions AND AI responses!</strong></p>
+        
+        <h2>🔧 What Was Fixed:</h2>
+        <ul>
+            <li>✅ <strong>User Question Display</strong> - Selected questions now appear in chat</li>
+            <li>✅ <strong>Conversation Flow</strong> - Shows question first, then AI response</li>
+            <li>✅ <strong>Visual Distinction</strong> - Different styling for user vs AI messages</li>
+            <li>✅ <strong>Chat History</strong> - Complete conversation context</li>
+        </ul>
+        
+        <div class="chat-demo">
+            <div class="before-section">
+                <h3>❌ Before (Only AI Response):</h3>
+                <div class="plain-response">
+                    Yes! We offer a 30-day return policy. If you're not satisfied, return the product in its original condition for a full refund. Contact our customer service for return instructions.
+                </div>
+                <p style="color: #dc3545; font-style: italic;">Problem: User couldn't see what question they asked!</p>
+            </div>
+            
+            <div class="after-section">
+                <h3>✅ After (Question + Response):</h3>
+                
+                <!-- User Message -->
+                <div class="user-message-demo">
+                    <div class="user-content-demo">
+                        Can I return a product?
+                    </div>
+                    <div class="user-avatar-demo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- AI Response -->
+                <div class="ai-message-demo">
+                    <div class="ai-avatar-demo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="ai-content-demo">
+                        Yes! We offer a 30-day return policy. If you're not satisfied, return the product in its original condition for a full refund. Contact our customer service for return instructions.
+                    </div>
+                </div>
+                
+                <p style="color: #28a745; font-style: italic;">✅ Perfect! Now shows complete conversation context!</p>
+            </div>
+        </div>
+        
+        <h2>🎯 How It Works Now:</h2>
+        <ol>
+            <li><strong>User clicks a question</strong> (e.g., "Can I return a product?")</li>
+            <li><strong>Question appears in chat</strong> with user avatar (right-aligned, blue)</li>
+            <li><strong>AI response appears below</strong> with AI avatar (left-aligned, gradient)</li>
+            <li><strong>Complete conversation context</strong> is maintained</li>
+        </ol>
+        
+        <h2>🧪 Test the New Chat:</h2>
+        <a href="index.html" class="test-button">Test on Home Page</a>
+        
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <h3>📋 Test Steps:</h3>
+            <ol>
+                <li>Click the chat icon (bottom-right corner)</li>
+                <li>Click any question button</li>
+                <li>Verify you see:
+                    <ul>
+                        <li>✅ Your question appears first (blue, right-aligned)</li>
+                        <li>✅ AI response appears below (gray, left-aligned)</li>
+                        <li>✅ Both have appropriate avatars</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h2>✨ Technical Implementation:</h2>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+            <h3>JavaScript Changes:</h3>
+            <pre style="background: #e9ecef; padding: 10px; border-radius: 3px; overflow-x: auto; font-size: 12px;">
+// Now shows both user question and AI response
+chatResponse.innerHTML = `
+    &lt;div class="user-message"&gt;
+        &lt;div class="message-content user-content"&gt;${questionText}&lt;/div&gt;
+        &lt;div class="user-avatar"&gt;👤&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="response-message"&gt;
+        &lt;div class="ai-avatar"&gt;🤖&lt;/div&gt;
+        &lt;div class="message-content"&gt;${response}&lt;/div&gt;
+    &lt;/div&gt;
+`;</pre>
+            
+            <h3>CSS Styles Added:</h3>
+            <ul>
+                <li><strong>.user-message</strong> - Right-aligned user messages</li>
+                <li><strong>.user-content</strong> - Blue background for user text</li>
+                <li><strong>.user-avatar</strong> - User profile icon</li>
+                <li><strong>Responsive layout</strong> - Works on all screen sizes</li>
+            </ul>
+        </div>
+        
+        <h2>🎉 Benefits:</h2>
+        <ul>
+            <li>✅ <strong>Better UX</strong> - Users can see their question and response</li>
+            <li>✅ <strong>Clear Context</strong> - Complete conversation flow</li>
+            <li>✅ <strong>Professional Look</strong> - Modern chat interface</li>
+            <li>✅ <strong>Visual Hierarchy</strong> - Easy to distinguish user vs AI</li>
+        </ul>
+        
+        <p class="success"><strong>Your chat now works like a proper conversation with both questions and answers visible!</strong></p>
+    </div>
+</body>
+</html>
