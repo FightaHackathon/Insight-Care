@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification System Test</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .test-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .test-btn.success { background: #28a745; color: white; }
+        .test-btn.info { background: #17a2b8; color: white; }
+        .test-btn.warning { background: #ffc107; color: #333; }
+        .test-btn.error { background: #dc3545; color: white; }
+        .test-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        .status {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .debug-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification Bell (Fixed Position) -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 2000;">
+        <div class="notification-container">
+            <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span class="notification-badge" id="notification-badge">0</span>
+            </button>
+            
+            <div class="notification-dropdown" id="notification-dropdown">
+                <div class="notification-header">
+                    <h3>Notifications</h3>
+                    <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                </div>
+                <div class="notification-list" id="notification-list">
+                    <div class="empty-notifications" id="empty-notifications">
+                        <div class="empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <p>No notifications yet</p>
+                    </div>
+                </div>
+                <div class="notification-footer">
+                    <button class="view-all-btn">View All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h1>🔔 Notification System Test & Debug</h1>
+        <p><strong>Purpose:</strong> Test if notifications work and debug any issues.</p>
+        
+        <div class="status">
+            <h3>📋 Test Instructions:</h3>
+            <ol>
+                <li><strong>Look for the bell icon</strong> in the top-right corner</li>
+                <li><strong>Click the test buttons below</strong> to trigger notifications</li>
+                <li><strong>Check if the red badge appears</strong> with a number</li>
+                <li><strong>Click the bell</strong> to see if the dropdown opens</li>
+                <li><strong>Verify notifications appear</strong> in the dropdown list</li>
+            </ol>
+        </div>
+        
+        <h2>🧪 Test Buttons</h2>
+        <div class="test-buttons">
+            <button class="test-btn success" onclick="testNotification('booking', 'Appointment Booked', 'Your skincare consultation is confirmed for tomorrow at 2:00 PM')">
+                📅 Test Booking Notification
+            </button>
+            <button class="test-btn info" onclick="testNotification('reminder', 'Skincare Reminder', 'Time for your evening skincare routine!')">
+                ⏰ Test Reminder Notification
+            </button>
+            <button class="test-btn warning" onclick="testNotification('update', 'Profile Update', 'Please update your profile information')">
+                📝 Test Update Notification
+            </button>
+            <button class="test-btn error" onclick="testNotification('clinic-update', 'New Services', 'Check out our new skincare treatments!')">
+                🏥 Test Clinic Notification
+            </button>
+            <button class="test-btn info" onclick="testClickability()">
+                🖱️ Test Bell Clickability
+            </button>
+            <button class="test-btn warning" onclick="debugNotificationSystem()">
+                🔍 Debug System
+            </button>
+        </div>
+        
+        <div id="debug-output" class="debug-info" style="display: none;">
+            <h3>Debug Information:</h3>
+            <div id="debug-content"></div>
+        </div>
+        
+        <h2>✅ Expected Results:</h2>
+        <ul>
+            <li>✅ Red badge appears on bell with notification count</li>
+            <li>✅ Bell is clickable and opens/closes dropdown</li>
+            <li>✅ Notifications appear in dropdown list</li>
+            <li>✅ Toast notifications appear temporarily</li>
+            <li>✅ Clicking notifications marks them as read</li>
+            <li>✅ Clear All button removes all notifications</li>
+        </ul>
+        
+        <h2>🔧 Troubleshooting:</h2>
+        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <h3>If notifications don't work:</h3>
+            <ol>
+                <li><strong>Check browser console</strong> for error messages (F12)</li>
+                <li><strong>Click "Debug System"</strong> button above</li>
+                <li><strong>Verify notification-functions.js is loaded</strong></li>
+                <li><strong>Try manual initialization:</strong> Type <code>initNotifications()</code> in console</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Include notification system -->
+    <script src="notification-functions.js"></script>
+    
+    <script>
+        // Test functions
+        function testNotification(type, title, message) {
+            console.log(`Testing notification: ${type} - ${title}`);
+            
+            if (typeof addNotification === 'function') {
+                addNotification(type, title, message);
+                updateDebugInfo(`✅ Notification added: ${title}`);
+            } else {
+                updateDebugInfo(`❌ addNotification function not found`);
+            }
+        }
+        
+        function testClickability() {
+            const btn = document.getElementById('notification-btn');
+            const dropdown = document.getElementById('notification-dropdown');
+            
+            if (btn && dropdown) {
+                updateDebugInfo(`✅ Bell button found and clickable`);
+                
+                // Simulate click
+                btn.click();
+                
+                setTimeout(() => {
+                    const isVisible = dropdown.classList.contains('show');
+                    updateDebugInfo(`Bell click result: ${isVisible ? '✅ Dropdown opened' : '❌ Dropdown not opened'}`);
+                }, 100);
+            } else {
+                updateDebugInfo(`❌ Bell button or dropdown not found`);
+            }
+        }
+        
+        function debugNotificationSystem() {
+            const debugOutput = document.getElementById('debug-output');
+            const debugContent = document.getElementById('debug-content');
+            
+            debugOutput.style.display = 'block';
+            
+            let debug = [];
+            debug.push(`🔍 Notification System Debug Report`);
+            debug.push(`Generated: ${new Date().toLocaleString()}`);
+            debug.push(`---`);
+            
+            // Check elements
+            const btn = document.getElementById('notification-btn');
+            const dropdown = document.getElementById('notification-dropdown');
+            const badge = document.getElementById('notification-badge');
+            const list = document.getElementById('notification-list');
+            
+            debug.push(`Elements Check:`);
+            debug.push(`- Notification button: ${btn ? '✅ Found' : '❌ Missing'}`);
+            debug.push(`- Notification dropdown: ${dropdown ? '✅ Found' : '❌ Missing'}`);
+            debug.push(`- Notification badge: ${badge ? '✅ Found' : '❌ Missing'}`);
+            debug.push(`- Notification list: ${list ? '✅ Found' : '❌ Missing'}`);
+            debug.push(`---`);
+            
+            // Check functions
+            debug.push(`Functions Check:`);
+            debug.push(`- addNotification: ${typeof addNotification === 'function' ? '✅ Available' : '❌ Missing'}`);
+            debug.push(`- initNotificationSystem: ${typeof initNotificationSystem === 'function' ? '✅ Available' : '❌ Missing'}`);
+            debug.push(`- handleNotificationClick: ${typeof handleNotificationClick === 'function' ? '✅ Available' : '❌ Missing'}`);
+            debug.push(`---`);
+            
+            // Check CSS classes
+            if (dropdown) {
+                debug.push(`Dropdown State:`);
+                debug.push(`- Has 'show' class: ${dropdown.classList.contains('show') ? '✅ Yes' : '❌ No'}`);
+                debug.push(`- Computed opacity: ${getComputedStyle(dropdown).opacity}`);
+                debug.push(`- Computed visibility: ${getComputedStyle(dropdown).visibility}`);
+            }
+            
+            debugContent.innerHTML = debug.join('<br>');
+        }
+        
+        function updateDebugInfo(message) {
+            const debugOutput = document.getElementById('debug-output');
+            const debugContent = document.getElementById('debug-content');
+            
+            debugOutput.style.display = 'block';
+            
+            const timestamp = new Date().toLocaleTimeString();
+            const newMessage = `[${timestamp}] ${message}`;
+            
+            if (debugContent.innerHTML) {
+                debugContent.innerHTML += '<br>' + newMessage;
+            } else {
+                debugContent.innerHTML = newMessage;
+            }
+        }
+        
+        // Auto-test on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                updateDebugInfo('🚀 Page loaded, notification system should be ready');
+                
+                // Add a welcome notification
+                if (typeof addNotification === 'function') {
+                    addNotification('info', 'Test Page Loaded', 'Notification system test page is ready!');
+                    updateDebugInfo('✅ Welcome notification added');
+                } else {
+                    updateDebugInfo('❌ addNotification function not available');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Consistency Test</title>
+    <link rel="stylesheet" href="modern-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .page-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .page-link {
+            display: block;
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .page-link:hover {
+            background: #0056b3;
+        }
+        .test-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 500;
+        }
+        .test-btn.success { background: #28a745; color: white; }
+        .test-btn.info { background: #17a2b8; color: white; }
+        .status {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .checklist {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification Bell (Fixed Position) -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 2000;">
+        <div class="notification-container">
+            <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span class="notification-badge" id="notification-badge">0</span>
+            </button>
+            
+            <div class="notification-dropdown" id="notification-dropdown">
+                <div class="notification-header">
+                    <h3>Notifications</h3>
+                    <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+                </div>
+                <div class="notification-list" id="notification-list">
+                    <div class="empty-notifications" id="empty-notifications">
+                        <div class="empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <p>No notifications yet</p>
+                    </div>
+                </div>
+                <div class="notification-footer">
+                    <button class="view-all-btn">View All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h1>🔔 Notification Consistency Test</h1>
+        <p><strong>Purpose:</strong> Test that notifications work consistently across ALL pages in your SkinCare application.</p>
+        
+        <div class="status">
+            <h3>📋 How to Test Consistency:</h3>
+            <ol>
+                <li><strong>Add a test notification</strong> using the button below</li>
+                <li><strong>Navigate to each page</strong> using the links below</li>
+                <li><strong>Verify the notification persists</strong> on every page</li>
+                <li><strong>Check the bell icon</strong> is clickable on every page</li>
+                <li><strong>Confirm badge count</strong> is consistent everywhere</li>
+            </ol>
+        </div>
+        
+        <h2>🧪 Add Test Notification</h2>
+        <button class="test-btn success" onclick="addTestNotification()">
+            ✅ Add Consistency Test Notification
+        </button>
+        <button class="test-btn info" onclick="showCurrentNotifications()">
+            📊 Show Current Notifications
+        </button>
+        
+        <h2>🔗 Test All Pages</h2>
+        <p>Click each link and verify the notification appears on every page:</p>
+        
+        <div class="page-grid">
+            <div class="page-card">
+                <h3>🏠 Main Pages</h3>
+                <a href="index.html" class="page-link">Home Page</a>
+                <a href="clinic.html" class="page-link">Clinics</a>
+                <a href="treatment.html" class="page-link">Treatments</a>
+                <a href="myProfile.html" class="page-link">My Profile</a>
+            </div>
+            
+            <div class="page-card">
+                <h3>📅 Booking Pages</h3>
+                <a href="bookingList.html" class="page-link">Booking List</a>
+                <a href="clinic-details.html" class="page-link">Clinic Details</a>
+                <a href="treatment-details.html" class="page-link">Treatment Details</a>
+            </div>
+            
+            <div class="page-card">
+                <h3>🧪 Analysis Pages</h3>
+                <a href="skin.html" class="page-link">Skin Analysis</a>
+                <a href="hairTest.html" class="page-link">Hair Test</a>
+                <a href="colorAnalysis.html" class="page-link">Color Analysis</a>
+                <a href="bodyShape.html" class="page-link">Body Shape</a>
+                <a href="skinTone.html" class="page-link">Skin Tone</a>
+            </div>
+            
+            <div class="page-card">
+                <h3>🔧 Test Pages</h3>
+                <a href="persistent-notification-test.html" class="page-link">Persistence Test</a>
+                <a href="notification-test.html" class="page-link">Basic Test</a>
+                <a href="notification-system-demo.html" class="page-link">System Demo</a>
+            </div>
+        </div>
+        
+        <div class="checklist">
+            <h3>✅ Consistency Checklist</h3>
+            <p>For each page you visit, verify:</p>
+            <ul>
+                <li>✅ <strong>Bell icon is visible</strong> in the top-right corner</li>
+                <li>✅ <strong>Badge shows correct count</strong> (should be same on all pages)</li>
+                <li>✅ <strong>Bell is clickable</strong> and opens dropdown</li>
+                <li>✅ <strong>Notifications appear</strong> in the dropdown list</li>
+                <li>✅ <strong>Same notifications</strong> visible on all pages</li>
+                <li>✅ <strong>Read/unread status</strong> is consistent</li>
+                <li>✅ <strong>Clear all button</strong> works from any page</li>
+            </ul>
+        </div>
+        
+        <h2>🎯 Expected Results</h2>
+        <div style="background: #d4edda; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+            <h3>✅ What Should Work:</h3>
+            <ul>
+                <li><strong>Perfect consistency</strong> - Same notifications on every page</li>
+                <li><strong>Persistent storage</strong> - Notifications survive page navigation</li>
+                <li><strong>Real-time updates</strong> - Changes reflect immediately</li>
+                <li><strong>Cross-page functionality</strong> - Bell works the same everywhere</li>
+            </ul>
+        </div>
+        
+        <h2>🚨 If Something's Wrong</h2>
+        <div style="background: #f8d7da; padding: 15px; border-radius: 8px; border-left: 4px solid #dc3545;">
+            <h3>❌ Common Issues:</h3>
+            <ul>
+                <li><strong>Bell not clickable</strong> - Page missing notification-functions.js</li>
+                <li><strong>Notifications disappear</strong> - Page not using localStorage system</li>
+                <li><strong>Different counts</strong> - Page has duplicate handlers</li>
+                <li><strong>No bell icon</strong> - Page missing notification HTML structure</li>
+            </ul>
+            
+            <h3>🔧 Quick Fixes:</h3>
+            <ol>
+                <li>Check browser console for errors (F12)</li>
+                <li>Verify notification-functions.js is included</li>
+                <li>Ensure notification HTML structure exists</li>
+                <li>Remove duplicate JavaScript handlers</li>
+            </ol>
+        </div>
+        
+        <div id="notification-status" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; display: none;">
+            <h3>📊 Current Notification Status:</h3>
+            <div id="status-content"></div>
+        </div>
+    </div>
+
+    <!-- Include notification system -->
+    <script src="notification-functions.js"></script>
+    
+    <script>
+        function addTestNotification() {
+            if (typeof addNotification === 'function') {
+                const timestamp = new Date().toLocaleTimeString();
+                addNotification(
+                    'info',
+                    'Consistency Test',
+                    `Test notification added at ${timestamp}. This should appear on ALL pages!`
+                );
+                alert('✅ Test notification added! Now navigate to other pages to test consistency.');
+            } else {
+                alert('❌ Notification system not loaded!');
+            }
+        }
+        
+        function showCurrentNotifications() {
+            const statusDiv = document.getElementById('notification-status');
+            const statusContent = document.getElementById('status-content');
+            
+            statusDiv.style.display = 'block';
+            
+            const notifications = JSON.parse(localStorage.getItem('skincare_notifications') || '[]');
+            
+            let content = [];
+            content.push(`📊 <strong>Total Notifications:</strong> ${notifications.length}`);
+            content.push(`📬 <strong>Unread:</strong> ${notifications.filter(n => !n.read).length}`);
+            content.push(`📭 <strong>Read:</strong> ${notifications.filter(n => n.read).length}`);
+            content.push(`---`);
+            
+            if (notifications.length > 0) {
+                content.push(`📋 <strong>Recent Notifications:</strong>`);
+                notifications.slice(0, 3).forEach((notif, index) => {
+                    const status = notif.read ? '📭' : '📬';
+                    const time = new Date(notif.timestamp).toLocaleTimeString();
+                    content.push(`${index + 1}. ${status} ${notif.title} (${time})`);
+                });
+            } else {
+                content.push(`📋 <strong>No notifications found</strong>`);
+            }
+            
+            statusContent.innerHTML = content.join('<br>');
+        }
+        
+        // Auto-show status on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                showCurrentNotifications();
+                
+                // Add welcome notification if none exist
+                const notifications = JSON.parse(localStorage.getItem('skincare_notifications') || '[]');
+                if (notifications.length === 0) {
+                    if (typeof addNotification === 'function') {
+                        addNotification(
+                            'info',
+                            'Consistency Test Ready',
+                            'Welcome! Add a test notification and navigate between pages to test consistency.'
+                        );
+                    }
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

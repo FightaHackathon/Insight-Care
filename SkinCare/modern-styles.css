@@ -2570,17 +2570,19 @@ input:checked + .toggle-slider:before {
 
 .notification-btn {
   position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-full, 50%);
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition);
-  color: var(--text-secondary);
+  cursor: pointer !important;
+  transition: all var(--transition, 0.2s ease);
+  color: var(--text-secondary, #6b7280);
+  z-index: 100;
+  pointer-events: auto !important;
 }
 
 .notification-btn:hover {
@@ -2613,26 +2615,28 @@ input:checked + .toggle-slider:before {
 
 .notification-dropdown {
   position: absolute;
-  top: calc(100% + var(--space-sm));
+  top: calc(100% + var(--space-sm, 8px));
   right: 0;
   width: 320px;
-  background: var(--surface-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  background: var(--surface-elevated, #ffffff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.15));
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-  transition: all var(--transition);
-  z-index: 1000;
+  transition: all var(--transition, 0.2s ease);
+  z-index: 1001 !important;
   max-height: 400px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .notification-dropdown.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .notification-header {

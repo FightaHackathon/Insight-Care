@@ -640,23 +640,7 @@
             });
         }
         
-        // Notification Dropdown Toggle
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationDropdown = document.getElementById('notification-dropdown');
-        
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('show');
-            });
-            
-            // Close notification dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-        }
+        // Notification system is handled by notification-functions.js
         
         // Profile dropdown toggle
         const profileBtn = document.querySelector('.profile-btn');
@@ -740,16 +724,14 @@
         // Simulate clinic updates (for demonstration)
         // In a real application, this would be triggered when clinic data is actually updated
         function simulateClinicUpdate(clinicName, updateType) {
-            // Import the notification utility and trigger notification
-            import('./notifications.js').then(module => {
-                module.triggerClinicUpdateNotification({
-                    clinicName: clinicName,
-                    updateType: updateType,
-                    timestamp: new Date().toISOString()
-                });
-            }).catch(error => {
-                console.log('Notification system not available:', error);
-            });
+            // Add notification using our new system
+            if (typeof addNotification === 'function') {
+                addNotification(
+                    'clinic-update',
+                    `${clinicName} Update`,
+                    `${updateType} - Check out the latest updates from ${clinicName}!`
+                );
+            }
         }
 
         // Example: Simulate clinic updates when clinic cards are clicked
@@ -790,8 +772,10 @@
 =======
     
 >>>>>>> fdd2716094e5f165e7299e6ac2c101c9abd6682a
+    <!-- Include Notification System -->
+    <script src="notification-functions.js"></script>
+
     <!-- TypeScript Modules -->
     <script type="module" src="app.js"></script>
-    <script type="module" src="notifications.js"></script>
 </body>
 </html>
