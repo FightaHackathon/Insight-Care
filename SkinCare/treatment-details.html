@@ -2,53 +2,709 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Treatment Detail</title>
-  <link rel="stylesheet" href="treatment-details.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Treatment Details - SkinCare</title>
+  <link rel="stylesheet" href="modern-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Treatment Details specific styles */
+    .treatment-detail-hero {
+      background: var(--gradient-background);
+      padding: var(--space-3xl) 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .treatment-detail-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .treatment-detail-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .treatment-detail-hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .treatment-detail-hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      line-height: 1.7;
+    }
+
+    .treatment-detail-section {
+      max-width: 1200px;
+      margin: var(--space-3xl) auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .treatment-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: start;
+    }
+
+    .treatment-image-section {
+      position: relative;
+    }
+
+    .treatment-main-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+      transition: transform var(--transition);
+    }
+
+    .treatment-main-image:hover {
+      transform: scale(1.02);
+    }
+
+    .treatment-image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: var(--space-xl);
+      border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+      color: white;
+    }
+
+    .treatment-content-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .treatment-info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .treatment-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .treatment-description {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--space-xl);
+    }
+
+    .treatment-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--surface-hover);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .feature-text {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .treatment-duration {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: rgba(255, 107, 157, 0.1);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--primary);
+    }
+
+    .duration-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--primary);
+    }
+
+    .duration-text {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .treatment-cta-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-2xl);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .cta-description {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: var(--space-lg) var(--space-2xl);
+      border-radius: var(--radius-lg);
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: var(--space-lg) var(--space-2xl);
+      border-radius: var(--radius-lg);
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .back-to-treatments {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition);
+      margin-bottom: var(--space-xl);
+    }
+
+    .back-to-treatments:hover {
+      color: var(--primary);
+      gap: var(--space-md);
+    }
+
+    .back-to-treatments svg {
+      transition: transform var(--transition);
+    }
+
+    .back-to-treatments:hover svg {
+      transform: translateX(-4px);
+    }
+
+    @media (max-width: 768px) {
+      .treatment-detail-hero-title {
+        font-size: 2.5rem;
+      }
+
+      .treatment-detail-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      .treatment-main-image {
+        height: 300px;
+      }
+
+      .treatment-title {
+        font-size: 2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+
+      .treatment-features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Modern Navigation Bar -->
+  <nav class="modern-nav">
+    <div class="nav-container">
+      <div class="nav-brand" style="display: flex;">
+        <img src="Pics/logo2.png" alt="" style="width: 50px; margin-right: 10px; border-radius: 50%; object-fit: cover;">
+        <h1 class="brand-logo" style="font-family:monospace; margin-top: 5px;">InsightCare</h1>
+      </div>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link dropdown-trigger active">
+            Services
+            <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="bodyShape.html" class="dropdown-item">Body Shape Analysis</a>
+            <a href="colorAnalysis.html" class="dropdown-item">Color Analysis</a>
+            <a href="hairTest.html" class="dropdown-item">Hair Test</a>
+            <a href="skin.html" class="dropdown-item">Skin Test</a>
+            <a href="skinTone.html" class="dropdown-item">Skin Tone Test</a>
+            <a href="treatment.html" class="dropdown-item active">Treatments</a>
+          </div>
+        </div>
+        <a href="clinic.html" class="nav-link">Clinics</a>
+        <a href="bookingList.html" class="nav-link">Bookings</a>
+      </div>
+      
+      <!-- Mobile Navigation Toggle -->
+      <button class="mobile-nav-toggle" aria-label="Toggle mobile menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+      
+      <div class="nav-actions">
+        <!-- Notification Bell -->
+        <div class="notification-container">
+          <button class="notification-btn" aria-label="Notifications" id="notification-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="notification-badge" id="notification-badge">0</span>
+          </button>
+          
+          <!-- Notification Dropdown -->
+          <div class="notification-dropdown" id="notification-dropdown">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <button class="clear-all-btn" id="clear-all-btn">Clear All</button>
+            </div>
+            <div class="notification-list" id="nav-notification-list">
+              <div class="empty-notifications" id="nav-empty-notifications">
+                <div class="empty-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </div>
+                <p>No notifications yet</p>
+              </div>
+            </div>
+            <div class="notification-footer">
+              <button class="view-all-btn" onclick="window.location.href='myProfile.html#notifications-section'">View All</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-container">
+          <button class="profile-btn" aria-label="User profile menu">
+            <span class="profile-name">Guest</span>
+            <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+          <div class="profile-dropdown" role="menu">
+            <a href="myProfile.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              My Profile
+            </a>
+            <a href="bookingList.html" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              My Bookings
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="auth.html#login" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Log In
+            </a>
+            <a href="auth.html#signup" class="dropdown-item" role="menuitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                <line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/>
+                <line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <div class="mobile-nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="bodyShape.html" class="nav-link">Body Shape Analysis</a>
+        <a href="colorAnalysis.html" class="nav-link">Color Analysis</a>
+        <a href="hairTest.html" class="nav-link">Hair Test</a>
+        <a href="treatment.html" class="nav-link active">Treatments</a>
+        <a href="clinic.html" class="nav-link">Clinics</a>
+        <a href="bookingList.html" class="nav-link">Bookings</a>
+      </div>
+    </div>
+  </nav>
 
-  <div class="detail-card" id="treatment-detail"></div>
+  <!-- Back to Treatments Link -->
+  <div class="treatment-detail-section">
+    <a href="treatment.html" class="back-to-treatments">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Back to Treatments
+    </a>
+  </div>
 
+  <!-- Treatment Detail Content -->
+  <div id="treatment-detail-content"></div>
+
+  <!-- Chat Component -->
+  <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div id="chatbox" class="chatbox hidden" role="dialog" aria-labelledby="chat-header">
+    <div class="chat-header" id="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="chat-title">SkinCare Support</span>
+          <span class="chat-status">Online</span>
+        </div>
+      </div>
+      <button id="close-chat" class="chat-close" aria-label="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="m18 6-12 12" stroke="currentColor" stroke-width="2"/>
+          <path d="m6 6 12 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-welcome">
+        <p>Hi! How can we help you with treatment details today?</p>
+      </div>
+      <div class="question-list">
+        <button class="question">What's the best skincare routine for oily skin?</button>
+        <button class="question">Do your products contain parabens?</button>
+        <button class="question">Are your products cruelty-free?</button>
+        <button class="question">How long does shipping take?</button>
+        <button class="question">Can I return a product?</button>
+      </div>
+      <div id="chat-response" class="chat-response"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
   <script>
     const treatments = {
       "acne": {
         title: "Acne Treatment",
+        subtitle: "Clear, Healthy Skin Starts Here",
         image: "Pics/hormonal-acne.jpg",
-        description: "This treatment helps cleanse clogged pores, reduce inflammation, and balance oil production to treat and prevent acne breakouts."
+        description: "Our comprehensive acne treatment program is designed to target the root causes of breakouts while promoting clear, healthy skin. Using advanced dermatological techniques and proven ingredients, we help you achieve lasting results.",
+        features: [
+          "Deep pore cleansing",
+          "Anti-inflammatory therapy",
+          "Oil production balance",
+          "Scar reduction treatment"
+        ],
+        duration: "60-90 minutes per session",
+        price: "$150-250 per session"
       },
       "hair-breakage": {
         title: "Hair Breakage Repair",
+        subtitle: "Restore Your Hair's Natural Strength",
         image: "Pics/breakage.jpg",
-        description: "Strengthens weak hair strands with keratin-based therapies and nourishing oils to reduce split ends and breakage."
+        description: "Transform damaged, brittle hair into strong, healthy locks with our specialized hair repair treatment. Our keratin-based therapies and nourishing oils work together to strengthen hair from root to tip.",
+        features: [
+          "Keratin protein therapy",
+          "Deep conditioning treatment",
+          "Split end repair",
+          "Scalp health optimization"
+        ],
+        duration: "90-120 minutes per session",
+        price: "$180-300 per session"
       },
       "anti-aging": {
         title: "Anti-Aging Therapy",
+        subtitle: "Turn Back Time Naturally",
         image: "Pics/antiAging.jpg",
-        description: "Stimulates collagen production and reduces the appearance of wrinkles and fine lines using non-invasive procedures."
+        description: "Rejuvenate your skin and reduce the signs of aging with our advanced anti-aging treatments. Using non-invasive procedures and cutting-edge technology, we stimulate collagen production and restore youthful radiance.",
+        features: [
+          "Collagen stimulation",
+          "Wrinkle reduction",
+          "Skin tightening",
+          "Age spot treatment"
+        ],
+        duration: "75-105 minutes per session",
+        price: "$200-350 per session"
       },
       "dry-skin": {
         title: "Dry Skin Solution",
+        subtitle: "Hydration That Lasts",
         image: "Pics/skin.jpg",
-        description: "Deep hydration treatment to soothe flaky, itchy skin and restore the skin barrier."
+        description: "Combat dry, flaky skin with our intensive hydration treatment program. We restore your skin's natural moisture barrier and provide long-lasting relief from irritation and discomfort.",
+        features: [
+          "Deep hydration therapy",
+          "Barrier repair treatment",
+          "Moisture retention",
+          "Soothing relief"
+        ],
+        duration: "60-90 minutes per session",
+        price: "$120-200 per session"
       }
     };
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("treatment");
-
     const treatment = treatments[slug];
-    const container = document.getElementById("treatment-detail");
+    const container = document.getElementById("treatment-detail-content");
 
     if (treatment) {
       container.innerHTML = `
-        <img src="${treatment.image}" alt="${treatment.title}">
-        <h2>${treatment.title}</h2>
-        <p>${treatment.description}</p>
+        <!-- Hero Section -->
+        <section class="treatment-detail-hero">
+          <div class="treatment-detail-hero-content">
+            <h1 class="treatment-detail-hero-title">${treatment.title}</h1>
+            <p class="treatment-detail-hero-subtitle">${treatment.subtitle}</p>
+          </div>
+        </section>
+
+        <!-- Treatment Details Section -->
+        <section class="treatment-detail-section">
+          <div class="treatment-detail-grid">
+            <div class="treatment-image-section">
+              <img src="${treatment.image}" alt="${treatment.title}" class="treatment-main-image">
+              <div class="treatment-image-overlay">
+                <h3>Professional Treatment</h3>
+                <p>Expert care for optimal results</p>
+              </div>
+            </div>
+
+            <div class="treatment-content-section">
+              <div class="treatment-info-card">
+                <h2 class="treatment-title">${treatment.title}</h2>
+                <p class="treatment-description">${treatment.description}</p>
+                
+                <div class="treatment-features">
+                  ${treatment.features.map(feature => `
+                    <div class="feature-item">
+                      <svg class="feature-icon" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                      <span class="feature-text">${feature}</span>
+                    </div>
+                  `).join('')}
+                </div>
+
+                <div class="treatment-duration">
+                  <svg class="duration-icon" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="duration-text">Duration: ${treatment.duration}</span>
+                </div>
+              </div>
+
+              <div class="treatment-cta-section">
+                <h3 class="cta-title">Ready to Start Your Journey?</h3>
+                <p class="cta-description">Book your consultation today and take the first step towards achieving your skincare goals.</p>
+                <div class="cta-buttons">
+                  <a href="clinic.html" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Book Consultation
+                  </a>
+                  <a href="clinic.html" class="btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Find Clinic
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       `;
     } else {
-      container.innerHTML = `<p style="color:red;">Treatment not found.</p>`;
+      container.innerHTML = `
+        <section class="treatment-detail-hero">
+          <div class="treatment-detail-hero-content">
+            <h1 class="treatment-detail-hero-title">Treatment Not Found</h1>
+            <p class="treatment-detail-hero-subtitle">The requested treatment could not be found.</p>
+            <a href="treatment.html" class="btn-primary">Back to Treatments</a>
+          </div>
+        </section>
+      `;
     }
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    
+    if (mobileNavToggle && mobileNavMenu) {
+      mobileNavToggle.addEventListener('click', function() {
+        mobileNavMenu.classList.toggle('show');
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!mobileNavToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+          mobileNavMenu.classList.remove('show');
+        }
+      });
+    }
+
+    // Profile dropdown toggle
+    const profileBtn = document.querySelector('.profile-btn');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    
+    if (profileBtn && profileDropdown) {
+      profileBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const isOpen = profileDropdown.classList.contains('dropdown-open');
+        if (isOpen) {
+          profileDropdown.classList.remove('dropdown-open');
+          profileBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          profileDropdown.classList.add('dropdown-open');
+          profileBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+      
+      // Close profile dropdown when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+          profileDropdown.classList.remove('dropdown-open');
+          profileBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
   </script>
 
+  <!-- Include Notification System -->
+  <script src="notification-functions.js"></script>
+
+  <!-- TypeScript Modules -->
+  <script type="module" src="app.js"></script>
+  <script src="chat.js"></script>
 </body>
 </html>
