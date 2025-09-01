@@ -1074,6 +1074,8 @@
             } else {
                 result = "Rectangle";
             }
+            
+            console.log('Calculated body shape:', result);
 
             // Display result with images
             displayBodyShapeResult(result);
@@ -1090,23 +1092,46 @@
             // Clear previous images
             resultImages.innerHTML = '';
 
-            // Map body shape names to folder names
-            const folderMap = {
-                "Hourglass": "Hourglass",
-                "Inverted Triangle": "Inverted triangle",
-                "Pear": "Pear",
-                "Rectangle": "Rectangle",
-                "Apple": "Rectangle" // Apple shape uses Rectangle images as fallback
+            // Map body shape names to image file names
+            const imageMap = {
+                "Hourglass": {
+                    tops: "suitable tops.jpg",
+                    bottoms: "suitable bottoms.jpg", 
+                    dresses: "suitable dresses.jpg"
+                },
+                "Inverted Triangle": {
+                    tops: "suitable topsit.jpg",
+                    bottoms: "suitable bottomsit.jpg",
+                    dresses: "suitable dressesit.jpg"
+                },
+                "Pear": {
+                    tops: "suitable topsp.jpg",
+                    bottoms: "suitable bottomsp.jpg",
+                    dresses: "suitable dressesp.jpg"
+                },
+                "Rectangle": {
+                    tops: "suitable topsr.jpg",
+                    bottoms: "suitable bottomsr.jpg",
+                    dresses: "suitable dressesr.jpg"
+                },
+                "Apple": {
+                    tops: "suitable topsr.jpg",
+                    bottoms: "suitable bottomsr.jpg", 
+                    dresses: "suitable dressesr.jpg"
+                }
             };
 
-            const folderName = folderMap[bodyShape] || "Rectangle";
-            const basePath = `body%20shapes%20results/${encodeURIComponent(folderName)}/`;
+            const bodyShapeImages = imageMap[bodyShape] || imageMap["Rectangle"];
+            
+            // Debug: Log the mapping
+            console.log('Body shape:', bodyShape);
+            console.log('Selected images:', bodyShapeImages);
 
-            // Image categories to display
+            // Image categories to display with correct file names
             const imageCategories = [
-                { file: "suitable tops.webp", label: "Suitable Tops" },
-                { file: "suitable bottoms.webp", label: "Suitable Bottoms" },
-                { file: "suitable dresses.webp", label: "Suitable Dresses" }
+                { file: bodyShapeImages.tops, label: "Suitable Tops" },
+                { file: bodyShapeImages.bottoms, label: "Suitable Bottoms" },
+                { file: bodyShapeImages.dresses, label: "Suitable Dresses" }
             ];
 
             // Create image cards
@@ -1121,7 +1146,7 @@
 
                 const img = document.createElement('img');
                 img.className = 'result-image';
-                img.src = basePath + encodeURIComponent(category.file);
+                img.src = 'Pics/' + category.file;
                 img.alt = `${bodyShape} - ${category.label}`;
                 img.loading = 'lazy';
                 img.style.display = 'none'; // Hide initially
@@ -1150,6 +1175,7 @@
                     console.error('Failed to load image:', this.src);
                     clearTimeout(loadingTimeout);
                     loadingDiv.style.display = 'none';
+                    
                     const errorMsg = document.createElement('div');
                     errorMsg.className = 'result-image-error';
                     errorMsg.innerHTML = `
@@ -1159,6 +1185,7 @@
                             </svg>
                             <div>Image not available</div>
                             <div style="font-size: 0.8rem; margin-top: 4px;">Path: ${this.src}</div>
+                            <div style="font-size: 0.8rem; margin-top: 4px;">Body Shape: ${bodyShape}</div>
                         </div>
                     `;
                     imageCard.appendChild(errorMsg);
