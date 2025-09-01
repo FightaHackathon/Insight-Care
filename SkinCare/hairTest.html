@@ -672,7 +672,16 @@
             "You have thick, coarse hair (as opposed to medium or fine)."
         ];
 
+        // Hair type scoring system
+        const hairTypeScores = {
+            '1A': 0, '1B': 0, '1C': 0,  // Straight hair types
+            '2A': 0, '2B': 0, '2C': 0,  // Wavy hair types
+            '3A': 0, '3B': 0, '3C': 0,  // Curly hair types
+            '4A': 0, '4B': 0, '4C': 0   // Coily hair types
+        };
+
         let currentQuestion = 0;
+        let answers = [];
 
         function startQuiz() {
             document.getElementById("start-screen").style.display = "none";
@@ -687,18 +696,250 @@
         }
 
         function submitAnswer(agreed) {
+            answers.push(agreed);
             console.log("Answer for question", currentQuestion + 1, ":", agreed ? "Agree" : "Disagree");
             currentQuestion++;
+            
             if (currentQuestion < questions.length) {
                 updateQuiz();
             } else {
-                document.querySelector(".quiz-container").innerHTML = `
-                    <div style="text-align: center; padding: var(--space-xl);">
-                        <h3 style="color: var(--primary); margin-bottom: var(--space-lg);">Thank you!</h3>
-                        <p style="color: var(--text-secondary);">Your answers have been recorded. We'll analyze your hair type and provide personalized recommendations.</p>
-                    </div>
-                `;
+                showResults();
             }
+        }
+
+        function showResults() {
+            const hairType = determineHairType(answers);
+            const hairTypeInfo = getHairTypeInfo(hairType);
+            
+            document.querySelector(".quiz-container").innerHTML = `
+                <div style="text-align: center; padding: var(--space-xl);">
+                    <h3 style="color: var(--primary); margin-bottom: var(--space-lg);">Your Hair Type Results!</h3>
+                    <div style="background: var(--surface-hover); border-radius: var(--radius-lg); padding: var(--space-xl); margin-bottom: var(--space-xl);">
+                        <h2 style="color: var(--primary); font-size: 2rem; margin-bottom: var(--space-md);">${hairType}</h2>
+                        <p style="color: var(--text-secondary); font-size: 1.125rem; margin-bottom: var(--space-lg);">${hairTypeInfo.subtitle}</p>
+                        <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-lg);">${hairTypeInfo.description}</p>
+                    </div>
+                    
+                    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-xl); margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--primary); margin-bottom: var(--space-md);">Care Tips for ${hairType} Hair:</h4>
+                        <ul style="text-align: left; color: var(--text-secondary); line-height: 1.6;">
+                            ${hairTypeInfo.careTips.map(tip => `<li style="margin-bottom: var(--space-sm);">${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <button onclick="restartQuiz()" class="quiz-start-btn" style="margin-top: var(--space-lg);">Take Quiz Again</button>
+                </div>
+            `;
+        }
+
+        function determineHairType(answers) {
+            // Reset scores
+            Object.keys(hairTypeScores).forEach(key => hairTypeScores[key] = 0);
+            
+            // Question 1-3: Straight hair indicators
+            if (answers[0]) hairTypeScores['1A'] += 3;
+            if (answers[1]) hairTypeScores['1B'] += 3;
+            if (answers[2]) hairTypeScores['1C'] += 3;
+            
+            // Question 4-6: Wavy hair indicators
+            if (answers[3]) hairTypeScores['2A'] += 3;
+            if (answers[4]) hairTypeScores['2B'] += 3;
+            if (answers[5]) hairTypeScores['2C'] += 3;
+            
+            // Question 7-9: Curly hair indicators
+            if (answers[6]) hairTypeScores['3A'] += 3;
+            if (answers[7]) hairTypeScores['3B'] += 3;
+            if (answers[8]) hairTypeScores['3C'] += 3;
+            
+            // Question 10-12: Coily hair indicators
+            if (answers[9]) hairTypeScores['4A'] += 3;
+            if (answers[10]) hairTypeScores['4B'] += 3;
+            if (answers[11]) hairTypeScores['4C'] += 3;
+            
+            // Texture questions (13-15) affect all types
+            if (answers[12]) { // Fine hair
+                hairTypeScores['1A'] += 1;
+                hairTypeScores['2A'] += 1;
+                hairTypeScores['3A'] += 1;
+                hairTypeScores['4A'] += 1;
+            }
+            if (answers[13]) { // Medium hair
+                hairTypeScores['1B'] += 1;
+                hairTypeScores['2B'] += 1;
+                hairTypeScores['3B'] += 1;
+                hairTypeScores['4B'] += 1;
+            }
+            if (answers[14]) { // Thick hair
+                hairTypeScores['1C'] += 1;
+                hairTypeScores['2C'] += 1;
+                hairTypeScores['3C'] += 1;
+                hairTypeScores['4C'] += 1;
+            }
+            
+            // Find the highest scoring hair type
+            let maxScore = 0;
+            let result = '1A';
+            
+            Object.entries(hairTypeScores).forEach(([type, score]) => {
+                if (score > maxScore) {
+                    maxScore = score;
+                    result = type;
+                }
+            });
+            
+            return result;
+        }
+
+        function getHairTypeInfo(hairType) {
+            const hairTypeData = {
+                '1A': {
+                    subtitle: 'Straight - Fine & Wispy',
+                    description: 'Your hair is fully straight, fine, wispy, and very sleek. It tends to look very shiny and straight, but can get oily faster than other types.',
+                    careTips: [
+                        'Use a hairbrush with natural bristles to distribute scalp oils',
+                        'Use shampoo and hair masks to prevent excessive oiliness',
+                        'Apply texturizing spray before styling',
+                        'Use hairspray to lock in styles'
+                    ]
+                },
+                '1B': {
+                    subtitle: 'Straight - Medium & Voluminous',
+                    description: 'Your hair is fully straight with some volume and thickness. It has more body than 1A hair and can hold styles better.',
+                    careTips: [
+                        'Use volumizing shampoos and conditioners',
+                        'Apply mousse or volumizing products at the roots',
+                        'Use a round brush when blow-drying for extra volume',
+                        'Consider texturizing products for added dimension'
+                    ]
+                },
+                '1C': {
+                    subtitle: 'Straight - Coarse & Thick',
+                    description: 'Your hair is mostly straight with occasional bends or waves. It\'s coarse and thick, providing lots of volume and texture.',
+                    careTips: [
+                        'Use moisturizing shampoos and conditioners',
+                        'Apply leave-in conditioners to manage thickness',
+                        'Use heat protectants before styling',
+                        'Consider regular trims to manage thickness'
+                    ]
+                },
+                '2A': {
+                    subtitle: 'Wavy - Loose & Tousled',
+                    description: 'Your hair has tousled, loose waves that are less defined and easy to style. It\'s naturally beachy and relaxed.',
+                    careTips: [
+                        'Squeeze-dry with a soft t-shirt instead of rubbing',
+                        'Use anti-frizz and moisturizing products',
+                        'Apply sea salt spray for enhanced waves',
+                        'Avoid touching hair to prevent frizzing'
+                    ]
+                },
+                '2B': {
+                    subtitle: 'Wavy - Defined S-Waves',
+                    description: 'Your hair has pronounced S-shaped waves that curl more as they get further from the scalp. It\'s well-defined and voluminous.',
+                    careTips: [
+                        'Use curl-enhancing creams and gels',
+                        'Apply products to damp hair for best results',
+                        'Consider plopping or diffusing to enhance waves',
+                        'Use silk pillowcases to prevent frizz'
+                    ]
+                },
+                '2C': {
+                    subtitle: 'Wavy - Voluminous & Frizzy',
+                    description: 'Your hair has voluminous, well-defined S-shaped waves that are especially prone to frizz. It has lots of body and texture.',
+                    careTips: [
+                        'Use anti-frizz serums and leave-in conditioners',
+                        'Apply products while hair is soaking wet',
+                        'Consider the curly girl method for care',
+                        'Use microfiber towels or cotton t-shirts to dry'
+                    ]
+                },
+                '3A': {
+                    subtitle: 'Curly - Loose & Bouncy',
+                    description: 'Your hair has big, bouncy curls roughly the size of sidewalk chalk. It\'s naturally voluminous and has lots of movement.',
+                    careTips: [
+                        'Use curl-enhancing creams and gels',
+                        'Apply products to soaking wet hair',
+                        'Consider plopping or diffusing to enhance curls',
+                        'Avoid heat styling too often to protect curls'
+                    ]
+                },
+                '3B': {
+                    subtitle: 'Curly - Tight Ringlets',
+                    description: 'Your hair has tight ringlets the size of a marker with lots of volume. It\'s dense and has excellent curl definition.',
+                    careTips: [
+                        'Use plenty of moisturizing products',
+                        'Apply products in sections for even distribution',
+                        'Consider protective styles like buns and twist-outs',
+                        'Use satin or silk pillowcases'
+                    ]
+                },
+                '3C': {
+                    subtitle: 'Curly - Springy Corkscrews',
+                    description: 'Your hair has springy, corkscrew curls the size of a pencil. It\'s dense, voluminous, and has excellent curl definition.',
+                    careTips: [
+                        'Use heavy moisturizing creams and butters',
+                        'Apply products in small sections',
+                        'Consider the LOC method (Liquid, Oil, Cream)',
+                        'Use protective styles to minimize manipulation'
+                    ]
+                },
+                '4A': {
+                    subtitle: 'Coily - Defined S-Coils',
+                    description: 'Your hair has well-defined S-shaped coils roughly the size of a chopstick. It\'s heavily textured and needs lots of moisture.',
+                    careTips: [
+                        'Moisturize hair frequently with water-based products',
+                        'Use the LCO method (Liquid, Cream, Oil)',
+                        'Consider twists or braids for protective styling',
+                        'Use satin bonnets or pillowcases'
+                    ]
+                },
+                '4B': {
+                    subtitle: 'Coily - Tight Z-Coils',
+                    description: 'Your hair has tight, Z-shaped coils that form a zig-zag pattern. It\'s very dense and needs intensive moisture.',
+                    careTips: [
+                        'Use heavy moisturizing products and oils',
+                        'Consider protective styles like box braids or twists',
+                        'Moisturize hair daily or every other day',
+                        'Use wide-tooth combs and finger detangling'
+                    ]
+                },
+                '4C': {
+                    subtitle: 'Coily - Sharp Z-Coils',
+                    description: 'Your hair has very sharp Z-shaped coils so tiny they don\'t look like curls from a distance. It\'s extremely dense and needs maximum moisture.',
+                    careTips: [
+                        'Use maximum moisture products and oils',
+                        'Consider crochet braids or other protective styles',
+                        'Moisturize hair multiple times per day',
+                        'Use finger detangling and minimal manipulation'
+                    ]
+                }
+            };
+            
+            return hairTypeData[hairType] || hairTypeData['1A'];
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById("start-screen").style.display = "block";
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("quiz-container").innerHTML = `
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <div class="quiz-question" id="quiz-question">
+                    Your hair is straight at the roots and has very pronounced S-shaped waves further down.
+                </div>
+
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="submitAnswer(true)">Agree</button>
+                    <button class="quiz-btn" onclick="submitAnswer(false)">Disagree</button>
+                </div>
+
+                <div class="quiz-footer">
+                    <span id="question-count">1 of 5</span>
+                </div>
+            `;
         }
 
         // Hook up the Start button
