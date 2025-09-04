@@ -978,6 +978,177 @@
         </div>
     </section>
 
+    <!-- Local styles for highlight and lightbox -->
+    <style>
+        /* Highlight animation for targeted card */
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,107,157,0.35); }
+            70% { box-shadow: 0 0 0 16px rgba(255,107,157,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,107,157,0); }
+        }
+        .target-highlight {
+            border-color: var(--primary);
+            animation: glowPulse 1.4s ease-out 2;
+        }
+
+        /* Lightbox styles */
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 9999;
+        }
+        .image-lightbox.open { display: flex; }
+        .image-lightbox-content {
+            position: relative;
+            max-width: 92vw;
+            max-height: 92vh;
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 16px;
+        }
+        .image-lightbox-img {
+            display: block;
+            max-width: 86vw;
+            max-height: 76vh;
+            border-radius: var(--radius-lg);
+            object-fit: contain;
+            background: var(--surface-hover);
+        }
+        .image-lightbox-caption {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .image-lightbox-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .image-lightbox-close:hover { background: var(--surface-hover); }
+    </style>
+
+    <!-- Results Gallery Section (images from "body shapes results") -->
+    <section class="results-gallery-section" id="results-gallery" style="max-width:1200px;margin: var(--space-3xl) auto; padding: 0 var(--space-lg);">
+        <h2 class="detailed-shapes-title">Body Shape Results Gallery</h2>
+        <p class="body-shapes-subtitle">Explore suitable Tops, Bottoms, and Dresses for each body shape.</p>
+
+        <div class="detailed-shapes-grid">
+            <!-- Hourglass -->
+            <div class="detailed-shape-card" id="result-hourglass">
+                <div class="shape-content">
+                    <h3 class="shape-title">Hourglass</h3>
+                    <p class="shape-description">Balanced bust and hips with a defined waist.</p>
+                </div>
+                <div class="result-images" style="padding: var(--space-xl);">
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Hourglass/suitable tops.jpg" alt="Hourglass - Suitable Tops" loading="lazy" />
+                        <div class="result-image-label">Suitable Tops</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Hourglass/suitable bottoms.jpg" alt="Hourglass - Suitable Bottoms" loading="lazy" />
+                        <div class="result-image-label">Suitable Bottoms</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Hourglass/suitable dresses.jpg" alt="Hourglass - Suitable Dresses" loading="lazy" />
+                        <div class="result-image-label">Suitable Dresses</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inverted Triangle -->
+            <div class="detailed-shape-card" id="result-inverted-triangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Inverted Triangle</h3>
+                    <p class="shape-description">Broader shoulders/bust and narrower hips.</p>
+                </div>
+                <div class="result-images" style="padding: var(--space-xl);">
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Inverted triangle/suitable topsit.jpg" alt="Inverted Triangle - Suitable Tops" loading="lazy" />
+                        <div class="result-image-label">Suitable Tops</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Inverted triangle/suitable bottomsit.jpg" alt="Inverted Triangle - Suitable Bottoms" loading="lazy" />
+                        <div class="result-image-label">Suitable Bottoms</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Inverted triangle/suitable dressesit.jpg" alt="Inverted Triangle - Suitable Dresses" loading="lazy" />
+                        <div class="result-image-label">Suitable Dresses</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pear -->
+            <div class="detailed-shape-card" id="result-pear">
+                <div class="shape-content">
+                    <h3 class="shape-title">Pear</h3>
+                    <p class="shape-description">Hips wider than bust with a defined waist.</p>
+                </div>
+                <div class="result-images" style="padding: var(--space-xl);">
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Pear/suitable topsp.jpg" alt="Pear - Suitable Tops" loading="lazy" />
+                        <div class="result-image-label">Suitable Tops</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Pear/suitable bottomsp.jpg" alt="Pear - Suitable Bottoms" loading="lazy" />
+                        <div class="result-image-label">Suitable Bottoms</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Pear/suitable dressesp.jpg" alt="Pear - Suitable Dresses" loading="lazy" />
+                        <div class="result-image-label">Suitable Dresses</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rectangle -->
+            <div class="detailed-shape-card" id="result-rectangle">
+                <div class="shape-content">
+                    <h3 class="shape-title">Rectangle</h3>
+                    <p class="shape-description">Bust, waist, and hips with similar measurements.</p>
+                </div>
+                <div class="result-images" style="padding: var(--space-xl);">
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Rectangle/suitable topsr.jpg" alt="Rectangle - Suitable Tops" loading="lazy" />
+                        <div class="result-image-label">Suitable Tops</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Rectangle/suitable bottomsr.jpg" alt="Rectangle - Suitable Bottoms" loading="lazy" />
+                        <div class="result-image-label">Suitable Bottoms</div>
+                    </div>
+                    <div class="result-image-card">
+                        <img class="result-image" src="body shapes results/Rectangle/suitable dressesr.jpg" alt="Rectangle - Suitable Dresses" loading="lazy" />
+                        <div class="result-image-label">Suitable Dresses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox DOM -->
+    <div class="image-lightbox" id="image-lightbox" aria-modal="true" role="dialog">
+        <div class="image-lightbox-content">
+            <button class="image-lightbox-close" id="image-lightbox-close" aria-label="Close preview">✕</button>
+            <img id="image-lightbox-img" class="image-lightbox-img" alt="Preview" />
+            <div id="image-lightbox-caption" class="image-lightbox-caption"></div>
+        </div>
+    </div>
+
     <!-- Chat Component -->
     <div class="chatbox-icon" role="button" tabindex="0" aria-label="Open chat support">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1092,31 +1263,37 @@
             // Clear previous images
             resultImages.innerHTML = '';
 
-            // Map body shape names to image file names
+            // Map body shape names to image file names and folders
             const imageMap = {
                 "Hourglass": {
+                    folder: "Hourglass",
                     tops: "suitable tops.jpg",
-                    bottoms: "suitable bottoms.jpg", 
+                    bottoms: "suitable bottoms.jpg",
                     dresses: "suitable dresses.jpg"
                 },
                 "Inverted Triangle": {
+                    folder: "Inverted triangle",
                     tops: "suitable topsit.jpg",
                     bottoms: "suitable bottomsit.jpg",
                     dresses: "suitable dressesit.jpg"
                 },
                 "Pear": {
+                    folder: "Pear",
                     tops: "suitable topsp.jpg",
                     bottoms: "suitable bottomsp.jpg",
                     dresses: "suitable dressesp.jpg"
                 },
                 "Rectangle": {
+                    folder: "Rectangle",
                     tops: "suitable topsr.jpg",
                     bottoms: "suitable bottomsr.jpg",
                     dresses: "suitable dressesr.jpg"
                 },
+                // Fallback Apple to Rectangle recommendations
                 "Apple": {
+                    folder: "Rectangle",
                     tops: "suitable topsr.jpg",
-                    bottoms: "suitable bottomsr.jpg", 
+                    bottoms: "suitable bottomsr.jpg",
                     dresses: "suitable dressesr.jpg"
                 }
             };
@@ -1146,7 +1323,7 @@
 
                 const img = document.createElement('img');
                 img.className = 'result-image';
-                img.src = 'Pics/' + category.file;
+                img.src = 'body shapes results/' + (imageMap[bodyShape].folder || 'Rectangle') + '/' + category.file;
                 img.alt = `${bodyShape} - ${category.label}`;
                 img.loading = 'lazy';
                 img.style.display = 'none'; // Hide initially
@@ -1212,7 +1389,78 @@
                     `Your body shape is ${bodyShape}! Check out your personalized style recommendations below.`
                 );
             }
+
+            // Redirect/scroll to the corresponding gallery card for this body shape
+            const redirectMap = {
+                'Hourglass': 'result-hourglass',
+                'Inverted Triangle': 'result-inverted-triangle',
+                'Pear': 'result-pear',
+                'Rectangle': 'result-rectangle',
+                'Apple': 'result-rectangle' // fallback mapping
+            };
+            const targetId = redirectMap[bodyShape] || 'result-rectangle';
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                // Smooth scroll to gallery and then to the specific card
+                const gallery = document.getElementById('results-gallery');
+                if (gallery) {
+                    gallery.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                } else {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                // Briefly highlight the target card
+                targetEl.classList.add('target-highlight');
+                setTimeout(() => targetEl.classList.remove('target-highlight'), 2200);
+
+                // Update URL hash without adding to history stack
+                if (history.replaceState) {
+                    history.replaceState(null, '', '#' + targetId);
+                } else {
+                    window.location.hash = targetId;
+                }
+            }
         }
+
+        // Enable click-to-view (lightbox) on gallery and result images
+        function setupImageLightbox() {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImg = document.getElementById('image-lightbox-img');
+            const lightboxCaption = document.getElementById('image-lightbox-caption');
+            const lightboxClose = document.getElementById('image-lightbox-close');
+            if (!lightbox || !lightboxImg || !lightboxClose) return;
+
+            const open = (src, caption) => {
+                lightboxImg.src = src;
+                lightboxCaption.textContent = caption || '';
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            };
+            const close = () => {
+                lightbox.classList.remove('open');
+                lightboxImg.src = '';
+                lightboxCaption.textContent = '';
+                document.body.style.overflow = '';
+            };
+
+            // Click on any .result-image or .shape-image inside results gallery to open
+            document.addEventListener('click', (e) => {
+                const img = e.target.closest('img.result-image, img.shape-image');
+                if (!img) return;
+                const card = img.closest('.detailed-shape-card, .result-image-card');
+                const cardTitle = card?.querySelector('.shape-title')?.textContent?.trim();
+                const label = card?.querySelector('.result-image-label')?.textContent?.trim();
+                const caption = [cardTitle, label].filter(Boolean).join(' — ');
+                open(img.src, caption);
+            });
+
+            // Close actions
+            lightboxClose.addEventListener('click', close);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('open')) close(); });
+        }
+        setupImageLightbox();
 
         // Mobile Navigation Toggle
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
